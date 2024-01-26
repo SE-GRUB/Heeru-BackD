@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('validasis', function (Blueprint $table) {
+        Schema::create('counselors', function (Blueprint $table) {
             $table->id();
-            $table->string('NIP')->unique();
-            $table->string('NOMOR');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->double('fare');
+            $table->text('description');
+            $table->integer('rating');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('validasis');
+        Schema::dropIfExists('counselors');
     }
 };
