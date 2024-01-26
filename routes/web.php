@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/ceknip', function () {
-    return response()->json(["jalankok"]);
+    return response()->json(DB::table('validasis')->get());
 });
