@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('profile_pic');
             $table->string('password');
-            // $table->rememberToken();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
