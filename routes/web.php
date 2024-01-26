@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ValidasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +17,5 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/ceknip', function () {
-    return response()->json(DB::table('validasis')->get());
-});
+
+Route::get('/ceknip', [ValidasiController::class, 'ceknip']);
