@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ValidasiController extends Controller
+class PicController extends Controller
 {
     public function ceknip(Request $request)
     {
