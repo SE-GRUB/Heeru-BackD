@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/ceknip', function () {
-    $id=$_GET["id"];
-    $datanip=DB::table('staff')->where('StaffID',$id)->get();
-    return response()->json($datanip);
-});
+    return response()->json(["jalankok"]);
+}
