@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ValidasiController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ceknip', [ValidasiController::class, 'ceknip']);
+Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.checkuser');
