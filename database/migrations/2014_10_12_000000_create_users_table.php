@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('no_telp')->unique();
             $table->string('email')->nullable();
             $table->text('profile_pic');
+            $table->string('password');
             // $table->rememberToken();
             $table->timestamps();
         });
