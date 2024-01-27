@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('profile_pic')->nullable()->change();
+        Schema::create('video_calls', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('consultation_id');
+            $table->foreign('consultation_id')->references('id')->on('consultations');
+            $table->text('meet_link');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('profile_pic')->nullable(false)->change();
-        });
+        Schema::dropIfExists('video_calls');
     }
 };

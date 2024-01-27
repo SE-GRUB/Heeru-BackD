@@ -28,10 +28,6 @@ Route::get('/user/{user}/editStudent', [UserController::class, 'editStudent'])->
 Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 
-//student route
-Route::get('/student/{student}/edit', [UserController::class, 'edit'])->name('student.edit');
-Route::put('/student/{student}/update', [UserController::class, 'update'])->name('student.update');
-
 // Progam route
 Route::get('/program', [ProgramController::class, 'index'])->name('program.index');
 Route::get('/program/create', [ProgramController::class, 'create'])->name('program.create');

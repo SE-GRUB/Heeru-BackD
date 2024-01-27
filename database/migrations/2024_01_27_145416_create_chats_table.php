@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('password')->nullable()->change();
+        Schema::create('chats', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('consultation_id');
+            $table->foreign('consultation_id')->references('id')->on('consultations');
+            $table->text('message');
+            $table->boolean('isRead');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('password')->nullable(false)->change();
-        });
+        Schema::dropIfExists('chats');
     }
 };

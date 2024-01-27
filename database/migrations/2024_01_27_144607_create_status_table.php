@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\report_category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('status', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('report_id');
+            $table->foreign('report_id')->references('id')->on('reports');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->text('comment');
+            $table->string('status');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('status');
     }
 };
