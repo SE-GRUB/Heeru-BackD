@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class counselor extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'user_id',
+        'fare',
+        'description',
+        'rating',
+    ];
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Backend')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -60,7 +61,7 @@
         <!-- Add your sidebar content here -->
         <ul>
             <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Products</a></li>
+            <li><a href="{{ Route('user.index') }}">User</a></li>
             <li><a href="#">Orders</a></li>
             <!-- Add more sidebar items as needed -->
         </ul>
@@ -90,5 +91,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Show/hide additional fields based on the selected role
+        $(document).ready(function(){
+            $('#role').change(function(){
+                if($(this).val() === 'student'){
+                    $('#studentFields').show();
+                    $('#picFields').show();
+                    $('#counselorFields').hide();
+                } else if ($(this).val() === 'pic') {
+                    $('#picFields').show();
+                    $('#studentFields').hide();
+                    $('#counselorFields').hide();
+                } else {
+                    $('#studentFields').hide();
+                    $('#picFields').hide();
+                    $('#counselorFields').show();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
