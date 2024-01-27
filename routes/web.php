@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('backend.index');
 });
 
 Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.checkuser');
