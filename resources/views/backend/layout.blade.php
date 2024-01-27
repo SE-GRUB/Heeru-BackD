@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Backend')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,6 +53,25 @@
             bottom: 0;
             width: 100%;
         }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +81,7 @@
         <ul>
             <li><a href="#">Dashboard</a></li>
             <li><a href="{{ Route('user.index') }}">User</a></li>
-            <li><a href="#">Orders</a></li>
+            <li><a href="{{ Route('program.index') }}">Program</a></li>
             <!-- Add more sidebar items as needed -->
         </ul>
     </div>
