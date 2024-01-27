@@ -35,7 +35,11 @@
                     <td>{{ $role->role }}</td>
                  @endforeach
                 <td>
-                    <a href="{{ route('user.edit', ['user' => $item->user]) }}" class="btn btn-primary">Edit</a>
+                    @foreach($item->roles as $role)
+                        if({{ $role->role }} == 'students'){
+                            <a href="{{ route('user.editStudent', ['user' => $item->user]) }}" class="btn btn-primary">Edit</a>
+                        }
+                    @endforeach
                     <form method="post" action="{{ route('user.destroy', ['user' => $item->user]) }}" style="display: inline-block;">
                         @csrf
                         @method('delete')

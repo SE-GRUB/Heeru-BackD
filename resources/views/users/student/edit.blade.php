@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2>User Registration Form</h2>
+        <h2>Edit Student</h2>
         <div>
             @if($errors->any())
             <ul>
@@ -32,32 +32,17 @@
                 </select>
             </div>
             
-            <!-- Additional Fields for Student -->
-            <div id="studentFields">
-                <div class="form-group">
-                    <label for="program_id">Program:</label>
-                    <select class="form-control" id="program_id" name="program_id">
-                        <option value="1">Program 1</option>
-                        <option value="2">Program 2</option>
-                        <!-- Add more programs as needed -->
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="program_id">Program:</label>
+                <select class="form-control" id="program_id" name="program_id">
+                    <option value="1">Program 1</option>
+                    <option value="2">Program 2</option>
+                </select>
             </div>
 
-            <!-- Additional Fields for PIC -->
-            <div id="picFields">
-                <div class="form-group">
-                    <label for="nip">NIP:</label>
-                    <input type="number" class="form-control" id="nip" name="nip">
-                </div>
-            </div>
-
-            <!-- Additional Fields for Counselor -->
-            <div id="counselorFields" style="display:none">
-                <div class="form-group">
-                    <label for="fare">Fare:</label>
-                    <input type="double" class="form-control" id="fare" name="fare">
-                </div>
+            <div class="form-group">
+                <label for="nip">NIP:</label>
+                <input type="number" class="form-control" id="nip" name="nip">
             </div>
 
             <div class="form-group">

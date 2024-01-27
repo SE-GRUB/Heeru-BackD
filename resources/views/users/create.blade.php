@@ -38,9 +38,9 @@
                 <div class="form-group">
                     <label for="program_id">Program:</label>
                     <select class="form-control" id="program_id" name="program_id">
-                        <option value="1">Program 1</option>
-                        <option value="2">Program 2</option>
-                        <!-- Add more programs as needed -->
+                        @foreach($programs as $program)
+                            <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

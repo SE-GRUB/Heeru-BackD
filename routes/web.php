@@ -24,9 +24,13 @@ Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.check
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
-Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::get('/user/{user}/editStudent', [UserController::class, 'editStudent'])->name('user.editStudent');
 Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+
+//student route
+Route::get('/student/{student}/edit', [UserController::class, 'edit'])->name('student.edit');
+Route::put('/student/{student}/update', [UserController::class, 'update'])->name('student.update');
 
 // Progam route
 Route::get('/program', [ProgramController::class, 'index'])->name('program.index');
