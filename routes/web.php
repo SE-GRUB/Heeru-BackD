@@ -24,8 +24,8 @@ Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.check
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
-Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
+Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 
 // Progam route

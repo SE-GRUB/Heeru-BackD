@@ -30,7 +30,29 @@ class UserController extends Controller
 
     public function index(){
         $users = User::all();
-        return view('users.index', ['users' => $users]);
+        $roles = [];
+
+        foreach ($users as $user) {
+            // Fetch roles for the current user
+            $userRoles = DB::table('users')
+                ->leftJoin('students', 'students.user_id', '=', 'users.id')
+                ->leftJoin('pics', 'pics.user_id', '=', 'users.id')
+                ->where('users.id', $user->id)
+                ->select(DB::raw('IF(students.id IS NOT NULL, "student", IF(pics.id IS NOT NULL, "pic", NULL)) AS role'))
+                ->get();
+
+            // Push the roles for the current user to the roles array
+            $roles[$user->id] = $userRoles;
+        }
+
+        $usersAndRoles = $users->map(function($user) use ($roles) {
+            $userRoles = isset($roles[$user->id]) ? $roles[$user->id] : [];
+            return (object) [
+                'user' => $user,
+                'roles' => $userRoles,
+            ];
+        });
+        return view('users.index', ['usersAndRoles' => $usersAndRoles]);
         
     }
 
@@ -81,20 +103,42 @@ class UserController extends Controller
 
 
     public function edit(User $user){
-        return view('user.edit', ['user' =>$user]);
+        return view('users.edit', ['user' =>$user]);
     }
 
     public function update(User $user, Request $request){
+    // dd($data['role']);
+        // $newUser = User::create($data);
         $data = $request->validate([
             'name' => 'required',
-            'nip' => 'required',
+            'role' => 'required',
             'no_telp' => 'required',
             'email' => 'required',
-            'remember_token' => 'nullable'
         ]);
 
-        $user->update(($data));
-        return redirect(route('user.index'))->with('sucess', 'User Updated Successfully');
+        if ($request['role'] == 'student') {
+            // dd('User is Student');
+            $studentData = $request->validate([
+                'program_id' => 'required',
+                'nip' => 'required|numeric',
+            ]);
+            $user->update(($studentData));
+
+        } else if ($request['role'] == 'pic') {
+            // dd('User is PIC');
+            $picData = $request->validate([
+                'nip' => 'required|numeric',
+            ]);
+            $user->update(($picData));
+        } else {
+            // dd('User is Counselor');
+            $counselorData = $request->validate([
+                'fare' => 'required|decimal:2'
+            ]);
+            $user->update(($counselorData));
+        }
+
+        return redirect((route(('users.index'))));
     }
 
     public function destroy(User $user){
