@@ -6,12 +6,12 @@
 
 <div>
     @if(session()->has('success'))
-    <div>
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
     </div>
     @endif
 </div>
-<a href="{{ route('program.create') }}" class="btn btn-primary">Add New User</a>
+<a href="{{ route('program.create') }}" class="btn btn-primary">Add New Program</a>
 <table>
     <thead>
         <tr>

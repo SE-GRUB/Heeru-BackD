@@ -4,15 +4,15 @@
 
 @section('content')
     <div class="container mt-5">
-        <div>
-            @if($errors->any())
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-            @endif
-        </div>
+        @if($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{route('program.update', ['program'=>$program])}}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf

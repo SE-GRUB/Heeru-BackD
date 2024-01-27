@@ -6,7 +6,7 @@
 
 <div>
     @if(session()->has('success'))
-    <div>
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
     </div>
     @endif
@@ -25,22 +25,16 @@
     </thead>
     <tbody>
         <!-- Loop through your users data and populate the table rows -->
-        @foreach($usersAndRoles as $item)
+        @foreach($users as $user)
             <tr>
-                <td>{{ $item->user->id }}</td>
-                <td>{{ $item->user->name }}</td>
-                <td>{{ $item->user->no_telp }}</td>
-                <td>{{ $item->user->email }}</td>
-                @foreach($item->roles as $role)
-                    <td>{{ $role->role }}</td>
-                 @endforeach
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->no_telp }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role }}</td>
                 <td>
-                    @foreach($item->roles as $role)
-                        if({{ $role->role }} == 'students'){
-                            <a href="{{ route('user.editStudent', ['user' => $item->user]) }}" class="btn btn-primary">Edit</a>
-                        }
-                    @endforeach
-                    <form method="post" action="{{ route('user.destroy', ['user' => $item->user]) }}" style="display: inline-block;">
+                    <a href="{{ route('user.edit', ['user' => $user]) }}" class="btn btn-primary">Edit</a>
+                    <form method="post" action="{{ route('user.destroy', ['user' => $user]) }}" style="display: inline-block;">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>

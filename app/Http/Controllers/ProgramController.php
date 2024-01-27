@@ -24,7 +24,7 @@ class ProgramController extends Controller
             'end_date' => 'required'
         ]);
         $newProgram = program::create($data);
-        return redirect((route(('program.index'))));
+        return redirect((route(('program.index'))))->with('sucess', 'Program Added Successfully !');;
     }
 
 
@@ -40,11 +40,11 @@ class ProgramController extends Controller
         ]);
 
         $program->update(($data));
-        return redirect(route('program.index'))->with('sucess', 'User Updated Successfully');
+        return redirect(route('program.index'))->with('sucess', 'Program Updated Successfully');
     }
 
     public function destroy(program $program){
         $program->delete();
-        return redirect(route('program.index'))->with('success', 'User Deleted Successfully');
+        return redirect(route('program.index'))->with('success', 'Program Deleted Successfully');
     }
 }

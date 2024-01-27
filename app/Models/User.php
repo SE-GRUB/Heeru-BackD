@@ -20,6 +20,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'no_telp',
+        'program_id',
+        'nip',
+        'fare',
+        'description',
+        'rating',
+        'role',
         'email',
         'password',
         'profile_pic',

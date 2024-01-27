@@ -23,9 +23,10 @@ return new class extends Migration
             $table->unsignedBigInteger('program_id')->nullable();
             $table->foreign('program_id')->references('id')->on('programs');
             $table->string('nip')->unique()->nullable();
-            $table->double('fare')->nullable();
+            $table->unsignedBigInteger('fare')->nullable();
             $table->text('description')->nullable();
             $table->integer('rating')->nullable();
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
         });

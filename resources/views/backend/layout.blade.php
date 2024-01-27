@@ -42,6 +42,7 @@
         .content {
             margin-left: 250px;
             padding: 20px;
+            overflow-y: auto;
         }
 
         footer {
@@ -114,6 +115,19 @@
     <script>
         // Show/hide additional fields based on the selected role
         $(document).ready(function(){
+            if($('#role').val() === 'student'){
+                $('#studentFields').show();
+                $('#picFields').show();
+                $('#counselorFields').hide();
+            } else if ($('#role').val() === 'pic') {
+                $('#picFields').show();
+                $('#studentFields').hide();
+                $('#counselorFields').hide();
+            } else {
+                $('#studentFields').hide();
+                $('#picFields').hide();
+                $('#counselorFields').show();
+            }
             $('#role').change(function(){
                 if($(this).val() === 'student'){
                     $('#studentFields').show();
@@ -126,7 +140,7 @@
                 } else {
                     $('#studentFields').hide();
                     $('#picFields').hide();
-                    $('#counselorFields').show();
+                    $('#counselorFields ').show();
                 }
             });
         });
