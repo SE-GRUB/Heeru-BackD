@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class report_category extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'category_name'
+    ];
 }

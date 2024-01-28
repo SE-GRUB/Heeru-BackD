@@ -83,6 +83,9 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="{{ Route('user.index') }}">User</a></li>
             <li><a href="{{ Route('program.index') }}">Program</a></li>
+            <li><a href="{{ Route('report.index') }}">Report</a></li>
+            <li><a href="{{ Route('reportCategories.index') }}">Report Categories</a></li>
+
             <!-- Add more sidebar items as needed -->
         </ul>
     </div>
