@@ -85,7 +85,7 @@
             <li><a href="{{ Route('program.index') }}">Program</a></li>
             <li><a href="{{ Route('report.index') }}">Report</a></li>
             <li><a href="{{ Route('report_category.index') }}">Report Categories</a></li>
-
+            <li><a href="{{ Route('post.index') }}">Post</a></li>
             <!-- Add more sidebar items as needed -->
         </ul>
     </div>
@@ -114,6 +114,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
         // Show/hide additional fields based on the selected role

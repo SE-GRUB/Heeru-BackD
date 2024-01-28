@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use Doctrine\DBAL\Schema\Index;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +55,10 @@ Route::get('/report_category/{report_category}/edit', [ReportCategoryController:
 Route::put('/report_category/{report_category}/update', [ReportCategoryController::class, 'update'])->name('report_category.update');
 Route::delete('/report_category/{report_category}/destroy', [ReportCategoryController::class, 'destroy'])->name('report_category.destroy');
 
+// Post route
+Route::get('/post', [PostController::class, 'index'])->name('post.index');
+Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::put('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
+Route::delete('/post/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');

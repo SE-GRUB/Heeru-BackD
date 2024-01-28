@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('poster')->nullable();
             $table->unsignedBigInteger('like');
             $table->boolean('isAnonymous');
-            $table->boolean('isVerified)');
+            $table->boolean('isVerified');
             $table->timestamps();
         });
     }
