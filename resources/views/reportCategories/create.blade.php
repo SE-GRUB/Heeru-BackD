@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title', 'Add Report')
+@section('title', 'Add Report Category')
 
 @section('content')
     <div class="container mt-5">
@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('reportCategories.store') }}" method="post">
+        <form action="{{ route('report_category.store') }}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("post")

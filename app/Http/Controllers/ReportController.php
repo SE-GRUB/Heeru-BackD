@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\report_category;
 use App\Models\reports;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class ReportController extends Controller
 {
@@ -15,7 +15,7 @@ class ReportController extends Controller
     }
 
     public function create(){
-        $reports = reports::all();
-        return view('report.create', ['programs' => $reports]);
+        $report_categories = report_category::all();
+        return view('report.create', ['report_categories' => $report_categories]);
     }
 }

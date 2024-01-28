@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title', 'Add Report')
+@section('title', 'Edit Report Category')
 
 @section('content')
     <div class="container mt-5">
@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{route('reportCategories.update', ['report_category'=>$report_category])}}" method="post">
+        <form action="{{route('report_category.update', ['report_category'=>$report_category])}}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("put")
@@ -21,7 +21,6 @@
             <div class="form-group">
                 <label for="category_name">Name</label>
                 <input type="text" class="form-control" id="category_name" name="category_name" value="{{ $report_category->category_name }}" required>
-
             </div>
 
             <button type="submit" class="btn btn-primary">Edit Report Categories</button>

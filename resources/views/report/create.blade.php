@@ -29,11 +29,11 @@
             </div>
 
             <div class="form-group">
-                <label for="report_category">category:</label>
+                <label for="report_category">Category:</label>
                 <select class="form-control" id="category" name="category" required>
-                    @foreach($report_category as $reportCategory)
-                            <option value="{{ $reportCategory->id }}">{{ $reportCategory->category_name }}</option>
-                        @endforeach
+                    @foreach($report_categories as $report_categorie)
+                        <option value="{{ $report_categorie->id }}">{{ $report_categorie->category_name }}</option>
+                    @endforeach
                 </select>
             </div>
             
