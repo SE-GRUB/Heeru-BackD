@@ -8,15 +8,15 @@ use Illuminate\Http\Request;
 class ReportCategoryController extends Controller
 {
     public function index(){
-        $report_category = report_category::all();
-        return view('reportCategories.index', ['report_category' => $report_category]);
+        $report_categories = report_category::all();
+        return view('reportCategories.index', ['report_category' => $report_categories]);
         
     }
 
     
     public function create(){
-        $report_category = report_category::all();
-        return view('reportCategories.create', ['report_category' => $report_category]);
+        $report_categories = report_category::all();
+        return view('reportCategories.create', ['report_category' => $report_categories]);
     }
 
     public function store(Request $request){
@@ -29,21 +29,21 @@ class ReportCategoryController extends Controller
         return redirect((route(('reportCategories.index'))))->with('sucess', 'Category Added Successfully !');;
     }
 
-    public function edit(report_category $report_category){
-        return view('reportCategories.edit', ['report_category' => $report_category]);
+    public function edit(report_category $report_categories){
+        return view('reportCategories.edit', ['report_category' => $report_categories]);
     }
 
-    public function update(report_category $report_category, Request $request){
+    public function update(report_category $report_categories, Request $request){
         $data = $request->validate([
             'category_name' => 'required'
         ]);
 
-        $report_category->update(($data));
+        $report_categories->update(($data));
         return redirect(route('reportCategories.index'))->with('sucess', 'Category Updated Successfully');
     }
 
-    public function destroy(report_category $report_category){
-        $report_category->delete();
+    public function destroy(report_category $report_categories){
+        $report_categories->delete();
         return redirect(route('reportCategories.index'))->with('success', 'Category Deleted Successfully');
     }
 

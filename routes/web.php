@@ -52,6 +52,6 @@ Route::get('/reportCategories', [ReportCategoryController::class, 'index'])->nam
 Route::get('/reportCategories/create', [ReportCategoryController::class, 'create'])->name('reportCategories.create');
 Route::post('/reportCategories', [ReportCategoryController::class, 'store'])->name('reportCategories.store');
 Route::get('/reportCategories/{reportCategories}/edit', [ReportCategoryController::class, 'edit'])->name('reportCategories.edit');
-Route::put('/reportCategories/{reportCategories}', [ReportCategoryController::class, 'update'])->name('reportCategories.update');
+Route::put('/reportCategories/{reportCategories}/update', [ReportCategoryController::class, 'update'])->name('reportCategories.update');
 Route::delete('/reportCategories//{reportCategories}/destroy', [ReportCategoryController::class, 'destroy'])->name('reportCategories.destroy');
 

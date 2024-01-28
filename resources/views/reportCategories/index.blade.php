@@ -28,10 +28,10 @@
                 <td>{{ $reportCategories->category_name}}</td>
         
                 <td>
-                    <a href="{{ route('reportCategories.edit', ['reportCategories' => $reportCategories]) }}" class="btn btn-primary">Edit</a>
-                    <form method="post" action="{{ route('reportCategories.destroy', ['report_category' => $reportCategories]) }}" style="display: inline-block;">
+                    <a href="{{ route('reportCategories.edit', ['report_category' => $reportCategories]) }}" class="btn btn-primary">Edit</a>
+                    {{-- <form method="post" action="{{ route('reportCategories.destroy', ['report_category' => $reportCategories]) }}" style="display: inline-block;">
                         @csrf
-                        @method('delete')
+                        @method('delete') --}}
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
                     </form>
                 </td>
