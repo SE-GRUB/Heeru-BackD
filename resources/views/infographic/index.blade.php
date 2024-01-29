@@ -17,6 +17,7 @@
         <tr>
             <th>ID</th>
             <th>Title</th>
+            <th>Image</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -25,7 +26,17 @@
             <tr>
                 <td>{{ $infographic->id}}</td>
                 <td>{{ $infographic->title}}</td>
-            
+
+                <td>
+                    @php
+                        $img=DB::table('infographic_images')->where('info_id', $infographic->id)->get();
+                    @endphp
+                        {{-- @dd($img) --}}
+                        @foreach($img as $image)
+                            <img src="{{ $image->image_path }}" alt="" style="width: 100px; height: 100px; object-fit: cover;">
+                        @endforeach
+                </td>
+
                 <td>
                     <a href="{{ route('infographic.edit', ['infographic' => $infographic]) }}" class="btn btn-primary">Edit</a>
                     <form method="post" action="{{ route('infographic.destroy', ['infographic' => $infographic]) }}" style="display: inline-block;">
