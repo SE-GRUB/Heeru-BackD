@@ -14,8 +14,8 @@ class CommentController extends Controller
         
     }
 
-    public function create(){
-        $post = post::all();
+    public function create(Request $request, $postid){
+        $post = post::find($postid);
         return view('comment.create', ['post' => $post]);
 
     }
