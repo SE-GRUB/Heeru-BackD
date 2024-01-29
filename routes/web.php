@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportCategoryController;
@@ -62,3 +63,11 @@ Route::post('/post', [PostController::class, 'store'])->name('post.store');
 Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
 Route::put('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
+
+// Post infographic
+Route::get('/infographic', [InfographicController::class, 'index'])->name('infographic.index');
+Route::get('/infographic/create', [InfographicController::class, 'create'])->name('infographic.create');
+Route::post('/infographic', [InfographicController::class, 'store'])->name('infographic.store');
+Route::get('/infographic/{infographic}/edit', [InfographicController::class, 'edit'])->name('infographic.edit');
+Route::put('/infographic/{infographic}/update', [InfographicController::class, 'update'])->name('infographic.update');
+Route::delete('/infographic/{infographic}/destroy', [InfographicController::class, 'destroy'])->name('infographic.destroy');

@@ -28,6 +28,7 @@
                 <input type="text" class="form-control" id="evidence" name="evidence" value="{{ $report->evidence }}"required>
             </div>
 
+
             <div class="form-group">
                 <label for="category_id">Category:</label>
                 <select class="form-control" id="category_id" name="category_id" value="{{ $report->category_id }}" required>
