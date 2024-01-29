@@ -36,6 +36,7 @@
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this program?')">Delete</button>
                     </form>
+
                 </td>
             </tr>
         @endforeach

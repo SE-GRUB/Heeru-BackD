@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
 use App\Http\Controllers\LikeController;
@@ -78,5 +79,14 @@ Route::delete('/infographic/{infographic}/destroy', [InfographicController::clas
 Route::get('/like', [LikeController::class, 'store'])->name('like.store');
 Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('like.destroy');
 
-// Infographic image route
-Route::delete('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');
+// // Infographic image route
+// Route::get('/infographic_image', [InfographicImageController::class, 'store'])->name('infographic_image.store');
+// Route::get('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');
+
+// Comment route
+Route::get('/comment', [CommentController::class, 'index'])->name('comment.index');
+Route::get('/comment/create', [CommentController::class, 'create'])->name('comment.create');
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
+Route::put('/comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
+Route::delete('/comment/{comment}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');
