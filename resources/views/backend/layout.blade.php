@@ -101,7 +101,7 @@
         </header>
 
         <!-- Index Section -->
-        <section class="index">
+        <section class="index mb-5" style="overflow-y: scroll;">
             <!-- Content specific to the index page -->
             @yield('content')
         </section>

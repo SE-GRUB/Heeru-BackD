@@ -78,6 +78,5 @@ Route::delete('/infographic/{infographic}/destroy', [InfographicController::clas
 Route::get('/like', [LikeController::class, 'store'])->name('like.store');
 Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('like.destroy');
 
-// // Infographic image route
-// Route::get('/infographic_image', [InfographicImageController::class, 'store'])->name('infographic_image.store');
-// Route::get('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');
+// Infographic image route
+Route::delete('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');
