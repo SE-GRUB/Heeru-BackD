@@ -28,11 +28,12 @@ class ReportController extends Controller
         ]);
         // dd($data);
         $newCategory = reports::create($data);
-        return redirect((route(('report.index'))))->with('sucess', 'report Added Successfully !');;
+        return redirect((route(('report.index'))))->with('success', 'Report Added Successfully !');;
     }
 
     public function edit(reports $report){
-        return view('report.edit', ['report' => $report]);
+        $report_categories = report_category::all();
+        return view('report.edit', ['report' => $report], ['report_categories' => $report_categories]);
     }
 
     public function update(reports $report, Request $request){
@@ -43,11 +44,11 @@ class ReportController extends Controller
         ]);
 
         $report->update(($data));
-        return redirect(route('report.index'))->with('sucess', 'report Updated Successfully');
+        return redirect(route('report.index'))->with('success', 'Report Updated Successfully');
     }
 
     public function destroy(reports $report){
         $report->delete();
-        return redirect(route('report.index'))->with('success', 'report Deleted Successfully');
+        return redirect(route('report.index'))->with('success', 'Report Deleted Successfully');
     }
 }

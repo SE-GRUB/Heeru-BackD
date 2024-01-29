@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title', 'Add Report')
+@section('title', 'Edit Report')
 
 @section('content')
     <div class="container mt-5">
@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <label for="category_id">Category:</label>
-                <select class="form-control" id="category_id" name="category_id" value="{{ $report->category_id }}" required>
+                <select class="form-control" id="category_id" name="category_id" selected="{{ $report->category_id }}" required>
                     @foreach($report_categories as $report_categorie)
                         <option value="{{ $report_categorie->id }}">{{ $report_categorie->category_name  }}</option>
                     @endforeach
@@ -41,7 +41,7 @@
 
 
         
-            <button type="submit" class="btn btn-primary">Add Report</button>
+            <button type="submit" class="btn btn-primary">Edit Report</button>
         </form>
     </div>
 

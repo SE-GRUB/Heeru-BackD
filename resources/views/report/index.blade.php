@@ -17,9 +17,9 @@
         <tr>
             <th>ID</th>
             <th>Time</th>
-            <th>evidence</th>
-            <th>category</th>
-        
+            <th>Evidence</th>
+            <th>Category</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
