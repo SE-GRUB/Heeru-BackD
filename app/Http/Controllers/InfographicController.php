@@ -18,25 +18,40 @@ class InfographicController extends Controller
         return view('infographic.create');
     }
 
+    private function uploadedfile($img,$path) {
+        // ini random aja biar hasilnya selalu beda aku pake waktu 
+        $time=time();
+        // buat array kosong
+        $newurl=[];
+        foreach ($img as $key => $imag) {
+            // pindahin gambarnya ke folder server
+            $imag->move($path, $time.'_'.$imag->getClientOriginalName());
+            $newurl[] = $path.'/'.$time.'_'.$imag->getClientOriginalName();
+        }
+        return $newurl;
+    }
+
     public function store(Request $request){
+        
         $data = $request->validate([
-            'title' => 'required'
+            'title' => 'required',
+            'infographic_images' => 'required',
+            'infographic_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        // simpan data ke Infographic
         $newInfographic = infographic::create($data);
-        // $infographic_id = $newInfographic['id'];
-        $data_image = $request->validate([
-            'infographic_images.*' => 'required' 
-        ]);
-        // dd($data_image);
-        foreach ($request->file('infographic_images') as $image) {
-            $path = $image->store('infographic_image', 'public');
-            $info_image_data = [$newInfographic->id, $path];
-            $newInfographicFile = infographic_image::create($info_image_data);
-            // $newInfographicFile = new infographic_image([
-            //     'infographic_id' => $newInfographic->id,
-            //     'image_path' => $path
-            // ]);
-            // $newInfographicFile->save();
+
+        // proses gambarnya ke folder server
+        $paths = $this->uploadedfile($request->file('infographic_images'),'infographic_images/'.$newInfographic->id);
+
+        // simpan path gambarnya ke database
+        foreach ($paths as $key => $path) {
+            // ada perubahan di modelnya tolong di cek model lain soalnya ada typo
+            infographic_image::create([
+                'info_id' => $newInfographic->id,
+                'image_path' => $path
+            ]);
         }
 
         return redirect((route(('infographic.index'))))->with('success', 'Infographic Added Successfully !');;

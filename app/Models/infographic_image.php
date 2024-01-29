@@ -11,7 +11,7 @@ class infographic_image extends Model
 
     protected $fillable = [
         'id',
-        'infographic_id',
+        'info_id',
         'image_path',
     ];
 }

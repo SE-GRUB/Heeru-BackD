@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('infographic.store') }}" method="post">
+        <form action="{{ route('infographic.store') }}" method="post" enctype="multipart/form-data">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("post")
