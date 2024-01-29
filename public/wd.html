@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh chat sederhana</title>
+    <style>
+        .st{
+            color: red;
+            text-align: start;
+        }
+        .cl{
+            color: blue;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="pow"></div>
+    <span id="polemik"></span>
+    <div class="awpl">
+        <!-- input id targer -->
+        <input type="text" id="target" name="target" value="10">
+        <!-- input pesan -->
+        <input type="text" id="pesan" name="pesan">
+        <button onclick="send()">Kirim</button>
+    </div>
+    <script>
+        function send() {
+            var target=document.getElementById("target").value;
+            var pesan=document.getElementById("pesan").value;
+            var url=`http://localhost:8000/chat/up?idconst=${1}&message="${pesan}"&idtarget=${target}`;
+            document.getElementById("pesan").value="";
+            fetch(url);
+        }
+
+        var user=0;
+        var psikolog=0;
+        function parse(pesan, id) {
+            var log = document.getElementById("polemik");
+            if (id==user) {
+                log.innerHTML += '<div class="st">'+pesan+'</div>';
+            } else {
+                log.innerHTML += '<div class="cl">'+pesan+'</div>';
+            }
+        }
+
+        function bidw() {
+        let url="http://localhost:8000/chat/get?idconst=1";
+            // featch(url)
+            fetch(url)
+            .then(function(response) {
+                document.getElementById("pow").innerHTML = response;
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                user=data.listUser[0].target_id;
+                psikolog=data.listUser[1].target_id;
+                document.getElementById("polemik").innerHTML=""
+                data.pesan.forEach(element => {
+                    console.log(element.Pesan);
+                    parse(element.Pesan, element.target_id);
+                });
+            });
+        }
+
+        setInterval(() => {
+            bidw()
+        }, 500);
+    </script>
+</body>
+</html>
