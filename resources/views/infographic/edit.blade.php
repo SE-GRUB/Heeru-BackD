@@ -13,29 +13,33 @@
                 </ul>
             </div>
         @endif
-        <td>
-            @php
-                $img=DB::table('infographic_images')->where('info_id', $infographic->id)->get();
-            @endphp
-                {{-- @dd($img) --}}
-                @foreach($img as $image)
-                    <img src="{{ url($image->image_path) }}" alt="" style="width: 100px; height: 100px; object-fit: cover;" id="imgpoin{{$image->id}}" onclick="hapusgambar({{$image->id}})">
-                @endforeach
-        </td>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($infographic_images as $infographic_image)
+                    <tr>
+                        <td>{{ $infographic_image->id}}</td>
 
-        <script>
-            function hapusgambar(params) {
-                console.log(params);
-                // fetch to localhost:8000/api/deleteimage
-                var url="{{ url('/infographic/iddel') }}?id="+params;
-                // alert(url);
-                fetch(url)
-                .then(response => response.json())
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }
-        </script>
+                        <td>
+                                    <img src="{{ url($infographic_image->image_path) }}" alt="" style="width: 600px; object-fit: cover;">
+                        </td>
+                        <td>
+                            <form method="post" action="{{ route('infographic_image.destroy', ['infographic_image' => $infographic_image]) }}" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this infographic?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         <form action="{{ route('infographic.update', ['infographic'=>$infographic])}}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
@@ -45,7 +49,6 @@
                 <label for="title">Infographic Title:</label>
                 <input type="text" class="form-control" id="title" name="title"  value="{{ $infographic->title }}" required>
             </div>
-
 
             <button type="submit" class="btn btn-primary">Edit Infographic</button>
         </form>

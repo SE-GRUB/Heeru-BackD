@@ -22,10 +22,8 @@ class InfographicController extends Controller
     private function uploadedfile($img,$path) {
         // ini random aja biar hasilnya selalu beda aku pake waktu
         $time=time();
-        // buat array kosong
         $newurl=[];
         foreach ($img as $key => $imag) {
-            // pindahin gambarnya ke folder server
             $imag->move($path, $time.'_'.$imag->getClientOriginalName());
             $newurl[] = $path.'/'.$time.'_'.$imag->getClientOriginalName();
         }
@@ -60,7 +58,8 @@ class InfographicController extends Controller
 
 
     public function edit(infographic $infographic){
-        return view('infographic.edit', ['infographic' => $infographic]);
+        $infographic_images = infographic_image::where('info_id', $infographic->id)->get();
+        return view('infographic.edit', ['infographic' => $infographic], ['infographic_images' => $infographic_images]);
     }
 
     public function update(infographic $infographic, Request $request){
@@ -73,6 +72,10 @@ class InfographicController extends Controller
     }
 
     public function destroy(infographic $infographic){
+        $infographic_images = infographic_image::where('info_id', $infographic->id)->get();
+        foreach($infographic_images as $infographic_image){
+            $infographic_image->delete();
+        }
         $infographic->delete();
         return redirect(route('infographic.index'))->with('success', 'Infographic Deleted Successfully');
     }

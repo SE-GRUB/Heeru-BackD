@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
 use App\Http\Controllers\LikeController;
@@ -88,6 +89,13 @@ Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('li
 Route::get('/chat/up', [ChatController::class, 'patup'])->name('chat.save');
 Route::get('/chat/get', [ChatController::class, 'patdown'])->name('chat.get');
 
-
 // custem Agus
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
+
+// Comment route
+Route::get('/comment', [CommentController::class, 'index'])->name('comment.index');
+Route::get('/comment/create', [CommentController::class, 'create'])->name('comment.create');
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
+Route::put('/comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
+Route::delete('/comment/{comment}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');
