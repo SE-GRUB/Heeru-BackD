@@ -86,6 +86,8 @@
             <li><a href="{{ Route('report.index') }}">Report</a></li>
             <li><a href="{{ Route('report_category.index') }}">Report Categories</a></li>
             <li><a href="{{ Route('post.index') }}">Post</a></li>
+            <li><a href="{{ Route('infographic.index') }}">Infographic</a></li>
+
             <!-- Add more sidebar items as needed -->
         </ul>
     </div>

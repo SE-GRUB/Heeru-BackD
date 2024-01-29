@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InfographicController;
+use App\Http\Controllers\InfographicImageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProgramController;
@@ -76,3 +77,7 @@ Route::delete('/infographic/{infographic}/destroy', [InfographicController::clas
 // Like route
 Route::get('/like', [LikeController::class, 'store'])->name('like.store');
 Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('like.destroy');
+
+// // Infographic image route
+// Route::get('/infographic_image', [InfographicImageController::class, 'store'])->name('infographic_image.store');
+// Route::get('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');

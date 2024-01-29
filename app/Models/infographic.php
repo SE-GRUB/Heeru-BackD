@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class infographic extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title'
+    ];
 }
