@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\comment;
+use App\Models\post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,19 +15,25 @@ class CommentController extends Controller
     }
 
     public function create(){
-        return view('comment.create');
+        $post = post::all();
+        return view('comment.create', ['post' => $post]);
+
     }
 
 
     public function store(Request $request){
-        
         $data = $request->validate([
+            'user_id' => 'required',
+            'post_id' => 'required',
             'comment' => 'required'
         ]);
-
-        // simpan data ke Infographic
-        $newInfographic = comment::create($data);
-        return redirect((route(('comment.index'))))->with('success', 'Comment Added Successfully !');;
+    
+        $post = post::findOrFail($request->input('post_id'));
+    
+    
+        $newComment = Comment::create($data);
+    
+        return redirect()->route('post.index')->with('success', 'Comment Added Successfully!');
     }
 
 

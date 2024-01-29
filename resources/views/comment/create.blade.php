@@ -17,6 +17,8 @@
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("post")
+            <input type="hidden" name="user_id" value="{{ $post->user_id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
 
             <div class="form-group">
                 <label for="comment">Comment :</label>
