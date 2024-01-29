@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('consultation_id')->references('id')->on('consultations');
             $table->text('message');
             $table->boolean('isRead');
+            $table->unsignedBigInteger('target_id');
             $table->timestamps();
         });
     }

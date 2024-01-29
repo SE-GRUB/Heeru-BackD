@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
 use App\Http\Controllers\LikeController;
@@ -7,8 +8,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,7 @@ Route::get('/report/{report}/edit', [ReportController::class, 'edit'])->name('re
 Route::put('/report/{report}', [ReportController::class, 'update'])->name('report.update');
 Route::delete('/report/{report}/destroy', [ReportController::class, 'destroy'])->name('report.destroy');
 
-//Report categories route 
+//Report categories route
 Route::get('/report_category', [ReportCategoryController::class, 'index'])->name('report_category.index');
 Route::get('/report_category/create', [ReportCategoryController::class, 'create'])->name('report_category.create');
 Route::post('/report_category', [ReportCategoryController::class, 'store'])->name('report_category.store');
@@ -81,3 +82,12 @@ Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('li
 // // Infographic image route
 // Route::get('/infographic_image', [InfographicImageController::class, 'store'])->name('infographic_image.store');
 // Route::get('/infographic_image/{infographic_image}/destroy', [InfographicImageController::class, 'destroy'])->name('infographic_image.destroy');
+
+
+// for chat route
+Route::get('/chat/up', [ChatController::class, 'patup'])->name('chat.save');
+Route::get('/chat/get', [ChatController::class, 'patdown'])->name('chat.get');
+
+
+// custem Agus
+Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');

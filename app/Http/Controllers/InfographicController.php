@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\infographic;
 use App\Models\infographic_image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InfographicController extends Controller
 {
     public function index(){
         $infographics = infographic::all();
         return view('infographic.index', ['infographics' => $infographics]);
-        
+
     }
 
     public function create(){
@@ -19,7 +20,7 @@ class InfographicController extends Controller
     }
 
     private function uploadedfile($img,$path) {
-        // ini random aja biar hasilnya selalu beda aku pake waktu 
+        // ini random aja biar hasilnya selalu beda aku pake waktu
         $time=time();
         // buat array kosong
         $newurl=[];
@@ -32,7 +33,7 @@ class InfographicController extends Controller
     }
 
     public function store(Request $request){
-        
+
         $data = $request->validate([
             'title' => 'required',
             'infographic_images' => 'required',
@@ -74,5 +75,10 @@ class InfographicController extends Controller
     public function destroy(infographic $infographic){
         $infographic->delete();
         return redirect(route('infographic.index'))->with('success', 'Infographic Deleted Successfully');
+    }
+
+    public function delpo(Request $request) {
+        DB::table('infographic_images')->where('id', $request->id)->delete();
+        return response()->json("beres", 200);
     }
 }
