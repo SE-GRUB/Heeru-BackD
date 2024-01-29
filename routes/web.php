@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InfographicController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportCategoryController;
@@ -64,10 +65,14 @@ Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edi
 Route::put('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 
-// Post infographic
+// Post infographic route
 Route::get('/infographic', [InfographicController::class, 'index'])->name('infographic.index');
 Route::get('/infographic/create', [InfographicController::class, 'create'])->name('infographic.create');
 Route::post('/infographic', [InfographicController::class, 'store'])->name('infographic.store');
 Route::get('/infographic/{infographic}/edit', [InfographicController::class, 'edit'])->name('infographic.edit');
 Route::put('/infographic/{infographic}/update', [InfographicController::class, 'update'])->name('infographic.update');
 Route::delete('/infographic/{infographic}/destroy', [InfographicController::class, 'destroy'])->name('infographic.destroy');
+
+// Like route
+Route::get('/like', [LikeController::class, 'store'])->name('like.store');
+Route::get('/like/{like}/destroy', [LikeController::class, 'destroy'])->name('like.destroy');
