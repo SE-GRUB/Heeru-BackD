@@ -21,13 +21,14 @@ class PaymentController extends Controller
     }
     
     public function store(Request $request, consultation $consultation){
+        // dd($consultation->id);
         $data = $request->validate([
             'consultation_id' => 'required',
             'payment_method_id' => 'required',
         ]);
         $newPayment = payment::create($data);
         $consultation->update(['isPaid' => true]);
-        return redirect((route(('consultation.index'))))->with('success', 'Payment Successfully !');;
+        return redirect(route('consultation.index'))->with('success', 'Payment Successfully!');
     }
 
 

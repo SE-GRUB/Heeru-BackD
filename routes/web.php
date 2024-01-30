@@ -137,7 +137,7 @@ Route::delete('/payment_method/{payment_method}/destroy', [PaymentMethodControll
 // Payment route
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::get('/payment/{consultation}/create', [PaymentController::class, 'create'])->name('payment.create');
-Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+Route::post('/payment/{consultation}/', [PaymentController::class, 'store'])->name('payment.store');
 Route::get('/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
 Route::put('/payment/{payment}/update', [PaymentController::class, 'update'])->name('payment.update');
 Route::delete('/payment/{payment}/destroy', [PaymentController::class, 'destroy'])->name('payment.destroy');
