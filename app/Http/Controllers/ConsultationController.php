@@ -47,8 +47,8 @@ class ConsultationController extends Controller
     //     return redirect(route('post.index'))->with('success', 'Post Updated Successfully');
     // }
 
-    public function destroy(consultation $consultations){
-        $consultations->delete();
+    public function destroy(consultation $consultation){
+        $consultation->delete();
         return redirect(route('consultation.index'))->with('success', 'Consultation Deleted Successfully');
     }
 }
