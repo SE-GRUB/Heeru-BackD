@@ -14,21 +14,22 @@ class CommentController extends Controller
         
     }
 
-    public function create(Request $request, $postid){
-        $post = post::find($postid);
+    public function create(post $post){
+        // dump($post->user_id);
         return view('comment.create', ['post' => $post]);
 
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request, post $post){
+        // dd($request);
         $data = $request->validate([
             'user_id' => 'required',
             'post_id' => 'required',
             'comment' => 'required'
         ]);
     
-        $post = post::findOrFail($request->input('post_id'));
+        // $post = post::findOrFail($request->input('post_id'));
     
     
         $newComment = Comment::create($data);

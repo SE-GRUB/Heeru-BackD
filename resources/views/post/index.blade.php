@@ -35,6 +35,8 @@
                 <td>{{ $post->like }}</td>
                 <td>{{ $post->isAnonymous ? 'Yes' : 'No' }}</td>
                 <td>{{ $post->isVerified ? 'Yes' : 'No' }}</td>
+                
+
                 <td>
                     <a href="{{ route('post.edit', ['post' => $post]) }}" class="btn btn-primary">Edit</a>
                     <form method="post" action="{{ route('post.destroy', ['post' => $post]) }}" style="display: inline-block;">
@@ -42,7 +44,7 @@
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                     </form>
-                    {{-- <a href="{{ route('comment.create'),  ['post' => $post], ['postid' => $post->id] }}" class="btn btn-primary">Add New Comment</a> --}}
+                    <a href="{{ route('comment.create',  ['post' => $post])}}" class="btn btn-primary">Add New Comment</a>
                 </td>
             </tr>
         @endforeach
