@@ -13,6 +13,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatReplyController;
 use App\Http\Controllers\CommentReplyController;
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\ConsultationResultController;
+use App\Models\consultation;
+use App\Models\consultation_result;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +109,15 @@ Route::get('/comment_reply/{comment}/', [CommentReplyController::class, 'index']
 Route::get('/comment_reply/{comment}/create', [CommentReplyController::class, 'create'])->name('comment_reply.create');
 Route::post('/comment_reply/{comment}/', [CommentReplyController::class, 'store'])->name('comment_reply.store');
 Route::delete('/comment_reply/{comment_reply}/{comment}/destroy', [CommentReplyController::class, 'destroy'])->name('comment_reply.destroy');
+
+// Consultation route
+Route::get('/consultation', [ConsultationController::class, 'index'])->name('consultation.index');
+Route::get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
+Route::post('/consultation', [ConsultationController::class, 'store'])->name('consultation.store');
+Route::delete('/consultation/{consultation}/destroy', [ConsultationController::class, 'destroy'])->name('consultation.destroy');
+
+//Consultation note route
+Route::get('/consultation_result', [ConsultationResultController::class, 'index'])->name('consultation_result.index');
+Route::get('/consultation_result/create', [ConsultationResultController::class, 'create'])->name('consultation_result.create');
+Route::post('/consultation_result/{consultation_result}/', [ConsultationResultController::class, 'store'])->name('consultation_result.store');
+Route::delete('/consultation_result/{consultation_result}/destroy', [ConsultationResultController::class, 'destroy'])->name('consultation_result.destroy');
