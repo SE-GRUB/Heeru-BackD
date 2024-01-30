@@ -37,8 +37,9 @@
                     <form method="post" action="{{ route('comment.destroy', ['comment' => $comment, 'post' => $post]) }}" style="display: inline-block;">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
                     </form>
+                    <a href="{{ route('comment_reply.index', ['comment' => $comment]) }}" class="btn btn-primary">View Reply</a>
                 </td>
             </tr>
         @endforeach

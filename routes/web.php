@@ -11,6 +11,8 @@ use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatReplyController;
+use App\Http\Controllers\CommentReplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,3 +99,9 @@ Route::get('/comment/{post}/', [CommentController::class, 'index'])->name('comme
 Route::get('/comment/{post}/create', [CommentController::class, 'create'])->name('comment.create');
 Route::post('/comment/{post}/', [CommentController::class, 'store'])->name('comment.store');
 Route::delete('/comment/{comment}/{post}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+//Reply route
+Route::get('/comment_reply/{comment}/', [CommentReplyController::class, 'index'])->name('comment_reply.index');
+Route::get('/comment_reply/{comment}/create', [CommentReplyController::class, 'create'])->name('comment_reply.create');
+Route::post('/comment_reply/{comment}/', [CommentReplyController::class, 'store'])->name('comment_reply.store');
+Route::delete('/comment_reply/{comment_reply}/{comment}/destroy', [CommentReplyController::class, 'destroy'])->name('comment_reply.destroy');
