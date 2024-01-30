@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class ConsultationResultController extends Controller
 {
     public function index(consultation $consultations){
-        $consultation_result = consultation_result::all();
-        return view('consultation_result.index', ['consultation_result' => $consultation_result], ['consultations' => $consultations]);
+        $consultation_results = consultation_result::all();
+        return view('consultation_result.index', ['consultation_results' => $consultation_results], ['consultations' => $consultations]);
     }
 
     public function create(consultation $consultations){
@@ -23,10 +23,10 @@ class ConsultationResultController extends Controller
     public function store(Request $request, consultation $consultations){
         // dd($request);
         $data = $request->validate([
-            'user_id' => 'required',
-            'comment_id' => 'required',
-            'post_id' => 'required',
-            'reply' => 'required'
+            'student_id' => 'required',
+            'counselor_id' => 'required',
+            'id' => 'required',
+            'note' => 'required'
         ]);
     
         // $post = post::findOrFail($request->input('post_id'));
