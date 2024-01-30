@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($consultations as $consultation)
+        @foreach($consultation as $consultation)
             <tr>
                 <td>{{ $consultation->id }}</td>
                 <td>{{ $consultation->student_id }}</td>

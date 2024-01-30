@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class ConsultationController extends Controller
 {
     public function index(){
-        $consultations = consultation::all();
-        return view('consultation.index', ['consultations' => $consultations]);
+        $consultation = consultation::all();
+        return view('consultation.index', ['consultation' => $consultation]);
     }
 
     public function create(){
