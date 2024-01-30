@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
@@ -121,3 +122,11 @@ Route::get('/consultation_result', [ConsultationResultController::class, 'index'
 Route::get('/consultation_result/create', [ConsultationResultController::class, 'create'])->name('consultation_result.create');
 Route::post('/consultation_result/{consultation_result}/', [ConsultationResultController::class, 'store'])->name('consultation_result.store');
 Route::delete('/consultation_result/{consultation_result}/destroy', [ConsultationResultController::class, 'destroy'])->name('consultation_result.destroy');
+
+// Payment method route
+Route::get('/payment_method', [PaymentMethodController::class, 'index'])->name('payment_method.index');
+Route::get('/payment_method/create', [PaymentMethodController::class, 'create'])->name('payment_method.create');
+Route::post('/payment_method', [PaymentMethodController::class, 'store'])->name('payment_method.store');
+Route::get('/payment_method/{payment_method}/edit', [PaymentMethodController::class, 'edit'])->name('payment_method.edit');
+Route::put('/payment_method/{payment_method}/update', [PaymentMethodController::class, 'update'])->name('payment_method.update');
+Route::delete('/payment_method/{payment_method}/destroy', [PaymentMethodController::class, 'destroy'])->name('payment_method.destroy');
