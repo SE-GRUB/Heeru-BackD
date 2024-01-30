@@ -9,6 +9,7 @@ class consultation extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'student_id',
         'counselor_id',
         'consultation_date',

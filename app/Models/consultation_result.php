@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class consultation_result extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'note'
+    ];
 }
