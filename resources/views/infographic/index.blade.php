@@ -11,7 +11,7 @@
     </div>
     @endif
 </div>
-<a href="{{ route('infographic.create') }}" class="btn btn-primary">Add New Program</a>
+<a href="{{ route('infographic.create') }}" class="btn btn-primary">Add New Infographic</a>
 <table>
     <thead>
         <tr>
