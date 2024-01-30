@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index(){
-        $comment = comment::all();
-        return view('comment.index', ['comment' => $comment]);
+    public function index(post $post){
+        $comments = comment::all();
+        return view('comment.index', ['comments' => $comments], ['post' => $post]);
         
     }
 
@@ -34,25 +34,11 @@ class CommentController extends Controller
     
         $newComment = Comment::create($data);
     
-        return redirect()->route('post.index')->with('success', 'Comment Added Successfully!');
+        return redirect(route('comment.index', ['post' => $post]))->with('success', 'Comment Added Successfully!');
     }
 
-
-    public function edit(comment $comment){
-        return view('comment.edit', ['comment' => $comment]);
-    }
-
-    public function update(comment $comment, Request $request){
-        $data = $request->validate([
-            'comment' => 'required'
-        ]);
-
-        $comment->update(($data));
-        return redirect(route('comment.index'))->with('success', 'Comment Updated Successfully');
-    }
-
-    public function destroy(comment $comment){
+    public function destroy(comment $comment, post $post){
         $comment->delete();
-        return redirect(route('comment.index'))->with('success', 'Comment Deleted Successfully');
+        return redirect(route('comment.index', ['post' => $post]))->with('success', 'Comment Deleted Successfully');
     }
 }

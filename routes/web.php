@@ -93,6 +93,7 @@ Route::get('/chat/get', [ChatController::class, 'patdown'])->name('chat.get');
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
 
 // Comment route
+Route::get('/comment/{post}/', [CommentController::class, 'index'])->name('comment.index');
 Route::get('/comment/{post}/create', [CommentController::class, 'create'])->name('comment.create');
-Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
-Route::delete('/comment/{comment}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');
+Route::post('/comment/{post}/', [CommentController::class, 'store'])->name('comment.store');
+Route::delete('/comment/{comment}/{post}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');

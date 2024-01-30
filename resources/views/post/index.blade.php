@@ -44,7 +44,7 @@
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                     </form>
-                    <a href="{{ route('comment.create',  ['post' => $post])}}" class="btn btn-primary">Add New Comment</a>
+                    <a href="{{ route('comment.index',  ['post' => $post])}}" class="btn btn-primary">View Comment</a>
                 </td>
             </tr>
         @endforeach

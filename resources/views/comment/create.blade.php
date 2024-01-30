@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('comment.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('comment.store', ['post' => $post]) }}" method="post" enctype="multipart/form-data">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("post")
