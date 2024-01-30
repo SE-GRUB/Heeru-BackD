@@ -89,6 +89,7 @@
             <li><a href="{{ Route('infographic.index') }}">Infographic</a></li>
             <li><a href="{{ Route('consultation.index') }}">Consultation</a></li>
             <li><a href="{{ Route('payment_method.index') }}">Payment Method</a></li>
+            <li><a href="{{ Route('payment.index') }}">Payment</a></li>
             <!-- Add more sidebar items as needed -->
         </ul>
     </div>

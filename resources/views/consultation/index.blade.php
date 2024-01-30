@@ -20,7 +20,6 @@
             <th>Counselor ID</th>
             <th>Consultation Date</th>
             <th>Duration</th>
-      
             <th>Action</th>
         </tr>
     </thead>
@@ -41,7 +40,8 @@
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this consultation?')">Delete</button>
                     </form>
-                    <a href="{{ route('consultation_result.index',  ['consultations' => $consultations])}}" class="btn btn-primary">View Note</a>
+                    <a href="{{ route('consultation_result.index',  ['consultation' => $consultation])}}" class="btn btn-primary">View Note</a>
+                    <a href="{{ route('payment.create',  ['consultation' => $consultation])}}" class="btn btn-primary">Pay</a>
                 </td>
             </tr>
         @endforeach

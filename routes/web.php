@@ -16,6 +16,7 @@ use App\Http\Controllers\ChatReplyController;
 use App\Http\Controllers\CommentReplyController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
+use App\Http\Controllers\PaymentController;
 use App\Models\consultation;
 use App\Models\consultation_result;
 
@@ -130,3 +131,11 @@ Route::post('/payment_method', [PaymentMethodController::class, 'store'])->name(
 Route::get('/payment_method/{payment_method}/edit', [PaymentMethodController::class, 'edit'])->name('payment_method.edit');
 Route::put('/payment_method/{payment_method}/update', [PaymentMethodController::class, 'update'])->name('payment_method.update');
 Route::delete('/payment_method/{payment_method}/destroy', [PaymentMethodController::class, 'destroy'])->name('payment_method.destroy');
+
+// Payment route
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/{consultation}/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
+Route::put('/payment/{payment}/update', [PaymentController::class, 'update'])->name('payment.update');
+Route::delete('/payment/{payment}/destroy', [PaymentController::class, 'destroy'])->name('payment.destroy');

@@ -12,6 +12,5 @@ class payment extends Model
     protected $fillable = [
         'consultation_id',
         'payment_method_id',
-        'isActive'
     ];
 }
