@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title', 'Comment Replies')
+@section('title', 'Consultation Result')
 
 @section('content')
 
@@ -34,6 +34,8 @@
                 
 
                 <td>
+                    <a href="{{ route('consultation_result.edit', ['consultation_result' => $consultation_result, 'consultation' => $consultation]) }}" class="btn btn-primary">Edit</a>
+
                     <form method="post" action="{{ route('consultation_result.destroy', ['consultation_result' => $consultation_result, 'consultation' => $consultation]) }}" style="display: inline-block;">
                         @csrf
                         @method("DELETE")

@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title', 'Add Comment')
+@section('title', 'Add Result')
 
 @section('content')
     <div class="container mt-5">
@@ -13,13 +13,13 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('consultation_result.store', ['consultations' => $consultations]) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('consultation_result.store', ['consultation' => $consultation]) }}" method="post" enctype="multipart/form-data">
             <!-- CSRF Token for Laravel -->
-            @csrf
+            @csrfa
             @method("post")
-            <input type="hidden" name="counselor_id" value="{{ $consultations->counselor_id }}">
-            <input type="hidden" name="student_id" value="{{ $consultations->student_id }}">
-            <input type="hidden" name="id" value="{{ $consultations->id }}">
+            <input type="hidden" name="counselor_id" value="{{ $consultation->counselor_id }}">
+            <input type="hidden" name="student_id" value="{{ $consultation->student_id }}">
+            <input type="hidden" name="consultation_id" value="{{ $consultation->id }}">
 
             <div class="form-group">
                 <label for="note">Result :</label>

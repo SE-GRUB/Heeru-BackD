@@ -9,6 +9,7 @@ class consultation_result extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'consultation_id',
         'note'
     ];
 }

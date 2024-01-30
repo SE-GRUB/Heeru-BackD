@@ -119,10 +119,12 @@ Route::post('/consultation', [ConsultationController::class, 'store'])->name('co
 Route::delete('/consultation/{consultation}/destroy', [ConsultationController::class, 'destroy'])->name('consultation.destroy');
 
 //Consultation note route
-Route::get('/consultation_result', [ConsultationResultController::class, 'index'])->name('consultation_result.index');
-Route::get('/consultation_result/create', [ConsultationResultController::class, 'create'])->name('consultation_result.create');
+Route::get('/consultation_result/{consultation}/', [ConsultationResultController::class, 'index'])->name('consultation_result.index');
+Route::get('/consultation_result/{consultation}/create', [ConsultationResultController::class, 'create'])->name('consultation_result.create');
 Route::post('/consultation_result/{consultation}/', [ConsultationResultController::class, 'store'])->name('consultation_result.store');
-Route::delete('/consultation_result/{consultation_result}/destroy', [ConsultationResultController::class, 'destroy'])->name('consultation_result.destroy');
+Route::get('/consultation_result/{consultation_result}/{consultation}/edit', [ConsultationResultController::class, 'edit'])->name('consultation_result.edit');
+Route::put('/consultation_result/{consultation_result}/{consultation}/update', [ConsultationResultController::class, 'update'])->name('consultation_result.update');
+Route::delete('/consultation_result/{consultation_result}/{consultation}/destroy', [ConsultationResultController::class, 'destroy'])->name('consultation_result.destroy');
 
 // Payment method route
 Route::get('/payment_method', [PaymentMethodController::class, 'index'])->name('payment_method.index');

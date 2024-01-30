@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CommentReplyController extends Controller
 {
     public function index(comment $comment){
-        $comment_replies = comment_reply::all();
+        $comment_replies = comment_reply::where('comment_id', $comment->id)->get();
         return view('comment_reply.index', ['comment_replies' => $comment_replies], ['comment' => $comment]);
     }
 
