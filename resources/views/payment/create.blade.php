@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('payment.store') }}" method="post">
+        <form action="{{ route('payment.store', ['consultation' => $consultation]) }}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("post")

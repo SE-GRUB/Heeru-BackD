@@ -41,7 +41,9 @@
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this consultation?')">Delete</button>
                     </form>
                     <a href="{{ route('consultation_result.index',  ['consultation' => $consultation])}}" class="btn btn-primary">View Note</a>
-                    <a href="{{ route('payment.create',  ['consultation' => $consultation])}}" class="btn btn-primary">Pay</a>
+                    @if(!$consultation->isPaid)
+                        <a href="{{ route('payment.create',  ['consultation' => $consultation])}}" class="btn btn-primary">Pay</a>
+                    @endif
                 </td>
             </tr>
         @endforeach

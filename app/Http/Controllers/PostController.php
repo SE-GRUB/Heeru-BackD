@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\comment;
+use App\Models\comment_reply;
 use App\Models\post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,6 +50,14 @@ class PostController extends Controller
     }
 
     public function destroy(post $post){
+        $comment_replies = comment_reply::where('post_id', $post->id)->get();
+        foreach($comment_replies as $comment_reply){
+            $comment_reply->delete();
+        }
+        $comments = comment::where('post_id', $post->id)->get();
+        foreach($comments as $comment){
+            $comment->delete();
+        }
         $post->delete();
         return redirect(route('post.index'))->with('success', 'Post Deleted Successfully');
     }

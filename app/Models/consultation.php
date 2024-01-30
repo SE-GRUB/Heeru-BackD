@@ -13,6 +13,7 @@ class consultation extends Model
         'student_id',
         'counselor_id',
         'consultation_date',
-        'duration'
+        'duration',
+        'isPaid'
     ];
 }

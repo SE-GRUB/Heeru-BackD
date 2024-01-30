@@ -26,8 +26,8 @@ class ConsultationController extends Controller
             'consultation_date' => 'required',
             'duration' => 'required',
         ]);
-       
-        $newPost = consultation::create($data);
+        $data['isPaid']=false;
+        $newConsultation = consultation::create($data);
         return redirect((route(('consultation.index'))))->with('success', 'Consultation Added Successfully !');;
     }
 
