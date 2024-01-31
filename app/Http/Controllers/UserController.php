@@ -7,18 +7,31 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\program;
 
+function generateNIP() {
+    $nip = 'C-';
+    for ($i = 0; $i < 6; $i++) {
+        $nip .= mt_rand(0, 9);
+    }
+    return $nip;
+}
+
 class UserController extends Controller
 {
     public function checkuser(Request $request){
-        $nip = $request->input('nip');
-        $user = DB::table('users')
-                ->where('users.nip', $nip)
-                ->first();
+        try {
+            $nip = $request->input('nip');
+            $user = DB::table('users')
+                    ->where('users.nip', $nip)
+                    ->first();
 
-        if ($user) {
-            return response()->json(['user' => $user]);
-        } else {
-            return response()->json(['message' => 'User tidak ditemukan'], 404);
+            if ($user) {
+                return response()->json(['user' => $user]);
+            }else{
+                return response()->json(['message' => 'User tidak ditemukan'], 302);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Internal server error'], 500);
+
         }
     }
 
@@ -31,7 +44,7 @@ class UserController extends Controller
     public function create(){
         $programs = program::all();
         return view('users.create', ['programs' => $programs]);
-    }
+    }   
 
     public function store(Request $request){
         if ($request['role'] == 'student') {
@@ -39,7 +52,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique',
                 'email' => 'required',
                 'program_id' => 'required',
                 'nip' => 'required|numeric',
@@ -49,7 +62,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique',
                 'email' => 'required',
                 'nip' => 'required|numeric',
             ]);
@@ -58,10 +71,11 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique',
                 'email' => 'required',
                 'fare' => 'required|numeric'
             ]);
+            $data['nip'] = generateNIP();
             $data['rating'] = 0;
         }
         // dd($data);
@@ -79,7 +93,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'role' => 'required',
-            'no_telp' => 'required',
+            'no_telp' => 'required|unique',
             'email' => 'required',
         ]);
     
@@ -107,6 +121,21 @@ class UserController extends Controller
             $data['rating'] = 0;
         }
     
+        $user->update($data);
+        return redirect(route('user.index'))->with('success', 'User Updated Successfully');
+    }
+
+    public function updateProfile(Request $request){
+        $data = $request->validate([
+            'user_id' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
+        $user = DB::table('users')
+                ->where('users.id', $data['user_id'])
+                ->first();
+
         $user->update($data);
         return redirect(route('user.index'))->with('success', 'User Updated Successfully');
     }
