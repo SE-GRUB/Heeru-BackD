@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\program;
+use App\Models\status;
 
 function generateNIP() {
     $nip = 'C-';
@@ -126,18 +128,32 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request){
-        $data = $request->validate([
-            'user_id' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        
-        $user = DB::table('users')
-                ->where('users.id', $data['user_id'])
-                ->first();
-
-        $user->update($data);
-        return redirect(route('user.index'))->with('success', 'User Updated Successfully');
+        try {
+            $data = $request->validate([
+                'user_id' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+            
+            // dd($data);
+            $user = DB::table('users')
+                    ->where('users.id', $data['user_id']);
+            
+            unset($data['user_id']);
+            // dd($data);
+            $data['password'] = Hash::make($data['password']);
+            $user->update($data);
+            // dd($up);
+                    
+            // dd($user, $data);
+            if ($user) {
+                return response()->json(['message' => 'User profile update successfully', 200]);
+            }else{
+                return response()->json(['message' => 'User tidak ditemukan'], 302);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Internal server error', json_encode($th)], 500);
+        }
     }
 
     public function destroy(User $user){

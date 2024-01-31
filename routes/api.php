@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.checkuser');
-Route::get('/updateProfile', [UserController::class,'UpdateProfile'])->name('profile.update');
+Route::get('/updateProfile', [UserController::class,'updateProfile'])->name('profile.update');
