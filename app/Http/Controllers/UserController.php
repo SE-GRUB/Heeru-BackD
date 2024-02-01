@@ -54,7 +54,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required|unique',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'program_id' => 'required',
                 'nip' => 'required|numeric',
@@ -64,7 +64,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required|unique',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'nip' => 'required|numeric',
             ]);
@@ -73,7 +73,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required|unique',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'fare' => 'required|numeric'
             ]);
@@ -95,7 +95,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'role' => 'required',
-            'no_telp' => 'required|unique',
+            'no_telp' => 'required|unique:users,no_telp',
             'email' => 'required',
         ]);
     
