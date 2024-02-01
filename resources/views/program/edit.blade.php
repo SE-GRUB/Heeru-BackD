@@ -24,6 +24,15 @@
             </div>
 
             <div class="form-group">
+                <label for="pic_id">PIC:</label>
+                <select class="form-control" id="pic_id" name="pic_id" selected="{{ $program->pic_id }}">
+                    @foreach($pics as $pic)
+                        <option value="{{ $pic->id }}">{{ $pic->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="start_date">Start Date:</label>
                 <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $program->start_date }}" required>
             </div>

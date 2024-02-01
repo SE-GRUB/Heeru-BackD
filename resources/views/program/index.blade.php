@@ -16,6 +16,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>PIC</th>
             <th>Program Name</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -26,6 +27,12 @@
         @foreach($programs as $program)
             <tr>
                 <td>{{ $program->id }}</td>
+                @php
+                    $pic_name = DB::table('users')
+                            ->where('id',  $program->pic_id)
+                            ->value('name');
+                @endphp
+                <td>{{ $pic_name }}</td>
                 <td>{{ $program->program_name }}</td>
                 <td>{{ $program->start_date }}</td>
                 <td>{{ $program->end_date }}</td>
