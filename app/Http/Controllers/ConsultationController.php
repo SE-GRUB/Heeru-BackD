@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\chat;
 use App\Models\consultation;
+use App\Models\consultation_result;
 use App\Models\User;
+use App\Models\video_call;
 use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
@@ -48,6 +51,18 @@ class ConsultationController extends Controller
     // }
 
     public function destroy(consultation $consultation){
+        $consultation_results=consultation_result::where('consultation_id', $consultation->id)->get();
+        foreach($consultation_results as $consultation_result){
+            $consultation_result->delete();
+        }
+        $chats = chat::where('consultation_id', $consultation->id)->get();
+        foreach($chats as $chat){
+            $chat->delete();
+        }
+        $video_calls=video_call::where('consultation_id', $consultation->id)->get();
+        foreach($video_calls as $video_call){
+            $video_call->delete();
+        }
         $consultation->delete();
         return redirect(route('consultation.index'))->with('success', 'Consultation Deleted Successfully');
     }

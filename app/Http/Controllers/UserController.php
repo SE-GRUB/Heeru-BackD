@@ -4,21 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\program;
+use App\Models\status;
+
+function generateNIP() {
+    $nip = 'C-';
+    for ($i = 0; $i < 6; $i++) {
+        $nip .= mt_rand(0, 9);
+    }
+    return $nip;
+}
 
 class UserController extends Controller
 {
     public function checkuser(Request $request){
-        $nip = $request->input('nip');
-        $user = DB::table('users')
-                ->where('users.nip', $nip)
-                ->first();
+        try {
+            $nip = $request->input('nip');
+            $user = DB::table('users')
+                    ->where('users.nip', $nip)
+                    ->first();
 
-        if ($user) {
-            return response()->json(['user' => $user]);
-        } else {
-            return response()->json(['message' => 'User tidak ditemukan'], 404);
+            if ($user) {
+                return response()->json(['user' => $user]);
+            }else{
+                return response()->json(['message' => 'User tidak ditemukan'], 302);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Internal server error'], 500);
+
         }
     }
 
@@ -31,7 +46,7 @@ class UserController extends Controller
     public function create(){
         $programs = program::all();
         return view('users.create', ['programs' => $programs]);
-    }
+    }   
 
     public function store(Request $request){
         if ($request['role'] == 'student') {
@@ -39,7 +54,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'program_id' => 'required',
                 'nip' => 'required|numeric',
@@ -49,7 +64,7 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'nip' => 'required|numeric',
             ]);
@@ -58,10 +73,11 @@ class UserController extends Controller
             $data = $request->validate([
                 'name' => 'required',
                 'role' => 'required',
-                'no_telp' => 'required',
+                'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
                 'fare' => 'required|numeric'
             ]);
+            $data['nip'] = generateNIP();
             $data['rating'] = 0;
         }
         // dd($data);
@@ -79,7 +95,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'role' => 'required',
-            'no_telp' => 'required',
+            'no_telp' => 'required|unique:users,no_telp',
             'email' => 'required',
         ]);
     
@@ -109,6 +125,35 @@ class UserController extends Controller
     
         $user->update($data);
         return redirect(route('user.index'))->with('success', 'User Updated Successfully');
+    }
+
+    public function updateProfile(Request $request){
+        try {
+            $data = $request->validate([
+                'user_id' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+            
+            // dd($data);
+            $user = DB::table('users')
+                    ->where('users.id', $data['user_id']);
+            
+            unset($data['user_id']);
+            // dd($data);
+            $data['password'] = Hash::make($data['password']);
+            $user->update($data);
+            // dd($up);
+                    
+            // dd($user, $data);
+            if ($user) {
+                return response()->json(['message' => 'User profile update successfully', 200]);
+            }else{
+                return response()->json(['message' => 'User tidak ditemukan'], 302);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Internal server error', json_encode($th)], 500);
+        }
     }
 
     public function destroy(User $user){
