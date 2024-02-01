@@ -11,6 +11,7 @@ class program extends Model
 
     protected $fillable = [
         'id',
+        'pic_id',
         'program_name',
         'start_date',   
         'end_date',

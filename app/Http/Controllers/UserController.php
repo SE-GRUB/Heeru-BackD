@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\program;
 use App\Models\status;
+use Carbon\Carbon;
 
 function generateNIP() {
     $nip = 'C-';
@@ -44,7 +45,9 @@ class UserController extends Controller
     }
 
     public function create(){
-        $programs = program::all();
+        $today = Carbon::now()->toDateString();
+
+        $programs = Program::where('end_date', '>=', $today)->get();
         return view('users.create', ['programs' => $programs]);
     }   
 
