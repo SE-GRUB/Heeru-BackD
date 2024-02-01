@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function index(){
-        $reports = reports::all();
-        return view('report.index', ['reports' => $reports]);
+    public function index(report_category $report_categories){
+        $reports = reports::select('reports.*')
+            ->join('report_categories', 'reports.category_id', '=', 'report_categories.id')
+            ->orderByDesc('report_categories.weight')
+            ->get();
+        return view('report.index', ['reports' => $reports, 'report_categories' => $report_categories]);
         
     }
 

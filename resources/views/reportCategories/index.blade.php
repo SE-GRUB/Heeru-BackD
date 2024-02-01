@@ -17,6 +17,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Weight</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -26,6 +27,8 @@
             <tr>
                 <td>{{ $report_category->id}}</td>
                 <td>{{ $report_category->category_name}}</td>
+                <td>{{ $report_category->weight}}</td>
+
         
                 <td>
                     <a href="{{ route('report_category.edit', ['report_category' => $report_category]) }}" class="btn btn-primary">Edit</a>

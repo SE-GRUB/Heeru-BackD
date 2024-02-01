@@ -20,7 +20,8 @@ class ReportCategoryController extends Controller
 
     public function store(Request $request){
         $data = $request->validate([
-            'category_name' => 'required'
+            'category_name' => 'required',
+            'weight' => 'required'
         ]);
         // dd($data);
         $newCategory = report_category::create($data);
@@ -33,7 +34,8 @@ class ReportCategoryController extends Controller
 
     public function update(report_category $report_category, Request $request){
         $data = $request->validate([
-            'category_name' => 'required'
+            'category_name' => 'required',
+            'weight' => 'required'
         ]);
 
         $report_category->update(($data));

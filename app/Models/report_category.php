@@ -10,6 +10,7 @@ class report_category extends Model
     use HasFactory;
     protected $fillable = [
         'id',
-        'category_name'
+        'category_name',
+        'weight'
     ];
 }

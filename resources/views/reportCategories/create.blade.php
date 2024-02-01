@@ -23,6 +23,11 @@
                 <input type="text" class="form-control" id="category_name" name="category_name" required>
             </div>
 
+            <div class="form-group">
+                <label for="weight">Weight</label>
+                <input type="number" class="form-control" id="weight" name="weight" required>
+            </div>
+
             <button type="submit" class="btn btn-primary">Add Report Categories</button>
         </form>
     </div>
