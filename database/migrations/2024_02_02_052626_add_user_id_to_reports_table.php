@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('report_categories', function (Blueprint $table) {
-            $table->integer('weight');
+        Schema::table('reports', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->after('id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -25,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('report_categories', function (Blueprint $table) {
+        Schema::table('reports', function (Blueprint $table) {
             //
         });
     }

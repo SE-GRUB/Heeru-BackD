@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string("program_name");
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
