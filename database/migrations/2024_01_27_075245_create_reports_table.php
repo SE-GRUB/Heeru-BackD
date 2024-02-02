@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->text('evidence');
+            $table->text('title');
             $table->foreign('category_id')->references('id')->on('report_categories');
             $table->timestamps();
         });

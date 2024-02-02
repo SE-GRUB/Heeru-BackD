@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('counselor_id')->references('id')->on('users');
             $table->date('consultation_date');
             $table->integer('duration');
+            $table->boolean('isPaid')->default(false);
             $table->timestamps();
         });
     }

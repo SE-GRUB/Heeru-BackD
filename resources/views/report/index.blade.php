@@ -16,6 +16,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Name</th>
             <th>Title</th>
             <th>Time</th>
             <th>Evidence</th>
@@ -28,6 +29,12 @@
         @foreach($reports as $report)
             <tr>
                 <td>{{ $report->id}}</td>
+                <td>
+                    @php
+                        $name = DB::table('users')->where('id', $report->user_id)->value('name')
+                    @endphp
+                    {{ $name }}
+                </td>
                 <td>{{ $report->title}}</td>
                 <td>{{ $report->created_at}}</td>
                 <td>{{ $report->evidence }}</td>
