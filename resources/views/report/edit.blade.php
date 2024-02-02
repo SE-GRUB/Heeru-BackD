@@ -31,14 +31,14 @@
 
             <div class="form-group">
                 <label for="category_id">Category:</label>
-                <select class="form-control" id="category_id" name="category_id" selected="{{ $report->category_id }}" required>
-                    @foreach($report_categories as $report_categorie)
-                        <option value="{{ $report_categorie->id }}">{{ $report_categorie->category_name  }}</option>
+                <select class="form-control" id="category_id" name="category_id" required>
+                    @foreach($report_categories as $report_category)
+                        <option value="{{ $report_category->id }}" @if($report_category->id == $report->category_id) selected @endif>
+                            {{ $report_category->category_name }}
+                        </option>
                     @endforeach
                 </select>
-            </div>
-            
-
+            </div>            
 
         
             <button type="submit" class="btn btn-primary">Edit Report</button>

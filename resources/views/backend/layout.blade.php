@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Backend')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
     <style>
         body {
@@ -33,16 +34,29 @@
         .sidebar a {
             color: #ffffff;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         .sidebar a:hover {
             color: #007bff;
         }
 
+        .sidebar li.active a {
+            color: #007bff;
+            font-weight: bold;
+        }
+
         .content {
             margin-left: 250px;
             padding: 20px;
-            overflow-y: auto;
+            /* overflow-y: scroll; */
+        }
+
+        header {
+            /* background-color: #343a40;
+            color: #ffffff; */
+            padding: 10px;
+            margin-bottom: 20px;
         }
 
         footer {
@@ -78,19 +92,17 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Add your sidebar content here -->
         <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="{{ Route('user.index') }}">User</a></li>
-            <li><a href="{{ Route('program.index') }}">Program</a></li>
-            <li><a href="{{ Route('report.index') }}">Report</a></li>
-            <li><a href="{{ Route('report_category.index') }}">Report Categories</a></li>
-            <li><a href="{{ Route('post.index') }}">Post</a></li>
-            <li><a href="{{ Route('infographic.index') }}">Infographic</a></li>
-            <li><a href="{{ Route('consultation.index') }}">Consultation</a></li>
-            <li><a href="{{ Route('payment_method.index') }}">Payment Method</a></li>
-            <li><a href="{{ Route('payment.index') }}">Payment</a></li>
-            <!-- Add more sidebar items as needed -->
+            <li class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}"><a href="{{ Route('dashboard.index') }}">Dashboard</a></li>
+            <li class="{{ request()->routeIs('user.index') ? 'active' : '' }}"><a href="{{ Route('user.index') }}">User</a></li>
+            <li class="{{ request()->routeIs('program.index') ? 'active' : '' }}"><a href="{{ Route('program.index') }}">Program</a></li>
+            <li class="{{ request()->routeIs('report.index') ? 'active' : '' }}"><a href="{{ Route('report.index') }}">Report</a></li>
+            <li class="{{ request()->routeIs('report_category.index') ? 'active' : '' }}"><a href="{{ Route('report_category.index') }}">Report Categories</a></li>
+            <li class="{{ request()->routeIs('post.index') ? 'active' : '' }}"><a href="{{ Route('post.index') }}">Post</a></li>
+            <li class="{{ request()->routeIs('infographic.index') ? 'active' : '' }}"><a href="{{ Route('infographic.index') }}">Infographic</a></li>
+            <li class="{{ request()->routeIs('consultation.index') ? 'active' : '' }}"><a href="{{ Route('consultation.index') }}">Consultation</a></li>
+            <li class="{{ request()->routeIs('payment_method.index') ? 'active' : '' }}"><a href="{{ Route('payment_method.index') }}">Payment Method</a></li>
+            <li class="{{ request()->routeIs('payment.index') ? 'active' : '' }}"><a href="{{ Route('payment.index') }}">Payment</a></li>
         </ul>
     </div>
 
@@ -98,20 +110,17 @@
     <div class="content">
         <!-- Header -->
         <header>
-            <!-- Add your header content here -->
             <h1>@yield('title', 'Backend')</h1>
         </header>
 
         <!-- Index Section -->
-        <section class="index mb-5" style="overflow-y: scroll;">
-            <!-- Content specific to the index page -->
+        <section class="index mb-5">
             @yield('content')
         </section>
     </div>
 
     <!-- Footer -->
     <footer>
-        <!-- Add your footer content here -->
         <p>&copy; 2024 Heeru - We Heeru</p>
     </footer>
 
@@ -119,9 +128,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Show/hide additional fields based on the selected role
         $(document).ready(function(){
             if($('#role').val() === 'student'){
                 $('#studentFields').show();
@@ -148,7 +157,7 @@
                 } else {
                     $('#studentFields').hide();
                     $('#picFields').hide();
-                    $('#counselorFields ').show();
+                    $('#counselorFields').show();
                 }
             });
         });

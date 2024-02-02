@@ -98,7 +98,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'role' => 'required',
-            'no_telp' => 'required|unique:users,no_telp',
+            'no_telp' => 'required',
             'email' => 'required',
         ]);
     

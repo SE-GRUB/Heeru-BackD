@@ -16,9 +16,11 @@ use App\Http\Controllers\ChatReplyController;
 use App\Http\Controllers\CommentReplyController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Models\consultation;
 use App\Models\consultation_result;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,10 @@ use App\Models\consultation_result;
 Route::get('/', function () {
     return view('backend.index');
 });
+
+//Dashboard route
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard/view/{program_id}/{report_category}', [DashboardController::class, 'view'])->name('dashboard.view');
 
 //user route
 

@@ -34,13 +34,15 @@
             <div id="studentFields">
                 <div class="form-group">
                     <label for="program_id">Program:</label>
-                    <select class="form-control" id="program_id" name="program_id" value="{{ $user->program_id }}">
+                    <select class="form-control" id="program_id" name="program_id">
                         @foreach($programs as $program)
-                            <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                            <option value="{{ $program->id }}" {{ $user->program_id == $program->id ? 'selected' : '' }}>
+                                {{ $program->program_name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div>            
 
             <div id="picFields">
                 <div class="form-group">
