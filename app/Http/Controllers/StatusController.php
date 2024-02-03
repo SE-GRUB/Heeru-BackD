@@ -18,18 +18,22 @@ class StatusController extends Controller
         return view('status.create', ['reports' => $reports]);
     }
 
-    public function store(Request $request, reports $report){
-        // dd($request);
+    public function store(Request $request){
         $data = $request->validate([
             'report_id' => 'required',
             'user_id' => 'required',
             'status' => 'required',
             'note' => 'required',
         ]);
-        // dd($data);
-        $newStatus = status::create($data);
-        return redirect(route('status.index', ['report' => $report]))->with('success', 'Store Added Successfully !');;
+        $report = reports::where('reports.id', '=', $data['report_id'])->first();
+        if ($data['status'] === 'done') {
+            $report->update(['isDone' => true]);
+        }
+        $newStatus = Status::create($data);
+
+        return redirect()->back()->with('success', 'Status added successfully!');
     }
+
 
 
     public function edit(status $status){
@@ -37,7 +41,7 @@ class StatusController extends Controller
         return view('status.edit', ['reports' => $reports], ['status' => $status]);
     }
 
-    public function update(Request $request, status $status, reports $report){
+    public function update(Request $request, status $status){
         // dd($request);
         $data = $request->validate([
             'report_id' => 'required',
@@ -46,12 +50,13 @@ class StatusController extends Controller
             'note' => 'required',
         ]);
         // dd($data);
+        $report = reports::where('reports.id', '=', $data['report_id'])->first();
         if ($data['status'] === 'done') {
             $report->update(['isDone' => true]);
         }
         $status->update(($data));
        
-        return redirect(route('status.index', ['status' => $status]))->with('success', 'Store Updated Successfully !');;
+        return redirect(route('status.index', ['status' => $status]))->with('success', 'Status Updated Successfully !');;
     }
 
     public function destroy(status $status){

@@ -15,8 +15,15 @@
 
 <ul class="nav nav-tabs">
     @foreach ($programs as $key => $program)
+        @php
+            $count = DB::table('reports')
+                ->join('users', 'reports.user_id', '=', 'users.id')
+                ->where('users.program_id', '=', $program->id)
+                ->where('reports.isDone', '=', false)
+                ->count();
+        @endphp
         <li class="nav-item @if($key == 0) active @endif">
-            <a class="nav-link @if($key == 0) active @endif" id="tab{{ $program->id }}" data-toggle="tab" href="#content{{ $program->id }}">{{ $program->program_name }}</a>
+            <a class="nav-link @if($key == 0) active @endif" id="tab{{ $program->id }}" data-toggle="tab" href="#content{{ $program->id }}">{{ $program->program_name }} <span class="badge badge-success">{{ $count }}</span></a>
         </li>
     @endforeach
 </ul>
@@ -29,6 +36,7 @@
             $reports = DB::table('reports')
                 ->join('users', 'reports.user_id', '=', 'users.id')
                 ->where('users.program_id', '=', $program->id)
+                ->where('reports.isDone', '=', false)
                 ->select('reports.*')
                 ->orderBy('reports.created_at', 'asc')
                 ->get();

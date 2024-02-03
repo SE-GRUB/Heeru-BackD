@@ -13,31 +13,32 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('status.update', ['status' => $status, 'report' => $reports]) }}" method="post">
+        <form action="{{ route('status.update', ['status' => $status]) }}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method("put")
 
             <div class="form-group">
                 <label for="report_id">Report :</label>
-                <select class="form-control" id="report_id" name="report_id"  selected="{{ $status->report_id }}" required>
+                <select class="form-control" id="report_id" name="report_id" required>
                     @foreach($reports as $report)
-                        <option value="{{ $report->id }}">{{ $report->title }}</option>
+                        <option value="{{ $report->id }}" {{ $status->report_id == $report->id ? 'selected' : '' }}>
+                            {{ $report->title }}
+                        </option>
                     @endforeach
                 </select>
             </div>
-
+            
             <input type="hidden" name="user_id" value="{{ $report->user_id }}">
-
-
+            
             <div class="form-group">
                 <label for="status">Status:</label>
-                <select class="form-control" id="status" name="status" selected="{{ $status->status }}" required>
-                    <option value="sent" selected>Sent</option>
-                    <option value="on_progress">On Progress</option>
-                    <option value="done">Done</option>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="sent" {{ $status->status == 'sent' ? 'selected' : '' }}>Sent</option>
+                    <option value="on_progress" {{ $status->status == 'on_progress' ? 'selected' : '' }}>On Progress</option>
+                    <option value="done" {{ $status->status == 'done' ? 'selected' : '' }}>Done</option>
                 </select>
-            </div>
+            </div>            
 
             <div class="form-group">
                 <label for="note">Note:</label>

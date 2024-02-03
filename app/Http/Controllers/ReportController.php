@@ -33,16 +33,15 @@ class ReportController extends Controller
             'user_id' => 'required'
         ]);
         // dd($data);
-       
+        $data['isDone']=false;
         $newReport = reports::create($data);
         $data2 = [
             'report_id' => $newReport->id,
             'user_id' => $newReport->user_id,
             'status' => 'sent',
-            'note' => 'maked',
+            'note' => 'laporan berhasil dibuat',
         ];
         // dd($data);
-
         $newstatus= status::create($data2);
 
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
