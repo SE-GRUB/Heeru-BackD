@@ -11,7 +11,8 @@
     </div>
     @endif
 </div>
-<a href="{{ route('status.create') }}" class="btn btn-primary">Add Status</a>
+{{-- Statusnya jangan dicreate  --}}
+{{-- <a href="{{ route('status.create') }}" class="btn btn-primary">Add Status</a> --}}
 <table>
     <thead>
         <tr>

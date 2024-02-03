@@ -13,7 +13,32 @@
 </div>
 
 <div class="container mt-5">
-    <h3>Report #{{$report->id}}</h3>
+    @php
+        $statuss = DB::table('status')
+            ->where('status.report_id', '=', $report->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $status = $statuss->first();
+
+        $statusClass = '';
+
+        switch ($status->status) {
+            case 'sent': 
+                $statusClass = 'btn btn-info';
+                break;
+            case 'process':
+                $statusClass = 'btn btn-primary';
+                break;
+            case 'on_process':
+                $statusClass = 'btn btn-warning';
+                break;
+            case 'done':
+                $statusClass = 'btn btn-success';
+                break;
+        }
+    @endphp
+    <h3 style="display: inline-block; margin-right: 10px;">Report #{{$report->id}}</h3>
+    <button class="{{ $statusClass }}" disabled>{{ ucfirst($status->status) }}</button>
     <h5><b>I. Whistleblower details</b></h5>
     <table class="table">
     @php
@@ -107,12 +132,6 @@
         </tbody>
     </table>
     <h5><b>III. Report Status</b></h5>
-    @php
-        $statuss = DB::table('status')
-            ->where('status.report_id', '=', $report->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-    @endphp
     <table class="table">
         <thead>
             <tr>
@@ -132,12 +151,12 @@
         </tbody>
     </table>
 
+    @if (!$report->isDone)
     <div class="row mt-3">
       <div class="col-md-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#statusModal">
             Update Status
         </button>
-        @if (!$report->isDone)
             <form method="post" action="{{ route('status.store') }}" style="display: inline-block;">
                 @csrf
                 <input type="hidden" name="report_id" value="{{ $report->id }}">
@@ -146,9 +165,9 @@
                 <input type="hidden" name="note" value="Laporan telah selesai">
                 <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to finish this report?')">Done</button>
             </form>
-        @endif    
-      </div>
+        </div>
     </div>
+    @endif    
   </div>
 @endsection
 

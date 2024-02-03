@@ -25,9 +25,15 @@ class StatusController extends Controller
             'status' => 'required',
             'note' => 'required',
         ]);
-        $newStatus = status::create($data);
-        return redirect(route('status.index'))->with('success', 'Store Added Successfully !');;
+        $report = reports::where('reports.id', '=', $data['report_id'])->first();
+        if ($data['status'] === 'done') {
+            $report->update(['isDone' => true]);
+        }
+        $newStatus = Status::create($data);
+
+        return redirect()->back()->with('success', 'Status added successfully!');
     }
+
 
 
     public function edit(status $status){
