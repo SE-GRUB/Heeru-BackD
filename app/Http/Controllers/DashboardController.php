@@ -24,6 +24,7 @@ class DashboardController extends Controller
             ->join('users', 'reports.user_id', '=', 'users.id')
             ->where('users.program_id', '=', $program_id)
             ->where('reports.category_id', "=", $report_category)
+            ->where('reports.isDone', '=', false)
             ->select('reports.*')
             ->orderBy('reports.created_at', 'asc')
             ->get();

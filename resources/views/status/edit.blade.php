@@ -33,7 +33,7 @@
                 <label for="status">Status:</label>
                 <select class="form-control" id="status" name="status" required>
                     <option value="sent" {{ $status->status == 'sent' ? 'selected' : '' }}>Sent</option>
-                    <option value="on_progress" {{ $status->status == 'on_progress' ? 'selected' : '' }}>On Progress</option>
+                    <option value="on progress" {{ $status->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
                     <option value="done" {{ $status->status == 'done' ? 'selected' : '' }}>Done</option>
                 </select>
             </div>            

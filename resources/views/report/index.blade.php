@@ -48,11 +48,12 @@
                 
                 <td>{{ $category_name }}</td>
 
-                <td>{{ $report->IsProcess ? 'Yes' : 'No' }}</td>
+                <td>{{ $report->isProcess ? 'Yes' : 'No' }}</td>
                 <td>{{ $report->isDone ? 'Yes' : 'No' }}</td>
 
                 <td>
                     <a href="{{ route('report.edit', ['report' => $report]) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('dashboard.detail', ['report' => $report]) }}" class="btn btn-info">View Details</a>
                     <form method="post" action="{{ route('report.destroy', ['report' => $report]) }}" style="display: inline-block;">
                         @csrf
                         @method('delete')

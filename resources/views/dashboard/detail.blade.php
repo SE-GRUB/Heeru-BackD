@@ -26,10 +26,7 @@
             case 'sent': 
                 $statusClass = 'btn btn-secondary';
                 break;
-            case 'process':
-                $statusClass = 'btn btn-primary';
-                break;
-            case 'on_process':
+            case 'on process':
                 $statusClass = 'btn btn-warning';
                 break;
             case 'done':
@@ -154,9 +151,19 @@
     @if (!$report->isDone)
     <div class="row mt-3">
       <div class="col-md-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#statusModal">
-            Update Status
-        </button>
+        @if (!$report->isProcess)
+            <form method="post" action="{{ route('status.store') }}" style="display: inline-block;">
+                @csrf
+                <input type="hidden" name="report_id" value="{{ $report->id }}">
+                <input type="hidden" name="user_id" value="{{$report->user_id}}">
+                <input type="hidden" name="status" value="on progress">
+                <input type="hidden" name="note" value="Laporan ini sedang diproses oleh PIC">
+                <button type="submit" class="btn btn-info">Process</button>
+            </form>
+        @else
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#statusModal">
+                Update Status
+            </button>
             <form method="post" action="{{ route('status.store') }}" style="display: inline-block;">
                 @csrf
                 <input type="hidden" name="report_id" value="{{ $report->id }}">
@@ -165,6 +172,7 @@
                 <input type="hidden" name="note" value="Laporan telah selesai">
                 <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to finish this report?')">Done</button>
             </form>
+        @endif
         </div>
     </div>
     @endif    

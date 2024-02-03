@@ -26,7 +26,7 @@ class StatusController extends Controller
         ]);
         $report = reports::where('reports.id', '=', $data['report_id'])->first();
         // dd($data);
-        if ($data['status'] === 'on_progress') {
+        if ($data['status'] === 'on progress') {
             $report->update(['isProcess' => true]);
         }
 
@@ -56,7 +56,7 @@ class StatusController extends Controller
         $report = reports::where('reports.id', '=', $data['report_id'])->first();
         if ($data['status'] === 'done') {
             $report->update(['isDone' => true, 'isProcess' => true]);
-        } else if ($data['status'] === 'on_progress') {
+        } else if ($data['status'] === 'on progress') {
             $report->update(['isDone' => false, 'isProcess' => true]);
         }
         
