@@ -11,7 +11,7 @@
     </div>
     @endif
 </div>
-<a href="{{ route('dashboard.index') }}" class="btn btn-primary">Back</a>
+<a href="javascript:history.back()" class="btn btn-primary">Back</a>
 <table>
     <thead>
         <tr>
