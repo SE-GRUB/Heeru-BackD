@@ -27,7 +27,6 @@
                 </select>
             </div>
 
-            <input type="hidden" name="user_id" value="{{ $report->user_id }}">
 
 
             <div class="form-group">

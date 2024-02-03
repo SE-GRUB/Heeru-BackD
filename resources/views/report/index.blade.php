@@ -21,8 +21,9 @@
             <th>Time</th>
             <th>Evidence</th>
             <th>Category</th>
+            <th>Category name</th>
+            <th>IsProcess</th>
             <th>IsDone</th>
-            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -39,13 +40,16 @@
                 <td>{{ $report->created_at}}</td>
                 <td>{{ $report->evidence }}</td>
                 <td>{{ $report->category_id }}</td>
-                <td>{{ $report->isDone ? 'Yes' : 'No' }}</td>
+                
 
                 @php
                     $category_name = DB::table('report_categories')->where('id', $report->category_id)->value('category_name')
                 @endphp
                 
                 <td>{{ $category_name }}</td>
+
+                <td>{{ $report->IsProcess ? 'Yes' : 'No' }}</td>
+                <td>{{ $report->isDone ? 'Yes' : 'No' }}</td>
 
                 <td>
                     <a href="{{ route('report.edit', ['report' => $report]) }}" class="btn btn-primary">Edit</a>

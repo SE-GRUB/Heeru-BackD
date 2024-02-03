@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('reports', function (Blueprint $table) {
-            $table->boolean('isDOne')->default(false)->after('title');
+        Schema::table('status', function (Blueprint $table) {
+            $table->dropColumn('user_id');
 
         });
     }
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('reports', function (Blueprint $table) {
+        Schema::table('status', function (Blueprint $table) {
             //
         });
     }

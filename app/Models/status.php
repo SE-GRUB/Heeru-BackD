@@ -12,7 +12,6 @@ class status extends Model
 
     protected $fillable = [
         'report_id',
-        'user_id',
         'status',
         'note',
    

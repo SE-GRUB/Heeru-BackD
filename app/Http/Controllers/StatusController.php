@@ -21,11 +21,15 @@ class StatusController extends Controller
     public function store(Request $request){
         $data = $request->validate([
             'report_id' => 'required',
-            'user_id' => 'required',
             'status' => 'required',
             'note' => 'required',
         ]);
         $report = reports::where('reports.id', '=', $data['report_id'])->first();
+        // dd($data);
+        if ($data['status'] === 'on_progress') {
+            $report->update(['isProcess' => true]);
+        }
+
         if ($data['status'] === 'done') {
             $report->update(['isDone' => true]);
         }
@@ -45,15 +49,17 @@ class StatusController extends Controller
         // dd($request);
         $data = $request->validate([
             'report_id' => 'required',
-            'user_id' => 'required',
             'status' => 'required',
             'note' => 'required',
         ]);
         // dd($data);
         $report = reports::where('reports.id', '=', $data['report_id'])->first();
         if ($data['status'] === 'done') {
-            $report->update(['isDone' => true]);
+            $report->update(['isDone' => true, 'isProcess' => true]);
+        } else if ($data['status'] === 'on_progress') {
+            $report->update(['isDone' => false, 'isProcess' => true]);
         }
+        
         $status->update(($data));
        
         return redirect(route('status.index', ['status' => $status]))->with('success', 'Status Updated Successfully !');;

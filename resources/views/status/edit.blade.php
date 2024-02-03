@@ -28,9 +28,7 @@
                     @endforeach
                 </select>
             </div>
-            
-            <input type="hidden" name="user_id" value="{{ $report->user_id }}">
-            
+                        
             <div class="form-group">
                 <label for="status">Status:</label>
                 <select class="form-control" id="status" name="status" required>
@@ -46,7 +44,7 @@
             </div>
             
 
-            <button type="submit" class="btn btn-primary">Edit User</button>
+            <button type="submit" class="btn btn-primary">Edit Status</button>
         </form>
     </div>
 
