@@ -28,6 +28,10 @@ class DashboardController extends Controller
             ->orderBy('reports.created_at', 'asc')
             ->get();
 
-        return view("dashboard.view", ['reports' => $reports], ['category_name' => $request['category_name']]);
+        return view('dashboard.view', ['reports' => $reports], ['category_name' => $request['category_name']]);
     }    
+
+    public function detail(reports $report){
+        return view('dashboard.detail', ['report' => $report]);
+    }
 }

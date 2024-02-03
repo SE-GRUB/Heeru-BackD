@@ -41,6 +41,7 @@ Route::get('/', function () {
 //Dashboard route
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::get('/dashboard/view/{program_id}/{report_category}', [DashboardController::class, 'view'])->name('dashboard.view');
+Route::get('/dashboard/detail/{report}', [DashboardController::class, 'detail'])->name('dashboard.detail');
 
 //user route
 

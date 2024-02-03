@@ -24,7 +24,6 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Loop through your users data and populate the table rows -->
         @foreach($reports as $report)
             <tr>
                 <td>{{ $report->id }}</td>
@@ -36,12 +35,7 @@
                 <td>{{ $report->created_at }}</td>
                 <td>{{ $report->evidence }}</td>
                 <td>
-                    <a href="{{ route('report.edit', ['report' => $report->id]) }}" class="btn btn-primary">Edit</a>
-                    <form method="post" action="{{ route('report.destroy', ['report' => $report->id]) }}" style="display: inline-block;">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this report?')">Delete</button>
-                    </form>
+                    <a href="{{ route('dashboard.detail', ['report' => $report->id]) }}" class="btn btn-primary">View Details</a>
                 </td>
             </tr>
         @endforeach

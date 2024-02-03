@@ -21,6 +21,7 @@
             <th>Time</th>
             <th>Evidence</th>
             <th>Category</th>
+            <th>IsDone</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -38,7 +39,7 @@
                 <td>{{ $report->created_at}}</td>
                 <td>{{ $report->evidence }}</td>
                 <td>{{ $report->category_id }}</td>
-                <td>{{ $report->isDone }}</td>
+                <td>{{ $report->isDone ? 'Yes' : 'No' }}</td>
 
                 @php
                     $category_name = DB::table('report_categories')->where('id', $report->category_id)->value('category_name')

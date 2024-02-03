@@ -13,14 +13,14 @@
                 </ul>
             </div>
         @endif
-        <form action="{{route('report.update', ['report'=>$report, 'user'=>$user])}}" method="post">
+        <form action="{{route('report.update', ['report'=>$report])}}" method="post">
             <!-- CSRF Token for Laravel -->
             @csrf
             @method('put')
             <div class="form-group">
-                <label for="user_id">User_ID:</label>
+                <label for="user_id">User ID:</label>
                 <select class="form-control" id="user_id" name="user_id" required>
-                    @foreach($user as $user)
+                    @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
