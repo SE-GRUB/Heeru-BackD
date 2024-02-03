@@ -33,7 +33,7 @@ class ReportController extends Controller
             'user_id' => 'required'
         ]);
         // dd($data);
-       
+        $data['isDone']=false;
         $newReport = reports::create($data);
         $data2 = [
             'report_id' => $newReport->id,
