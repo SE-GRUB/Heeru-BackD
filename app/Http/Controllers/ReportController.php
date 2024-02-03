@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\report_category;
 use App\Models\reports;
+use App\Models\status;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,9 +33,21 @@ class ReportController extends Controller
             'user_id' => 'required'
         ]);
         // dd($data);
-        $newCategory = reports::create($data);
+       
+        $newReport = reports::create($data);
+        $data2 = [
+            'report_id' => $newReport->id,
+            'user_id' => $newReport->user_id,
+            'status' => 'sent',
+            'note' => 'maked',
+        ];
+        // dd($data);
+
+        $newstatus= status::create($data2);
+
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
+    
 
     public function edit(reports $report){
         $report_categories = report_category::all()->sortByDesc('weight');

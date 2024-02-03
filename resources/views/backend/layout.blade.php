@@ -103,6 +103,8 @@
             <li class="{{ request()->routeIs('consultation.index') ? 'active' : '' }}"><a href="{{ Route('consultation.index') }}">Consultation</a></li>
             <li class="{{ request()->routeIs('payment_method.index') ? 'active' : '' }}"><a href="{{ Route('payment_method.index') }}">Payment Method</a></li>
             <li class="{{ request()->routeIs('payment.index') ? 'active' : '' }}"><a href="{{ Route('payment.index') }}">Payment</a></li>
+            <li class="{{ request()->routeIs('status.index') ? 'active' : '' }}"><a href="{{ Route('status.index') }}">Status</a></li>
+
         </ul>
     </div>
 

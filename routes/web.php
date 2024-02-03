@@ -18,6 +18,7 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StatusController;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -147,3 +148,11 @@ Route::post('/payment/{consultation}/', [PaymentController::class, 'store'])->na
 Route::get('/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
 Route::put('/payment/{payment}/update', [PaymentController::class, 'update'])->name('payment.update');
 Route::delete('/payment/{payment}/destroy', [PaymentController::class, 'destroy'])->name('payment.destroy');
+
+//Status route
+Route::get('/status', [StatusController::class, 'index'])->name('status.index');
+Route::get('/status/create', [StatusController::class, 'create'])->name('status.create');
+Route::post('/status', [StatusController::class, 'store'])->name('status.store');
+Route::get('/status/{status}/edit', [StatusController::class, 'edit'])->name('status.edit');
+Route::put('/status/{status}/update', [StatusController::class, 'update'])->name('status.update');
+Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])->name('status.destroy');

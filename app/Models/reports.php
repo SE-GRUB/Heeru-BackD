@@ -13,7 +13,8 @@ class reports extends Model
         'user_id',
         'category_id',
         'evidence',
-        'timestamps'
+        'timestamps',
+        'isDone'
     ];
   
 }
