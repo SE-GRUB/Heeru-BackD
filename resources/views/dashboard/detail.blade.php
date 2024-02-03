@@ -124,7 +124,7 @@
                 <td>{{ isset($data->w5) ? $data->w5 : '' }}</td>
             </tr>
             <tr>
-                <td>Why did the incident happened?<br>
+                <td>How did the incident happened?<br>
                     <i>Bagaimana kejadian ini terjadi ?</i>
                 </td>
                 <td>{{ isset($data->h1) ? $data->h1 : '' }}</td>
