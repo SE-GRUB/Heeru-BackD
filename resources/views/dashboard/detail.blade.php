@@ -24,7 +24,7 @@
 
         switch ($status->status) {
             case 'sent': 
-                $statusClass = 'btn btn-info';
+                $statusClass = 'btn btn-secondary';
                 break;
             case 'process':
                 $statusClass = 'btn btn-primary';
