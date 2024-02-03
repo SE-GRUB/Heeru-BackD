@@ -30,10 +30,10 @@ class UserController extends Controller
             if ($user) {
                 return response()->json(['user' => $user]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan'], 302);
+                return response()->json(['message' => 'User tidak ditemukan', 302]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error'], 500);
+            return response()->json(['message' => 'Internal server error', 500]);
 
         }
     }
@@ -152,10 +152,10 @@ class UserController extends Controller
             if ($user) {
                 return response()->json(['message' => 'User profile update successfully', 200]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan'], 302);
+                return response()->json(['message' => 'User tidak ditemukan', 302]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', json_encode($th)], 500);
+            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
         }
     }
 
@@ -169,10 +169,10 @@ class UserController extends Controller
             if (Hash::check($data['password'], $data['pass'])) {
                 return response()->json(['message' => 'Password Correct', 200]);
             } else {
-                return response()->json(['message' => 'Password Incorrect'], 302);
+                return response()->json(['message' => 'Password Incorrect', 302]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', json_encode($th)], 500);
+            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
         }
     }
 
