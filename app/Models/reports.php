@@ -14,7 +14,8 @@ class reports extends Model
         'category_id',
         'evidence',
         'timestamps',
-        'isDone'
+        'isDone',
+        'isProcess'
     ];
   
 }
