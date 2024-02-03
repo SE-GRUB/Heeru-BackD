@@ -11,7 +11,7 @@
     </div>
     @endif
 </div>
-
+<a href="javascript:history.back()" class="btn btn-primary">Back</a>
 <div class="container mt-5">
     @php
         $statuss = DB::table('status')
@@ -51,8 +51,8 @@
                 <td>{{$user->nip}}</td>
             </tr>
             <tr>
-            <td>Nama</td>
-            <td>{{$user->name}}</td>
+                <td>Nama</td>
+                <td>{{$user->name}}</td>
             </tr>
             <tr>
                 <td>Program</td>
@@ -77,6 +77,9 @@
             ->where('users.id', $report->user_id)
             ->select('users.nip', 'users.name', 'programs.program_name', 'users.no_telp', 'users.email')
             ->first();
+
+            
+            $data = json_decode($report->details);
     @endphp
         <tbody>
             <tr>
@@ -94,41 +97,43 @@
                 <td>What is the incident?<br>
                     <i>Apa yang terjadi ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->w1) ? $data->w1 : '' }}</td>
             </tr>
             <tr>
                 <td>Why did the incident happened?<br>
                     <i>Mengapa peristiwa ini terjadi ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->w2) ? $data->w2 : '' }}</td>
             </tr>
             <tr>
                 <td>Where did the incident happened?<br>
                     <i>Dimana lokasi peristiwa itu terjadi ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->w3) ? $data->w3 : '' }}</td>
             </tr>
             <tr>
                 <td>When did the incident happened?<br>
                     <i>Kapan peristiwa ini terjadi ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->w4) ? $data->w4 : '' }}</td>
             </tr>
             <tr>
                 <td>Who is/are involved in the incident?<br>
                     <i>Siapa yang terlibat dalam peristiwa ini ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->w5) ? $data->w5 : '' }}</td>
             </tr>
             <tr>
                 <td>Why did the incident happened?<br>
                     <i>Bagaimana kejadian ini terjadi ?</i>
                 </td>
-                <td></td>
+                <td>{{ isset($data->h1) ? $data->h1 : '' }}</td>
             </tr>
         </tbody>
     </table>
-    <h5><b>III. Report Status</b></h5>
+    <h5><b>III. Evidence</b></h5>
+    <a href="#">{{$report->evidence}}</a>
+    <h5><b>IV. Report Status</b></h5>
     <table class="table">
         <thead>
             <tr>
@@ -198,9 +203,8 @@
 
                     <div class="form-group">
                         <label for="note">Note:</label>
-                        <input type="text" class="form-control" id="note" name="note" required>
+                        <textarea class="form-control" id="note" name="note" rows="4" required></textarea>
                     </div>
-
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Update Status</button>
                     </div>

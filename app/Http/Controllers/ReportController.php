@@ -29,11 +29,27 @@ class ReportController extends Controller
         $data = $request->validate([
             'title' => 'required',
             'evidence'=> 'required',
+            'w1' => 'required',
+            'w2' => 'required',
+            'w3' => 'required',
+            'w4' => 'required',
+            'w5' => 'required',
+            'h1' => 'required',
             'category_id' => 'required',
             'user_id' => 'required'
         ]);
         // dd($data);
         $data['isDone']=false;
+        $data['details'] = json_encode([
+            'w1' => $data['w1'],
+            'w2' => $data['w2'],
+            'w3' => $data['w3'],
+            'w4' => $data['w4'],
+            'w5' => $data['w5'],
+            'h1' => $data['h1'],
+        ]);
+        
+        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);        
         $newReport = reports::create($data);
         $data2 = [
             'report_id' => $newReport->id,
@@ -59,9 +75,25 @@ class ReportController extends Controller
             'title' => 'required',
             'evidence'=> 'required',
             'category_id' => 'required',
+            'w1' => 'required',
+            'w2' => 'required',
+            'w3' => 'required',
+            'w4' => 'required',
+            'w5' => 'required',
+            'h1' => 'required',
             'user_id' => 'required'
         ]);
 
+        $data['details'] = json_encode([
+            'w1' => $data['w1'],
+            'w2' => $data['w2'],
+            'w3' => $data['w3'],
+            'w4' => $data['w4'],
+            'w5' => $data['w5'],
+            'h1' => $data['h1'],
+        ]);
+
+        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);     
         $report->update(($data));
         return redirect(route('report.index'))->with('success', 'Report Updated Successfully');
     }

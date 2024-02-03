@@ -45,7 +45,48 @@
                         </option>
                     @endforeach
                 </select>
-            </div>            
+            </div>   
+            
+            <h5><b>Complete these question naires to provide more information about the issue you are reporting.</b></h5><br>
+            @php
+                $data = json_decode($report->details);
+            @endphp
+
+            <div class="form-group">
+                <label for="w1">What is the incident?</label><br>
+                <i>Apa yang terjadi ?</i>
+                <textarea class="form-control" id="w1" name="w1" rows="3" required>{{ isset($data->w1) ? $data->w1 : '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="w2">Why did the incident happen?</label><br>
+                <i>Mengapa peristiwa ini terjadi ?</i>
+                <textarea class="form-control" id="w2" name="w2" rows="3" required>{{ isset($data->w2) ? $data->w2 : '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="w3">Where did the incident happen?</label><br>
+                <i>Dimana lokasi peristiwa itu terjadi ?</i>
+                <textarea class="form-control" id="w3" name="w3" rows="3" required>{{ isset($data->w3) ? $data->w3 : '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="w4">When did the incident happen?</label><br>
+                <i>Kapan peristiwa ini terjadi ?</i>
+                <textarea class="form-control" id="w4" name="w4" rows="3" required>{{ isset($data->w4) ? $data->w4 : '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="w5">Who is/are involved in the incident?</label><br>
+                <i>Siapa yang terlibat dalam peristiwa ini ?</i>
+                <textarea class="form-control" id="w5" name="w5" rows="3" required>{{ isset($data->w5) ? $data->w5 : '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="h1">How did the incident happen?</label><br>
+                <i>Bagaimana kejadian ini terjadi ?</i>
+                <textarea class="form-control" id="h1" name="h1" rows="3" required>{{ isset($data->h1) ? $data->h1 : '' }}</textarea>
+            </div>
 
         
             <button type="submit" class="btn btn-primary">Edit Report</button>
