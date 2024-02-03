@@ -18,17 +18,15 @@ class StatusController extends Controller
         return view('status.create', ['reports' => $reports]);
     }
 
-    public function store(Request $request, reports $report){
-        // dd($request);
+    public function store(Request $request){
         $data = $request->validate([
             'report_id' => 'required',
             'user_id' => 'required',
             'status' => 'required',
             'note' => 'required',
         ]);
-        // dd($data);
         $newStatus = status::create($data);
-        return redirect(route('status.index', ['report' => $report]))->with('success', 'Store Added Successfully !');;
+        return redirect(route('status.index'))->with('success', 'Store Added Successfully !');;
     }
 
 
