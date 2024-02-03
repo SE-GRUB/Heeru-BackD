@@ -32,7 +32,7 @@
                 @endphp
                 
                 <td>{{ $report_title }}</td>
-                <td>{{ $status->status}}</td>
+                <td>{{ ucwords($status->status)}}</td>
 
         
                 <td>

@@ -35,7 +35,7 @@
         }
     @endphp
     <h3 style="display: inline-block; margin-right: 10px;">Report #{{$report->id}}</h3>
-    <button class="{{ $statusClass }}" disabled>{{ ucfirst($status->status) }}</button>
+    <button class="{{ $statusClass }}" disabled>{{ ucwords($status->status) }}</button>
     <h5><b>I. Whistleblower details</b></h5>
     <table class="table">
     @php
@@ -141,7 +141,7 @@
             @foreach ($statuss as $status)
             <tr>
                 <td>{{ $status->created_at }}</td>
-                <td>{{ $status->status }}</td>
+                <td>{{  ucwords($status->status) }}</td>
                 <td>{{ $status->note }}</td>
             </tr>
             @endforeach
@@ -155,7 +155,6 @@
             <form method="post" action="{{ route('status.store') }}" style="display: inline-block;">
                 @csrf
                 <input type="hidden" name="report_id" value="{{ $report->id }}">
-                <input type="hidden" name="user_id" value="{{$report->user_id}}">
                 <input type="hidden" name="status" value="on progress">
                 <input type="hidden" name="note" value="Laporan ini sedang diproses oleh PIC">
                 <button type="submit" class="btn btn-info">Process</button>
@@ -167,7 +166,6 @@
             <form method="post" action="{{ route('status.store') }}" style="display: inline-block;">
                 @csrf
                 <input type="hidden" name="report_id" value="{{ $report->id }}">
-                <input type="hidden" name="user_id" value="{{$report->user_id}}">
                 <input type="hidden" name="status" value="done">
                 <input type="hidden" name="note" value="Laporan telah selesai">
                 <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to finish this report?')">Done</button>
@@ -195,8 +193,6 @@
                     @csrf
                     @method('post')
                     <input type="hidden" name="report_id" value="{{$report->id}}">
-
-                    <input type="hidden" name="user_id" value="{{$report->user_id}}">
 
                     <input type="hidden" name="status" value="on progress">
 

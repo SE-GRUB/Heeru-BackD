@@ -25,7 +25,7 @@ class StatusController extends Controller
             'note' => 'required',
         ]);
         $report = reports::where('reports.id', '=', $data['report_id'])->first();
-        // dd($data);
+        
         if ($data['status'] === 'on progress') {
             $report->update(['isProcess' => true]);
         }
