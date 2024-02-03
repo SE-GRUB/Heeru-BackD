@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->boolean('isDone')->default(false);
+            $table->boolean('isDOne')->default(false)->after('title');
+
         });
     }
 
