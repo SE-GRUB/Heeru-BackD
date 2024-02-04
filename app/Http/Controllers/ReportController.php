@@ -8,6 +8,7 @@ use App\Models\status;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -64,51 +65,52 @@ class ReportController extends Controller
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
 
-    public function create_report(Request $request){
-        dd($request);
-        $data = $request->validate([
-            'title' => 'required',
-            'details' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required'
-        ]);
+    public function create_report(Request $request){  
+    $data = $request->validate([
+        'title' => 'required',
+        'details' => 'required',
+        'category_id' => 'required',
+        'user_id' => 'required'
+    ]);
 
-        try {
-            if ($request->hasFile('evidence')) {
-                $file = $request->file('evidence');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-    
-                $file->move(public_path('uploads'), $fileName);
-                $data['evidence'] = 'uploads/' . $fileName;
-            }
-    
-            $newReport = reports::create($data);
-    
-            $data2 = [
-                'report_id' => $newReport->id,
-                'user_id' => $newReport->user_id,
-                'status' => 'sent',
-                'note' => 'laporan berhasil dibuat',
-            ];
-    
-            $newStatus = status::create($data2);
-    
-            return response()->json([
-                'success' => true,
-                'message' => 'Report created successfully',
-                'data' => [
-                    'report' => $newReport,
-                    'status' => $newStatus,
-                ],
-            ], JsonResponse::HTTP_CREATED);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create report',
-                'error' => $e->getMessage(),
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    try {
+        if ($request->has('evidence')) {
+            $base64FileContent = $request->input('evidence');
+            $decodedFileContent = base64_decode($base64FileContent);
+
+            $fileName = time() . '_evidence.txt';
+            Storage::disk('public')->put($fileName, $decodedFileContent);
+
+            $data['evidence'] = 'uploads/' . $fileName;
         }
+
+        $newReport = reports::create($data);
+
+        $data2 = [
+            'report_id' => $newReport->id,
+            'user_id' => $newReport->user_id,
+            'status' => 'sent',
+            'note' => 'laporan berhasil dibuat',
+        ];
+
+        $newStatus = status::create($data2);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Report created successfully',
+            'data' => [
+                'report' => $newReport,
+                'status' => $newStatus,
+            ],
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to create report',
+            'error' => $e->getMessage(),
+        ]);
     }
+}
     
 
     public function edit(reports $report){

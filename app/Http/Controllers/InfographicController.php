@@ -20,7 +20,6 @@ class InfographicController extends Controller
     }
 
     private function uploadedfile($img,$path) {
-        // ini random aja biar hasilnya selalu beda aku pake waktu
         $time=time();
         $newurl=[];
         foreach ($img as $key => $imag) {
