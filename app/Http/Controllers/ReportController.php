@@ -6,7 +6,6 @@ use App\Models\report_category;
 use App\Models\reports;
 use App\Models\status;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -65,52 +64,66 @@ class ReportController extends Controller
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
 
-    public function create_report(Request $request){  
-    $data = $request->validate([
-        'title' => 'required',
-        'details' => 'required',
-        'category_id' => 'required',
-        'user_id' => 'required'
-    ]);
+    private function uploadedfile($img,$path) {
+        $time=time();
+        $newurl=[];
+        foreach ($img as $key => $imag) {
+            if ($imag->isValid()) {
+                $imag->move($path, $time . '_' . $imag->getClientOriginalName());
+                $newurl[] = $path . '/' . $time . '_' . $imag->getClientOriginalName();
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to upload file',
+                    'error' => 'File upload failed',
+                ]);
+            }
+        }
+        return $newurl;
+    }
 
-    try {
-        if ($request->has('evidence')) {
+    public function create_report(Request $request){  
+        $data = $request->validate([
+            'title' => 'required',
+            'details' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'evidence.*' => 'required',
+        ]);
+
+        try {
             $base64FileContent = $request->input('evidence');
             $decodedFileContent = base64_decode($base64FileContent);
 
-            $fileName = time() . '_evidence.txt';
-            Storage::disk('public')->put($fileName, $decodedFileContent);
+            $data['evidence']  = $this->uploadedfile($decodedFileContent,'report_evidences/'. $data['category_id']);
 
-            $data['evidence'] = 'uploads/' . $fileName;
+            $newReport = reports::create($data);
+
+            $data2 = [
+                'report_id' => $newReport->id,
+                'user_id' => $newReport->user_id,
+                'status' => 'sent',
+                'note' => 'laporan berhasil dibuat',
+            ];
+
+            $newStatus = status::create($data2);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Report created successfully',
+                'data' => [
+                    'report' => $newReport,
+                    'status' => $newStatus,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create report',
+                'error' => $e->getMessage(),
+            ]);
         }
-
-        $newReport = reports::create($data);
-
-        $data2 = [
-            'report_id' => $newReport->id,
-            'user_id' => $newReport->user_id,
-            'status' => 'sent',
-            'note' => 'laporan berhasil dibuat',
-        ];
-
-        $newStatus = status::create($data2);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Report created successfully',
-            'data' => [
-                'report' => $newReport,
-                'status' => $newStatus,
-            ],
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to create report',
-            'error' => $e->getMessage(),
-        ]);
     }
-}
     
 
     public function edit(reports $report){
