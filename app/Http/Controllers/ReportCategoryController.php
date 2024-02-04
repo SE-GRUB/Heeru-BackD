@@ -7,14 +7,24 @@ use Illuminate\Http\Request;
 
 class ReportCategoryController extends Controller
 {
+
+    public function show()
+    {
+        $report_categories = report_category::all()->sortByDesc('weight');;
+
+        return response()->json(['report_categories' => $report_categories]);
+    }
+
+
+
     public function index(){
-        $report_categories = report_category::all();
+        $report_categories = report_category::all()->sortByDesc('weight');
         return view('reportCategories.index', ['report_categories' => $report_categories]);
     }
 
     
     public function create(){
-        $report_categories = report_category::all();
+        $report_categories = report_category::all()->sortByDesc('weight');
         return view('reportCategories.create', ['report_categories' => $report_categories]);
     }
 
