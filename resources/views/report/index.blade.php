@@ -48,7 +48,7 @@
                 
                 <td>{{ $category_name }}</td>
 
-                <td>{{ $report->isProcess ? 'Yes' : 'No' }}</td>
+                <td>{{ $report->IsProcess ? 'Yes' : 'No' }}</td>
                 <td>{{ $report->isDone ? 'Yes' : 'No' }}</td>
 
                 <td>
