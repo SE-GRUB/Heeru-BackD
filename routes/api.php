@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReportCategoryController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,4 @@ Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.check
 Route::get('/updateProfile', [UserController::class,'updateProfile'])->name('profile.update');
 Route::get('/checkPass', [UserController::class,'checkPass'])->name('pass.check');
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
-
+Route::get('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
