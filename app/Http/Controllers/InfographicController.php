@@ -6,6 +6,7 @@ use App\Models\infographic;
 use App\Models\infographic_image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class InfographicController extends Controller
 {
@@ -74,6 +75,10 @@ class InfographicController extends Controller
         $infographic_images = infographic_image::where('info_id', $infographic->id)->get();
         foreach($infographic_images as $infographic_image){
             $infographic_image->delete();
+        }
+        $infographicFolderPath = public_path('infographic_images/' . $infographic->id);
+        if (File::exists($infographicFolderPath)) {
+            File::deleteDirectory($infographicFolderPath);
         }
         $infographic->delete();
         return redirect(route('infographic.index'))->with('success', 'Infographic Deleted Successfully');
