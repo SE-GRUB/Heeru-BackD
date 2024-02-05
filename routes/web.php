@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\StatusController;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -157,3 +159,14 @@ Route::post('/status', [StatusController::class, 'store'])->name('status.store')
 Route::get('/status/{status}/edit', [StatusController::class, 'edit'])->name('status.edit');
 Route::put('/status/{status}/update', [StatusController::class, 'update'])->name('status.update');
 Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])->name('status.destroy');
+
+// Update photo profile
+Route::get('/updateProfile', [UserController::class, 'drivepoin'])->name('drivepoin');
+
+Route::get('/wd', function () {
+    return view('welcome');
+});
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    Lfm::routes();
+});

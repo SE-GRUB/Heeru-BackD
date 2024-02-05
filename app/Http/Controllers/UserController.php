@@ -180,4 +180,8 @@ class UserController extends Controller
         $user->delete();
         return redirect(route('user.index'))->with('success', 'User Deleted Successfully');
     }
+
+    public function drivepoin(Request $request){
+        return view('users.show', ['user' => $user]);
+    }
 }
