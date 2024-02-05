@@ -2,8 +2,8 @@ theme: jekyll-theme-cayman
 
 # Setup
 title: Laravel File Manager
-description: File manager/gallery with CKEditor, TinyMCE and Summernote support.
-google_analytics: UA-92410814-4
+description: It's like Dropbox for your Laravel app.
+google_analytics: G-X9XY279785
 
 # About/contact
 author:

@@ -1,15 +1,9 @@
-<?php namespace Unisharp\Laravelfilemanager\controllers;
+<?php
 
-/**
- * Class DemoController
- * @package Unisharp\Laravelfilemanager\controllers
- */
+namespace UniSharp\LaravelFilemanager\Controllers;
+
 class DemoController extends LfmController
 {
-
-    /**
-     * @return mixed
-     */
     public function index()
     {
         return view('laravel-filemanager::demo');
