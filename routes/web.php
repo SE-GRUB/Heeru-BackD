@@ -168,5 +168,5 @@ Route::get('/wd', function () {
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    Lfm::routes();
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });
