@@ -30,10 +30,10 @@ class UserController extends Controller
             if ($user) {
                 return response()->json(['user' => $user]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan'], 302);
+                return response()->json(['message' => 'User tidak ditemukan', 302]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error'], 500);
+            return response()->json(['message' => 'Internal server error', 500]);
 
         }
     }
@@ -98,7 +98,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'role' => 'required',
-            'no_telp' => 'required|unique:users,no_telp',
+            'no_telp' => 'required',
             'email' => 'required',
         ]);
     
@@ -152,15 +152,36 @@ class UserController extends Controller
             if ($user) {
                 return response()->json(['message' => 'User profile update successfully', 200]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan'], 302);
+                return response()->json(['message' => 'User tidak ditemukan', 302]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', json_encode($th)], 500);
+            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
+        }
+    }
+
+    public function checkPass(Request $request){
+        try {
+            $data = $request->validate([
+                'password'=> 'required',
+                'pass' => 'required',
+            ]);
+
+            if (Hash::check($data['password'], $data['pass'])) {
+                return response()->json(['message' => 'Password Correct', 200]);
+            } else {
+                return response()->json(['message' => 'Password Incorrect', 302]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
         }
     }
 
     public function destroy(User $user){
         $user->delete();
         return redirect(route('user.index'))->with('success', 'User Deleted Successfully');
+    }
+
+    public function drivepoin(Request $request){
+        return view('users.show', ['user' => $user]);
     }
 }

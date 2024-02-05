@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
@@ -16,9 +17,13 @@ use App\Http\Controllers\ChatReplyController;
 use App\Http\Controllers\CommentReplyController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StatusController;
 use App\Models\consultation;
 use App\Models\consultation_result;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +39,11 @@ use App\Models\consultation_result;
 Route::get('/', function () {
     return view('backend.index');
 });
+
+//Dashboard route
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard/view/{program_id}/{report_category}', [DashboardController::class, 'view'])->name('dashboard.view');
+Route::get('/dashboard/detail/{report}', [DashboardController::class, 'detail'])->name('dashboard.detail');
 
 //user route
 
@@ -141,3 +151,22 @@ Route::post('/payment/{consultation}/', [PaymentController::class, 'store'])->na
 Route::get('/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
 Route::put('/payment/{payment}/update', [PaymentController::class, 'update'])->name('payment.update');
 Route::delete('/payment/{payment}/destroy', [PaymentController::class, 'destroy'])->name('payment.destroy');
+
+//Status route
+Route::get('/status', [StatusController::class, 'index'])->name('status.index');
+Route::get('/status/create', [StatusController::class, 'create'])->name('status.create');
+Route::post('/status', [StatusController::class, 'store'])->name('status.store');
+Route::get('/status/{status}/edit', [StatusController::class, 'edit'])->name('status.edit');
+Route::put('/status/{status}/update', [StatusController::class, 'update'])->name('status.update');
+Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])->name('status.destroy');
+
+// Update photo profile
+Route::get('/updateProfile', [UserController::class, 'drivepoin'])->name('drivepoin');
+
+Route::get('/wd', function () {
+    return view('welcome');
+});
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    Lfm::routes();
+});

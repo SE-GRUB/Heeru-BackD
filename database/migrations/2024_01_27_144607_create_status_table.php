@@ -18,8 +18,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('report_id');
             $table->foreign('report_id')->references('id')->on('reports');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('status');
             $table->string('note')->nullable();
             $table->timestamps();
