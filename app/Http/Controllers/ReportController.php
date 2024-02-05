@@ -7,7 +7,6 @@ use App\Models\reports;
 use App\Models\status;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -92,21 +91,38 @@ class ReportController extends Controller
         ]);
 
         try {
-            $base64FileContent = $request->input('evidence');
-            $decodedFileContent = base64_decode($base64FileContent);
+            $newReport = reports::create([
+                'title' => $data['title'],
+                'details' => $data['details'],
+                'category_id' => $data['category_id'],
+                'user_id' => $data['user_id'],
+            ]);
+    
+            // $evidencePaths = [];
 
-            $data['evidence']  = $this->uploadedfile($decodedFileContent,'report_evidences/'. $data['category_id']);
+            $paths = $this->uploadedfile($request->file('evidence'),'report_evidences/' . $newReport->id);
+    
+            // if ($request->hasFile('evidence')) {
+            //     foreach ($request->file('evidence') as $evidence) {
+            //         // Save evidence file to the public folder
+            //         $path = $evidence->storeAs('report_evidences/' . $data['category_id'], $newReport->id . '_' . $evidence->getClientOriginalName(), 'public');
+            
+            //         // Store the path in an array for reference
+            //         $evidencePaths[] = $path;
+            //     }
+            // }
 
-            $newReport = reports::create($data);
+            $evidencePath = json_encode($paths);
+    
+            // Update the newReport with evidence paths
+            $newReport->update(['evidence' => $evidencePath]);
 
-            $data2 = [
+            $newStatus = status::create([
                 'report_id' => $newReport->id,
                 'user_id' => $newReport->user_id,
                 'status' => 'sent',
                 'note' => 'laporan berhasil dibuat',
-            ];
-
-            $newStatus = status::create($data2);
+            ]);
 
             return response()->json([
                 'success' => true,
@@ -117,10 +133,11 @@ class ReportController extends Controller
                 ],
             ]);
         } catch (\Exception $e) {
+            // \Log::error('Failed to create report: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create report',
-                'error' => $e->getMessage(),
+                'message' => 'Failed to create report. Please try again later.',
             ]);
         }
     }
@@ -161,6 +178,7 @@ class ReportController extends Controller
     }
 
     public function destroy(reports $report){
+        status::where('report_id', $report->id)->delete(); 
         $report->delete();
         return redirect(route('report.index'))->with('success', 'Report Deleted Successfully');
     }
