@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
         <!-- Styles -->
         <style>
@@ -21,7 +22,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+        {{-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -127,6 +128,87 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        {{-- <x-head.tinymce-config/> --}}
+        {{-- <h1>TinyMCE in Laravel</h1> --}}
+        <!-- Insert the blade containing the TinyMCE placeholder HTML element -->
+        {{-- <x-forms.tinymce-editor/> --}}
+
+        <h1>
+            ini buat input seuatu postingan
+        </h1>
+        <textarea id="my-editor" name="content" class="form-control">{!! old('content', 'test editor content') !!}</textarea>
+        <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+        <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+        </script>
+
+        <script>
+            CKEDITOR.replace('my-editor', options);
+        </script>
+
+        <hr>
+        <h1>ini buat file upload function</h1>
+
+        {{-- <iframe src="/laravel-filemanager" style="width: 100%; height: 500px; overflow: hidden; border: none;"></iframe> --}}
+
+        <div class="input-group">
+            <span class="input-group-btn">
+                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                    <i class="fa fa-picture-o"></i> Choose
+                </a>
+            </span>
+            <input id="thumbnail" class="form-control" type="text" name="filepath">
         </div>
+        <img id="holder" style="margin-top:15px;max-height:100px;">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+        <script>
+            var lfm = function (id, type, options) {
+                let button = document.getElementById(id);
+                button.addEventListener('click', function () {
+                    var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+                    var target_input = document.getElementById(button.getAttribute('data-input'));
+                    var target_preview = document.getElementById(button.getAttribute('data-preview'));
+
+                    window.open(route_prefix + '?type=' + (options.type || 'file'), 'FileManager', 'width=900,height=600');
+                    window.SetUrl = function (items) {
+                        var file_path = items.map(function (item) {
+                            return item.url;
+                        }).join(',');
+
+                        // set the value of the desired input to the image URL
+                        target_input.value = file_path;
+                        target_input.dispatchEvent(new Event('change'));
+
+                        // clear previous preview
+                        target_preview.innerHTML = ''; // perbaikan dari innerHtml menjadi innerHTML
+
+                        // set or change the preview image src
+                        items.forEach(function (item) {
+                            let img = document.createElement('img');
+                            img.setAttribute('style', 'height: 5rem');
+                            img.setAttribute('src', item.thumb_url);
+                            target_preview.appendChild(img);
+                        });
+
+                        // trigger change event
+                        target_preview.dispatchEvent(new Event('change'));
+                    };
+                });
+            };
+
+            var route_prefix = "/laravel-filemanager";
+            lfm('lfm', 'image', {prefix: route_prefix});
+            // lfm('lfm2', 'file', {prefix: route_prefix});
+        </script>
     </body>
 </html>

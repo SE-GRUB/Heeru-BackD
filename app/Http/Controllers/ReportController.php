@@ -17,7 +17,7 @@ class ReportController extends Controller
             ->orderByDesc('report_categories.weight')
             ->get();
         return view('report.index', ['reports' => $reports, 'report_categories' => $report_categories]);
-        
+
     }
 
     public function create(){
@@ -49,8 +49,8 @@ class ReportController extends Controller
             'w5' => $data['w5'],
             'h1' => $data['h1'],
         ]);
-        
-        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);        
+
+        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);
         $newReport = reports::create($data);
         $data2 = [
             'report_id' => $newReport->id,
@@ -82,14 +82,15 @@ class ReportController extends Controller
         return $newurl;
     }
 
-    public function create_report(Request $request){  
-        $data = $request->validate([
-            'title' => 'required',
-            'details' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-            'evidence.*' => 'required',
-        ]);
+    public function create_report(Request $request){
+        dd($request->title);
+        // $data = $request->validate([
+        //     'title' => 'required',
+        //     'details' => 'required',
+        //     'category_id' => 'required',
+        //     'user_id' => 'required',
+        //     'evidence.*' => 'required',
+        // ]);
 
         try {
             $base64FileContent = $request->input('evidence');
@@ -124,7 +125,7 @@ class ReportController extends Controller
             ]);
         }
     }
-    
+
 
     public function edit(reports $report){
         $report_categories = report_category::all()->sortByDesc('weight');
@@ -155,7 +156,7 @@ class ReportController extends Controller
             'h1' => $data['h1'],
         ]);
 
-        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);     
+        unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);
         $report->update(($data));
         return redirect(route('report.index'))->with('success', 'Report Updated Successfully');
     }
