@@ -23,7 +23,7 @@ use App\Http\Controllers\StatusController;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use UniSharp\LaravelFilemanager\Lfm;
+use \vendor\UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,5 +168,5 @@ Route::get('/wd', function () {
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+    \vendor\UniSharp\LaravelFilemanager\Lfm::routes();
 });
