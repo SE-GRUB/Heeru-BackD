@@ -49,6 +49,8 @@ Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edi
 Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 
+
+
 // Progam route
 Route::get('/program', [ProgramController::class, 'index'])->name('program.index');
 Route::get('/program/create', [ProgramController::class, 'create'])->name('program.create');
@@ -165,6 +167,7 @@ Route::get('/wd', function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     Lfm::routes();
 });
+
 
 
 //Make Report API

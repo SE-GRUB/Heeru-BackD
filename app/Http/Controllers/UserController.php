@@ -130,19 +130,42 @@ class UserController extends Controller
         return redirect(route('user.index'))->with('success', 'User Updated Successfully');
     }
 
+    private function uploadedfile0($img, $path) {
+        $time=time();
+        $newurl=[];
+        // dd($img);
+        $imag=$img;
+        if ($imag->isValid()) {
+            $imag->move($path, $time . '_' . $imag->getClientOriginalName());
+            $newurl[] = $path . '/' . $time . '_' . $imag->getClientOriginalName();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to upload file',
+                'error' => 'File upload failed',
+            ]);
+        }
+        // dd($newurl);
+        return $newurl;
+    }
+
     public function updateProfile(Request $request){
         try {
             $data = $request->validate([
                 'user_id' => 'required',
-                'email' => 'required|email',
-                'password' => 'required',
+                'email' => 'required',
+                'profile_pic' => 'required',
             ]);
+
+            $paths = $this->uploadedfile0($request->file('profile_pic'),'photo_profile/' . $request['user_id']);
+            dd($paths);
             
             // dd($data);
             $user = DB::table('users')
                     ->where('users.id', $data['user_id']);
             
             unset($data['user_id']);
+            $data['profile_pic']= $paths;
             // dd($data);
             $data['password'] = Hash::make($data['password']);
             $user->update($data);
@@ -181,7 +204,7 @@ class UserController extends Controller
         return redirect(route('user.index'))->with('success', 'User Deleted Successfully');
     }
 
-    public function drivepoin(Request $request){
-        return view('users.show', ['user' => $user]);
-    }
+    // public function drivepoin(Request $request){
+    //     return view('users.show', ['user' => $user]);
+    // }
 }
