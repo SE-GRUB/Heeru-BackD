@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\InfographicImageController;
@@ -13,16 +12,12 @@ use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\ChatReplyController;
 use App\Http\Controllers\CommentReplyController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StatusController;
-use App\Models\consultation;
-use App\Models\consultation_result;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use UniSharp\LaravelFilemanager\Lfm;
 
 /*
@@ -164,9 +159,13 @@ Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])-
 Route::get('/updateProfile', [UserController::class, 'drivepoin'])->name('drivepoin');
 
 Route::get('/wd', function () {
-    return view('welcome');
+    return view('evidence.evidence');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     Lfm::routes();
 });
+
+
+//Make Report API
+// Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');

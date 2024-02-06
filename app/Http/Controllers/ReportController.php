@@ -63,9 +63,10 @@ class ReportController extends Controller
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
 
-    private function uploadedfile($img,$path) {
+    private function uploadedfile($img, $path) {
         $time=time();
         $newurl=[];
+        dd($img);
         foreach ($img as $key => $imag) {
             if ($imag->isValid()) {
                 $imag->move($path, $time . '_' . $imag->getClientOriginalName());
@@ -81,15 +82,35 @@ class ReportController extends Controller
         return $newurl;
     }
 
+    private function uploadedfile0($img, $path) {
+        $time=time();
+        $newurl=[];
+        // dd($img);
+        $imag=$img;
+        if ($imag->isValid()) {
+            $imag->move($path, $time . '_' . $imag->getClientOriginalName());
+            $newurl[] = $path . '/' . $time . '_' . $imag->getClientOriginalName();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to upload file',
+                'error' => 'File upload failed',
+            ]);
+        }
+        // dd($newurl);
+        return $newurl;
+    }
+
+
     public function create_report(Request $request){
-        dd($request->title);
-        // $data = $request->validate([
-        //     'title' => 'required',
-        //     'details' => 'required',
-        //     'category_id' => 'required',
-        //     'user_id' => 'required',
-        //     'evidence.*' => 'required',
-        // ]);
+        // dd($request->file());
+        $data = $request->validate([
+            'title' => 'required',
+            'details' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'evidence.*' => 'required',
+        ]);
 
         try {
             $newReport = reports::create([
@@ -101,8 +122,8 @@ class ReportController extends Controller
     
             // $evidencePaths = [];
 
-            $paths = $this->uploadedfile($request->file('evidence'),'report_evidences/' . $newReport->id);
-    
+            $paths = $this->uploadedfile0($request->file('evidence'),'report_evidences/' . $newReport->id);
+            dd($paths);
             // if ($request->hasFile('evidence')) {
             //     foreach ($request->file('evidence') as $evidence) {
             //         // Save evidence file to the public folder
@@ -114,6 +135,8 @@ class ReportController extends Controller
             // }
 
             $evidencePath = json_encode($paths);
+
+            dd($evidencePath);
     
             // Update the newReport with evidence paths
             $newReport->update(['evidence' => $evidencePath]);
