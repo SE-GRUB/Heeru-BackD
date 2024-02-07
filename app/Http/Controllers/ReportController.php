@@ -63,14 +63,15 @@ class ReportController extends Controller
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
 
-    private function uploadedfile($img, $path) {
-        $time=time();
-        $newurl=[];
-        dd($img);
-        foreach ($img as $key => $imag) {
-            if ($imag->isValid()) {
-                $imag->move($path, $time . '_' . $imag->getClientOriginalName());
-                $newurl[] = $path . '/' . $time . '_' . $imag->getClientOriginalName();
+    private function uploadedFiles($files, $path) {
+        $time = time();
+        $newUrls = [];
+    
+        foreach ($files as $file) {
+            if ($file->isValid()) {
+                $fileName = $time . '_' . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+                $newUrls[] = $path . '/' . $fileName;
             } else {
                 return response()->json([
                     'success' => false,
@@ -79,8 +80,10 @@ class ReportController extends Controller
                 ]);
             }
         }
-        return $newurl;
+    
+        return $newUrls;
     }
+    
 
     private function uploadedfile0($img, $path) {
         $time=time();
@@ -103,7 +106,7 @@ class ReportController extends Controller
 
 
     public function create_report(Request $request){
-        // dd($request->file());
+        // dd($request->file('evidence'));
         $data = $request->validate([
             'title' => 'required',
             'details' => 'required',
@@ -119,26 +122,14 @@ class ReportController extends Controller
                 'category_id' => $data['category_id'],
                 'user_id' => $data['user_id'],
             ]);
-    
-            // $evidencePaths = [];
 
-            $paths = $this->uploadedfile0($request->file('evidence'),'report_evidences/' . $newReport->id);
-            dd($paths);
-            // if ($request->hasFile('evidence')) {
-            //     foreach ($request->file('evidence') as $evidence) {
-            //         // Save evidence file to the public folder
-            //         $path = $evidence->storeAs('report_evidences/' . $data['category_id'], $newReport->id . '_' . $evidence->getClientOriginalName(), 'public');
-            
-            //         // Store the path in an array for reference
-            //         $evidencePaths[] = $path;
-            //     }
-            // }
+            $files = $request->file('evidence');
+            $path = 'report_evidences/' . $newReport->id;
+            $paths = $this->uploadedFiles($files, $path);
+
 
             $evidencePath = json_encode($paths);
 
-            dd($evidencePath);
-    
-            // Update the newReport with evidence paths
             $newReport->update(['evidence' => $evidencePath]);
 
             $newStatus = status::create([
@@ -152,10 +143,11 @@ class ReportController extends Controller
                 'success' => true,
                 'message' => 'Report created successfully',
                 'data' => [
-                    'report' => $newReport,
                     'status' => $newStatus,
                 ],
             ]);
+
+            // return redirect()->back()->back()->with('success', 'Report created successfully');
         } catch (\Exception $e) {
             // \Log::error('Failed to create report: ' . $e->getMessage());
 
@@ -163,6 +155,7 @@ class ReportController extends Controller
                 'success' => false,
                 'message' => 'Failed to create report. Please try again later.',
             ]);
+            // return redirect()->back()->->with('error', 'Failed to create report. Please try again later.');
         }
     }
 
@@ -202,6 +195,7 @@ class ReportController extends Controller
     }
 
     public function destroy(reports $report){
+        // dd($report);
         status::where('report_id', $report->id)->delete(); 
         $report->delete();
         return redirect(route('report.index'))->with('success', 'Report Deleted Successfully');

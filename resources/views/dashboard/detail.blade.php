@@ -132,7 +132,27 @@
         </tbody>
     </table>
     <h5><b>III. Evidence</b></h5>
-    <a href="#">{{$report->evidence}}</a>
+    {{-- <div id="imageContainer">
+        @php
+            $evidences = json_decode($report->evidence)
+        @endphp
+        @foreach ($evidences as $evidence)
+            <img style="width: 500px" src="http://127.0.0.1:8000/{{ $evidence }}" alt="">
+        @endforeach
+    </div> --}}
+
+    <div id="evidenceContainer">
+        <ul class="list-group">
+            @php
+                $evidences = json_decode($report->evidence);
+            @endphp
+            @foreach ($evidences as $evidence)
+                <li class="list-group-item">
+                    <a href="{{ asset($evidence) }}" target="_blank">{{ basename($evidence) }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
     <h5><b>IV. Report Status</b></h5>
     <table class="table">
         <thead>

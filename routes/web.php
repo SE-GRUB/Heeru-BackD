@@ -18,6 +18,7 @@ use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StatusController;
+use Illuminate\Http\Request;
 use UniSharp\LaravelFilemanager\Lfm;
 
 /*
@@ -160,8 +161,8 @@ Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])-
 // Update photo profile
 Route::get('/updateProfile', [UserController::class, 'drivepoin'])->name('drivepoin');
 
-Route::get('/wd', function () {
-    return view('evidence.evidence');
+Route::get('/laporanBukti', function (Request $request) {
+    return view('evidence.evidence', ['data' => $request]);
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
@@ -169,6 +170,5 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
 });
 
 
-
-//Make Report API
-// Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
+// Make Report API
+Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
