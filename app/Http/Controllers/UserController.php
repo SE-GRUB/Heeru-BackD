@@ -155,30 +155,41 @@ class UserController extends Controller
                 'user_id' => 'required',
                 'email' => 'required',
                 'profile_pic' => 'required',
+                'password' => 'required',
             ]);
 
-            $paths = $this->uploadedfile0($request->file('profile_pic'),'photo_profile/' . $request['user_id']);
-            dd($paths);
-            
-            // dd($data);
+            $files = $request->file('profile_pic');
+            $path = 'photo_profile/' . $data['user_id'];
+            $paths = $this->uploadedFile0($files, $path);
+
+            $evidencePath = json_encode($paths);
             $user = DB::table('users')
                     ->where('users.id', $data['user_id']);
             
             unset($data['user_id']);
             $data['profile_pic']= $paths;
-            // dd($data);
+            // // dd($data);
             $data['password'] = Hash::make($data['password']);
             $user->update($data);
             // dd($up);
                     
             // dd($user, $data);
             if ($user) {
-                return response()->json(['message' => 'User profile update successfully', 200]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Update profile successfully',
+                ]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan', 302]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not found',
+                ]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal Server Error',
+            ]);
         }
     }
 

@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.checkuser');
-Route::get('/updateProfile', [UserController::class,'updateProfile'])->name('profile.update');
+Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('profile.update');
 Route::get('/checkPass', [UserController::class,'checkPass'])->name('pass.check');
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');

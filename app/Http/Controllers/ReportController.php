@@ -115,46 +115,66 @@ class ReportController extends Controller
             'evidence.*' => 'required',
         ]);
 
-        try {
-            $newReport = reports::create([
-                'title' => $data['title'],
-                'details' => $data['details'],
-                'category_id' => $data['category_id'],
-                'user_id' => $data['user_id'],
-            ]);
-
+        if ($request->hasFile('evidence')) {
+            // Jika file ada dalam permintaan, ambil informasi file
             $files = $request->file('evidence');
-            $path = 'report_evidences/' . $newReport->id;
+            $path = 'report_evidences/' . $data['user_id'];
+        
+            // Simpan file dan dapatkan pathnya
             $paths = $this->uploadedFiles($files, $path);
+            $pathsString = implode(', ', $paths);
+        
+            // Periksa apakah file berhasil diunggah
+            if (count($paths) > 0) {
+                return response()->json(['success' => true, 'message' => 'File berhasil diterima dan disimpan ke ' . $pathsString . '.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Gagal menyimpan file.']);
+            }
+        } else {
+            // Jika file tidak ada dalam permintaan, kirimkan respons dengan pesan kesalahan
+            return response()->json(['success' => false, 'message' => 'File tidak diterima.']);
+        }
+
+        try {
+            // $newReport = reports::create([
+            //     'title' => $data['title'],
+            //     'details' => $data['details'],
+            //     'category_id' => $data['category_id'],
+            //     'user_id' => $data['user_id'],
+            // ]);
+
+            // $files = $request->file('evidence');
+            // $path = 'report_evidences/' . $newReport->id;
+            // $paths = $this->uploadedFiles($files, $path);
 
 
-            $evidencePath = json_encode($paths);
+            // $evidencePath = json_encode($paths);
 
-            $newReport->update(['evidence' => $evidencePath]);
+            // $newReport->update(['evidence' => $evidencePath]);
 
-            $newStatus = status::create([
-                'report_id' => $newReport->id,
-                'user_id' => $newReport->user_id,
-                'status' => 'sent',
-                'note' => 'laporan berhasil dibuat',
-            ]);
+            // $newStatus = status::create([
+            //     'report_id' => $newReport->id,
+            //     'user_id' => $newReport->user_id,
+            //     'status' => 'sent',
+            //     'note' => 'laporan berhasil dibuat',
+            // ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Report created successfully',
-                'data' => [
-                    'status' => $newStatus,
-                ],
-            ]);
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Report created successfully',
+            //     'data' => [
+            //         'status' => $newStatus,
+            //     ],
+            // ]);
 
             // return redirect()->back()->back()->with('success', 'Report created successfully');
         } catch (\Exception $e) {
             // \Log::error('Failed to create report: ' . $e->getMessage());
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create report. Please try again later.',
-            ]);
+            // return response()->json([
+            //     'success' => false,
+            //     'message' => 'Failed to create report. Please try again later.',
+            // ]);
             // return redirect()->back()->->with('error', 'Failed to create report. Please try again later.');
         }
     }
