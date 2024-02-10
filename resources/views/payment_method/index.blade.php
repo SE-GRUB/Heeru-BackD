@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Payment Methods')
+@section('icon', 'credit-card-search')
 
 @section('content')
 

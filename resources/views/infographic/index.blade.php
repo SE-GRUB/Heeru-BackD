@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Infographic')
+@section('icon', 'image-v')
 
 @section('content')
 

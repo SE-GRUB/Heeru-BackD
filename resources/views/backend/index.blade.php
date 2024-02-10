@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Dashboard')
+@section('icon', 'tachometer-fast')
 
 @section('content')
     <!-- Add your index page content here -->

@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Report Status')
+@section('icon', 'share')
 
 @section('content')
 

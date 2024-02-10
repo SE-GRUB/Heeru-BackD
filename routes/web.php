@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
@@ -34,12 +35,12 @@ use UniSharp\LaravelFilemanager\Lfm;
 
 Route::get('/', function () {
     return view('backend.index');
-});
+})->name('index');
 
 //Dashboard route
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-Route::get('/dashboard/view/{program_id}/{report_category}', [DashboardController::class, 'view'])->name('dashboard.view');
-Route::get('/dashboard/detail/{report}', [DashboardController::class, 'detail'])->name('dashboard.detail');
+Route::get('/dashboard_report', [DashboardController::class, 'index'])->name('dashboard_report.index');
+Route::get('/dashboard_report/view/{program_id}/{report_category}', [DashboardController::class, 'view'])->name('dashboard_report.view');
+Route::get('/dashboard_report/detail/{report}', [DashboardController::class, 'detail'])->name('dashboard_report.detail');
 
 //user route
 
@@ -172,3 +173,15 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
 
 // Make Report API
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
+
+// Auth::routes();
+Route::controller(LoginController::class)->group(function() {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/authenticate', 'process_login')->name('authenticate');
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
+//Login
+// Route::get('/logins', [AuthController::class, 'login'])->name('login');
+// Route::post('/logins', [AuthController::class, 'process_login'])->name('login');

@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Payments')
+@section('icon', 'bill')
 
 @section('content')
 

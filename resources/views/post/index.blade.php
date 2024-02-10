@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Posts')
+@section('icon', 'postcard')
 
 @section('content')
 
