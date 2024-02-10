@@ -58,7 +58,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $report_category->category_name }}</h5>
                         <p class="card-text">{{ $report_count }} reports</p>
-                        <a href="{{ route('dashboard.view', ['category_name' => $report_category->category_name, 'program_id' => $program->id, 'report_category' => $report_category->id]) }}" class="btn btn-primary">view</a>
+                        <a href="{{ route('dashboard_report.view', ['category_name' => $report_category->category_name, 'program_id' => $program->id, 'report_category' => $report_category->id]) }}" class="btn btn-primary">view</a>
                     </div>
                 </div>
                 @endforeach
