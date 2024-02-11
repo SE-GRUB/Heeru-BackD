@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\program;
-use App\Models\status;
 use Carbon\Carbon;
 
 function generateNIP() {
@@ -28,13 +27,29 @@ class UserController extends Controller
                     ->first();
 
             if ($user) {
-                return response()->json(['user' => $user]);
+                $userArray = [
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'no_telp' => $user->no_telp,
+                    'email' => $user->email,
+                    'password' => $user->password ? '*******' : '',
+                ];
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User found',
+                    'user' => $userArray,
+                ]);
             }else{
-                return response()->json(['message' => 'User tidak ditemukan', 302]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'NIP not found!',
+                ]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', 500]);
-
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+            ]);
         }
     }
 
@@ -197,16 +212,27 @@ class UserController extends Controller
         try {
             $data = $request->validate([
                 'password'=> 'required',
-                'pass' => 'required',
+                'user_id' => 'required',
             ]);
 
-            if (Hash::check($data['password'], $data['pass'])) {
-                return response()->json(['message' => 'Password Correct', 200]);
+            $pass = User::where( 'id',$data['user_id'])->value( 'password');
+
+            if (Hash::check($data['password'], $pass)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Password Correct',
+                ]);
             } else {
-                return response()->json(['message' => 'Password Incorrect', 302]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Password Incorrect',
+                ]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Internal server error', 500, json_encode($th)]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+            ]);
         }
     }
 
