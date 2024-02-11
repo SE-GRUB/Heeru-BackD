@@ -13,11 +13,20 @@
     <nav class="close">
         <div class="logo-name">
             <div class="logo-image">
-                <img src="http://127.0.0.1:8000/Admin/images/profile.jpg" alt="">
+                @if(Auth::check())
+                    @php
+                        $profilePic = Auth::user()->profile_pic ? json_decode(Auth::user()->profile_pic)[0] : null;
+                    @endphp
+
+                    <img src="{{ $profilePic ? "http://127.0.0.1:8000/$profilePic" : "http://127.0.0.1:8000/Admin/images/profile.jpg" }}" alt="Gambar Profil Pengguna">
+                @else
+                    <img src="http://127.0.0.1:8000/Admin/images/profile.jpg" alt="Gambar Profil Pengguna">
+                @endif
+                {{-- <img src="http://127.0.0.1:8000/{{ json_decode(Auth::user()->profile_pic) }}" alt="http://127.0.0.1:8000/Admin/images/profile.jpg"> --}}
             </div>
 
-            {{-- <span class="logo_name">{{ Auth::user()->name }}</span> --}}
-            <span class="logo_name">USERNAME</span>
+            <span class="logo_name">{{ Auth::user()->name }}</span>
+            {{-- <span class="logo_name">USERNAME</span> --}}
         </div>
 
         <div class="menu-items">
@@ -69,14 +78,9 @@
             </ul>            
             
             <ul class="logout-mode">
-                <li><a href="#">
-                    <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
-                        @csrf
-                        @method('DELETE')
+                <li><a href="{{route('actionlogout')}}">
                         <i class="uil uil-signout"></i>
-                        <button class="link-name" type="submit">Logout</button>
-                    </form>
-                    {{-- <span class="link-name">Logout</span> --}}
+                        <span class="link-name">Logout</span>
                 </a></li>
             </ul>
         </div>

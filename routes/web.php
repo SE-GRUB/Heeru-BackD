@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
@@ -33,9 +33,9 @@ use UniSharp\LaravelFilemanager\Lfm;
 |
 */
 
-Route::get('/', function () {
-    return view('backend.index');
-})->name('index');
+// Route::get('/', function () {
+//     return view('backend.index');
+// })->name('index');
 
 //Dashboard route
 Route::get('/dashboard_report', [DashboardController::class, 'index'])->name('dashboard_report.index');
@@ -175,12 +175,11 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
 
 // Auth::routes();
-Route::controller(LoginController::class)->group(function() {
-    Route::get('/login', 'login')->name('login');
-    Route::post('/authenticate', 'process_login')->name('authenticate');
-    Route::get('/dashboard', 'dashboard')->name('dashboard');
-    Route::post('/logout', 'logout')->name('logout');
-});
+Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+
 
 //Login
 // Route::get('/logins', [AuthController::class, 'login'])->name('login');

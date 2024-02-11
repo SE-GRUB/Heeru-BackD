@@ -16,7 +16,7 @@
                         {{ Session::get('error') }}
                     </div>
                 @endif
-                <form action="{{ route('login') }}" method="POST" class="sign-in-form">
+                <form action="{{ route('actionlogin') }}" method="POST" class="sign-in-form">
                     @csrf
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
@@ -51,7 +51,7 @@
         login_btn.addEventListener("click", () => {
             container.classList.add("fullscreen-mode");
             setTimeout(function(){
-                window.location.href = '{{route('index')}}';
+                window.location.href = '{{route('dashboard')}}';
             }, 1200);
         });
     </script>
