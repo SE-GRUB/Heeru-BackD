@@ -67,7 +67,7 @@
                                     $profilePic = $user->profile_pic ? json_decode($user->profile_pic)[0] : null;
                                 @endphp
                                 <img id="profileImage" src="{{ $profilePic ? asset($profilePic) : asset("Admin/images/profile.jpg") }}" alt="User Profile Picture" />
-                                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;" required/>
+                                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;"/>
                             </label>
                         </div>
                     </div>

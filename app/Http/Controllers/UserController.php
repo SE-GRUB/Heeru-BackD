@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\program;
 use Carbon\Carbon;
@@ -150,7 +151,6 @@ class UserController extends Controller
             'no_telp' => 'required',
             'email' => 'required',
         ]);
-    
         if ($request['role'] == 'student') {
             if ($user['role'] != $request['role']) {
                 $user['nip'] = null;
@@ -165,11 +165,15 @@ class UserController extends Controller
                 $user['fare'] = null;
                 $user['rating'] = null;
             }
+            $infographicFolderPath = public_path('photo_profile/' .  $user['id']);
+            if (File::exists($infographicFolderPath)) {
+                File::deleteDirectory($infographicFolderPath);
+            }
             $files = $request->file('profile_pic');
             $path = 'photo_profile/' . $user['id'];
             $paths = $this->uploadedFile0($files, $path);
 
-            $data['profile_pic']= $paths;
+            $data['profile_pic'] = $paths;
             $data['password'] = Hash::make($request->input('password'));
         } elseif ($request['role'] == 'counselor') {
             if ($user['role'] != $request['role']) {
@@ -179,6 +183,7 @@ class UserController extends Controller
             $data['fare'] = $request->input('fare');
             $data['rating'] = 0;
         }
+        // dd($data);
         $user->update($data);
         return redirect(route('user.index'))->with('success', 'User Updated Successfully');
     }

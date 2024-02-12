@@ -67,7 +67,7 @@
                                 <img id="pensil" src="{{ asset("asset/editpp.png") }}" alt="" />
                                 {{-- </label> --}}
                                 <img style="display: none;" id="profileImage" src="" alt="" />
-                                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;" required/>
+                                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;"/>
                             </label>
                         </div>
                     </div>
