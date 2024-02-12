@@ -172,7 +172,7 @@ class ReportController extends Controller
         $users = User::where('role', 'student')->get();
         return view('report.edit', ['report' => $report, 'users' => $users], ['report_categories' => $report_categories]);
     }
-
+  
     public function update(reports $report, Request $request){
         $data = $request->validate([
             'title' => 'required',

@@ -118,28 +118,56 @@
                 $('#studentFields').show();
                 $('#picFields').show();
                 $('#counselorFields').hide();
-            } else if ($('#role').val() === 'pic') {
+                $('#adminFields').hide();
+                $('#photoFields').hide();
+
+            } else if (($('#role').val() === 'pic' ) || ($('#role').val() === 'admin')) {
                 $('#picFields').show();
+                $('#adminFields').show();
+                $('#photoFields').show();
                 $('#studentFields').hide();
                 $('#counselorFields').hide();
             } else {
+                $('#adminFields').hide();
                 $('#studentFields').hide();
                 $('#picFields').hide();
                 $('#counselorFields').show();
+                $('#photoFields').hide();
             }
             $('#role').change(function(){
                 if($(this).val() === 'student'){
                     $('#studentFields').show();
                     $('#picFields').show();
                     $('#counselorFields').hide();
-                } else if ($(this).val() === 'pic') {
+                    $('#adminFields').hide();
+                    $('#photoFields').hide();
+
+                } else if ($(this).val() === 'pic' || $('#role').val() === 'admin') {
                     $('#picFields').show();
+                    $('#adminFields').show();
+                    $('#photoFields').show();
                     $('#studentFields').hide();
                     $('#counselorFields').hide();
+
                 } else {
+                    $('#adminFields').hide();
                     $('#studentFields').hide();
                     $('#picFields').hide();
                     $('#counselorFields').show();
+                    $('#photoFields').hide();
+                }
+            });
+            document.getElementById('profile_pic').addEventListener('change', function (event) {
+                const fileInput = event.target;
+                document.getElementById("pensil").style.display = "none";
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById("profileImage").src = e.target.result;
+                        document.getElementById("profileImage").style.display = "block";
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
                 }
             });
         });

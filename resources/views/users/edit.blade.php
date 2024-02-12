@@ -3,6 +3,43 @@
 @section('title', 'Edit User')
 
 @section('content')
+<style>
+    .container-fluid{
+        justify-content: center;
+        text-align: center;
+    }
+    .lingkarannya{
+        background-color: #D6D6D6;
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .photoprofile{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #labelForFileInput{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #profileImage {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%; 
+        object-fit: cover;
+    }
+</style>
     <div class="container mt-5">
         @if($errors->any())
             <div class="alert alert-danger" role="alert">
@@ -13,9 +50,28 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('user.update', $user) }}" method="POST">
+        <form action="{{ route('user.update', $user) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            <div id="photoFields">
+                <div class="container-fluid">
+                    <div class="photoprofile">
+                        <div class="lingkarannya" id="profileImageContainer">
+                            <label for="profile_pic" class="edit-icon" id="labelForFileInput">
+                                {{-- <label class="edit-icon"> --}}
+                                <img style="display: none;" id="pensil" src="{{ asset("asset/editpp.png") }}" alt="" />
+                                {{-- </label> --}}
+                                @php
+                                    $profilePic = $user->profile_pic ? json_decode($user->profile_pic)[0] : null;
+                                @endphp
+                                <img id="profileImage" src="{{ $profilePic ? asset($profilePic) : asset("Admin/images/profile.jpg") }}" alt="User Profile Picture" />
+                                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;" required/>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -28,6 +84,7 @@
                     <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Student</option>
                     <option value="pic" {{ $user->role == 'pic' ? 'selected' : '' }}>PIC</option>
                     <option value="counselor" {{ $user->role == 'counselor' ? 'selected' : '' }}>Counselor</option>
+                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
             </div>
             
@@ -55,6 +112,13 @@
                 <div class="form-group">
                     <label for="fare">Fare:</label>
                     <input type="number" class="form-control" id="fare" name="fare" value="{{ $user->fare }}">
+                </div>
+            </div>
+
+            <div id="adminFields">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" value="{{ $user->password }}">
                 </div>
             </div>
 
