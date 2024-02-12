@@ -286,6 +286,40 @@ form.sign-in-form {
   pointer-events: all;
 } */
 
+.alert {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-danger p {
+  margin: 0;
+}
+
+.alert-danger a {
+  color: #721c24;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.text-danger{
+  color: red;
+  text-align: left;
+  font-size: 14px;
+}
+
+.hide{
+  display: none;
+}
+
 @media (max-width: 870px) {
   .container {
     min-height: 800px;

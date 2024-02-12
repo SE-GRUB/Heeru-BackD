@@ -22,11 +22,12 @@
                 @else
                     <img src="http://127.0.0.1:8000/Admin/images/profile.jpg" alt="Gambar Profil Pengguna">
                 @endif
-                {{-- <img src="http://127.0.0.1:8000/{{ json_decode(Auth::user()->profile_pic) }}" alt="http://127.0.0.1:8000/Admin/images/profile.jpg"> --}}
             </div>
 
-            <span class="logo_name">{{ Auth::user()->name }}</span>
-            {{-- <span class="logo_name">USERNAME</span> --}}
+            <div class="user-info">
+                <span class="logo_name">{{ Auth::user()->name }}</span>
+                <span class="role">{{ Auth::user()->role }}</span>
+            </div>
         </div>
 
         <div class="menu-items">

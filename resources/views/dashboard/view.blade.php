@@ -35,7 +35,7 @@
                 <td>{{ $report->created_at }}</td>
                 <td>{{ $report->evidence }}</td>
                 <td>
-                    <a href="{{ route('dashboard.detail', ['report' => $report->id]) }}" class="btn btn-primary">View Details</a>
+                    <a href="{{ route('dashboard_report.detail', ['report' => $report->id]) }}" class="btn btn-primary">View Details</a>
                 </td>
             </tr>
         @endforeach

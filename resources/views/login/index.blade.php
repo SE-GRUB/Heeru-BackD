@@ -11,23 +11,25 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                @if(Session::has('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ Session::get('error') }}
-                    </div>
-                @endif
-                <form action="{{ route('actionlogin') }}" method="POST" class="sign-in-form">
+                <form action="{{ route('actionlogin') }}" method="POST" id="formLogin" class="sign-in-form">
                     @csrf
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="number" name="nip" id="nip" placeholder="NIP" autocomplete="off" autofocus required>
+                        <input type="number" name="nip" id="nip" placeholder="NIP" autocomplete="off" autofocus>
                     </div>
+                    <span id="errortext1" class="text-danger hide">text</span>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" id="password" placeholder="Password" autocomplete="off" autofocus required>
+                        <input type="password" name="password" id="password" placeholder="Password" autocomplete="off" autofocus>
                     </div>
-                    <input type="submit" value="Login" class="btn solid" id="loginBtn">
+                    <span id="errortext2" class="text-danger hide">text</span>
+                    <input type="button" value="Login" class="btn solid" id="loginBtn">
                 </form>
             </div>
         </div>
@@ -48,11 +50,31 @@
         const login_btn = document.querySelector("#loginBtn");
         const container = document.querySelector(".container");
 
+        var nip = document.getElementById("nip");
+        var password = document.getElementById("password");
+
+        var errortext1=document.getElementById("errortext1");
+        var errortext2=document.getElementById("errortext2");
+
         login_btn.addEventListener("click", () => {
-            container.classList.add("fullscreen-mode");
-            setTimeout(function(){
-                window.location.href = '{{route('dashboard')}}';
-            }, 1200);
+            if(nip.value.trim() === ""){
+                errortext1.innerHTML="Please input your NIP";
+                errortext1.classList.remove("hide");
+            }else{
+                errortext1.classList.add("hide");
+            }
+
+            if(password.value.trim() === ""){
+                errortext2.innerHTML="Please input your Password";
+                errortext2.classList.remove("hide");
+            }else{
+                errortext2.classList.add("hide");
+                document.getElementById("formLogin").submit();
+                container.classList.add("fullscreen-mode");
+                setTimeout(function(){
+                    window.location.href = '{{route('dashboard')}}';
+                }, 1200);
+            }
         });
     </script>
 </body>

@@ -23,12 +23,12 @@ class LoginController extends Controller
             'nip' => $request->input('nip'),
             'password' => $request->input('password'),
         ];
-
         if (Auth::Attempt($data)) {
             return redirect('dashboard');
         }else{
+            return redirect("/")->with('error','NIP atau Password Salah!');
             // Session::flash('error', 'Email atau Password Salah');
-            return redirect('/');
+            // return redirect('/');
         }
     }
 
