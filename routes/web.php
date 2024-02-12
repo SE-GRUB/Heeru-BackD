@@ -179,8 +179,3 @@ Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
 Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
-
-
-//Login
-// Route::get('/logins', [AuthController::class, 'login'])->name('login');
-// Route::post('/logins', [AuthController::class, 'process_login'])->name('login');

@@ -28,7 +28,6 @@ class DashboardController extends Controller
             ->select('reports.*')
             ->orderBy('reports.created_at', 'asc')
             ->get();
-
         return view('dashboard.view', ['reports' => $reports], ['category_name' => $request['category_name']]);
     }    
 

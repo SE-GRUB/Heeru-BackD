@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', $category_name)
+@section('icon', 'tachometer-fast')
 
 @section('content')
 

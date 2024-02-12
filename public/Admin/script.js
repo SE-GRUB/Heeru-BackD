@@ -1,6 +1,6 @@
 const body = document.querySelector("body"),
       sidebar = body.querySelector("nav");
-      sidebarToggle = body.querySelector(".sidebar-toggle");
+    //   sidebarToggle = body.querySelector(".sidebar-toggle");
 
 let getStatus = localStorage.getItem("status");
 if (!getStatus) {

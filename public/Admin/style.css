@@ -9,7 +9,7 @@
 
 :root{
     /* ===== Colors ===== */
-    --primary-color: #0E4BF1;
+    --primary-color: #64A5F9;
     --panel-color: #FFF;
     --text-color: #000;
     --black-light-color: #707070;
@@ -36,10 +36,30 @@ nav{
     padding: 10px 14px;
     background-color: var(--panel-color);
     border-right: 1px solid var(--border-color);
-    transition: var(--tran-05);;
+    transition: var(--tran-05);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+nav::-webkit-scrollbar {
+    width: 12px;
+    background-color: var(--primary-color); 
+}
+
+nav::-webkit-scrollbar-track {
+    background: var(--toggle-color);
+}
+
+nav::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+nav::-webkit-scrollbar-corner {
+    background: var(--toggle-color);
 }
 nav.close{
     width: 73px;
+    overflow-y: hidden;
 }
 nav .logo-name{
     display: flex;
@@ -65,14 +85,14 @@ nav .logo-image img{
 }
 
 nav .logo-name .logo_name{
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--text-color);
     /* margin-left: 14px; */
     transition: var(--tran-05);
 }
 nav .logo_name .role{
-    font-size: 18px;
+    font-size: 14px;
     color: var(--text-color);
     /* margin-left: 14px; */
     transition: var(--tran-05);

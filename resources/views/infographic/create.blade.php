@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Add Infographic')
+@section('icon', 'image-v')
 
 @section('content')
     <div class="container mt-5">

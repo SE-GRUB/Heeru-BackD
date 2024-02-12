@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Add Payment')
+@section('icon', 'bill')
 
 @section('content')
     <div class="container mt-5">

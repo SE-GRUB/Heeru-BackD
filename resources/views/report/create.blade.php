@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Add Report')
+@section('icon', 'file-graph')
 
 @section('content')
     <div class="container mt-5">

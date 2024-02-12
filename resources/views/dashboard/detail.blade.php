@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Report Details')
+@section('icon', 'tachometer-fast')
 
 @section('content')
 

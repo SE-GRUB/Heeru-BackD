@@ -11,6 +11,12 @@ input {
   font-family: "Poppins", sans-serif;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -117,6 +123,19 @@ form.sign-in-form {
   font-weight: 600;
   font-size: 1.1rem;
   color: #333;
+  padding-right: 40px;
+}
+
+#togglePassword {
+  text-align: center;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .input-field input::placeholder {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="http://127.0.0.1:8000/Login/style.css">
+    <link rel="stylesheet" href="{{ asset('Login/style.css') }}">
     <title>Login</title>
 </head>
 <body>
@@ -27,7 +27,10 @@
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
                         <input type="password" name="password" id="password" placeholder="Password" autocomplete="off" autofocus>
-                    </div>
+                        <button type="button" id="togglePassword">
+                            <i class="fas fa-eye" id="showPasswordIcon"></i>
+                        </button>                            
+                    </div>                    
                     <span id="errortext2" class="text-danger hide">text</span>
                     <input type="button" value="Login" class="btn solid" id="loginBtn">
                 </form>
@@ -36,11 +39,11 @@
   
         <div class="panels-container">
             <div class="panel left-panel">
-                <img src="http://127.0.0.1:8000/Login/corner-left.png" alt="left-corner" class="corner-image-left">
+                <img src="{{ asset('Login/corner-left.png') }}" alt="left-corner" class="corner-image-left">
                 <div class="content">
-                    <img src="http://127.0.0.1:8000/Login/logo_white.png" alt="logo" class="logo">
+                    <img src="{{ asset('Login/logo_white.png') }}" alt="logo" class="logo">
                 </div>
-                <img src="http://127.0.0.1:8000/Login/corner-right.png" alt="right-corner" class="corner-image-right">
+                <img src="{{ asset('Login/corner-right.png') }}" alt="right-corner" class="corner-image-right">
             </div>
     </div>
 
@@ -74,7 +77,28 @@
                 setTimeout(function(){
                     window.location.href = '{{route('dashboard')}}';
                 }, 1200);
+                return true;
             }
+            return false
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var togglePassword = document.getElementById('togglePassword');
+            var password = document.getElementById('password');
+            var showPasswordIcon = document.getElementById("showPasswordIcon");
+
+            togglePassword.addEventListener('click', function() {
+                var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+
+                if (type === 'text') {
+                    showPasswordIcon.classList.remove("fa-eye");
+                    showPasswordIcon.classList.add("fa-eye-slash");
+                } else {
+                    showPasswordIcon.classList.remove("fa-eye-slash");
+                    showPasswordIcon.classList.add("fa-eye");
+                }
+            });
         });
     </script>
 </body>

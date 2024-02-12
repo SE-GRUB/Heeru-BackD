@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Add User')
+@section('icon', 'user')
 
 @section('content')
     <div class="container mt-5">

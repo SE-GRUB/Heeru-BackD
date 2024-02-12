@@ -6,7 +6,7 @@
     <title>@yield('title', 'Backend')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> --}}
-    <link rel="stylesheet" href="http://127.0.0.1:8000/Admin/style.css">
+    <link rel="stylesheet" href="{{ asset('Admin/style.css') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 </head>
 <body>
@@ -14,19 +14,24 @@
         <div class="logo-name">
             <div class="logo-image">
                 @if(Auth::check())
-                    @php
-                        $profilePic = Auth::user()->profile_pic ? json_decode(Auth::user()->profile_pic)[0] : null;
-                    @endphp
-
-                    <img src="{{ $profilePic ? "http://127.0.0.1:8000/$profilePic" : "http://127.0.0.1:8000/Admin/images/profile.jpg" }}" alt="Gambar Profil Pengguna">
+                @php
+                    $profilePic = Auth::user()->profile_pic ? json_decode(Auth::user()->profile_pic)[0] : null;
+                @endphp
+                
+                <img src="{{ $profilePic ? asset($profilePic) : asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">            
                 @else
-                    <img src="http://127.0.0.1:8000/Admin/images/profile.jpg" alt="Gambar Profil Pengguna">
+                    <img src="{{ asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">
                 @endif
             </div>
 
             <div class="user-info">
-                <span class="logo_name">{{ Auth::user()->name }}</span>
-                <span class="role">{{ Auth::user()->role }}</span>
+                @if (Auth::check())
+                    <span class="logo_name">{{ Auth::user()->name }}</span>
+                    <span class="role">{{ Auth::user()->role }}</span>
+                @else
+                    <span class="logo_name">USERNAME</span>
+                    <span class="role">ROLE</span>
+                @endif
             </div>
         </div>
 
@@ -89,7 +94,7 @@
 
     <section class="dashboard">
         <div class="top">
-            <img src="http://127.0.0.1:8000/Admin/images/logo.png" alt="HEERU">
+            <img src="{{ asset('Admin/images/logo.png') }}" alt="HEERU">
         </div>
 
         <div class="dash-content">
@@ -105,13 +110,18 @@
             </footer>
         </div>
     </section>
-
+    <script>
+        var isAuthenticated = {{ Auth::check() ? 'true' : 'false' }};
+        if (!isAuthenticated) {
+            window.location.href = "{{ route('login') }}";
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="http://127.0.0.1:8000/Admin/script.js"></script>
+    <script src="{{ asset('Admin/script.js') }}"></script>
     <script>
         $(document).ready(function(){
             if($('#role').val() === 'student'){
