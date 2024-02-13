@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 // use Session;
 
 class LoginController extends Controller
@@ -23,15 +26,19 @@ class LoginController extends Controller
             'nip' => $request->input('nip'),
             'password' => $request->input('password'),
         ];
+        // dd($data);
+        $role = User::where('nip', $data['nip'])->value('role');
+
+        if (!in_array($role, ['admin', 'pic'])) {
+            return redirect("/")->with('error','Student cannot  access this page!');
+        }
+
         if (Auth::Attempt($data)) {
             return redirect('dashboard');
         }else{
-            return redirect("/")->with('error','NIP atau Password Salah!');
-            // Session::flash('error', 'Email atau Password Salah');
-            // return redirect('/');
+            return redirect("/")->with('error','NIP or Password Incorrect!');
         }
     }
-
     public function dashboard(){
         return view('backend.index');
     }

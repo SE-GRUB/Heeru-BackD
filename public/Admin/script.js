@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $('table').DataTable();
+});
+
 const body = document.querySelector("body"),
       sidebar = body.querySelector("nav");
     //   sidebarToggle = body.querySelector(".sidebar-toggle");

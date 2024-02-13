@@ -165,15 +165,16 @@ class UserController extends Controller
                 $user['fare'] = null;
                 $user['rating'] = null;
             }
-            $infographicFolderPath = public_path('photo_profile/' .  $user['id']);
-            if (File::exists($infographicFolderPath)) {
-                File::deleteDirectory($infographicFolderPath);
+            if($request->hasfile('profile_pic')){
+                $profilePicFolderPath = public_path('photo_profile/' .  $user['id']);
+                if (File::exists($profilePicFolderPath)) {
+                    File::deleteDirectory($profilePicFolderPath);
+                }
+                $files = $request->file('profile_pic');
+                $path = 'photo_profile/' . $user['id'];
+                $paths = $this->uploadedFile0($files, $path);
+                $data['profile_pic'] = $paths;
             }
-            $files = $request->file('profile_pic');
-            $path = 'photo_profile/' . $user['id'];
-            $paths = $this->uploadedFile0($files, $path);
-
-            $data['profile_pic'] = $paths;
             $data['password'] = Hash::make($request->input('password'));
         } elseif ($request['role'] == 'counselor') {
             if ($user['role'] != $request['role']) {
