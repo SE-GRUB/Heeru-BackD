@@ -3,8 +3,9 @@
 @section('title', $category_name)
 @section('icon', 'tachometer-fast')
 
-@section('content')
+@section('useDatatables', false)
 
+@section('content')
 <div>
     @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
@@ -12,7 +13,7 @@
     </div>
     @endif
 </div>
-<a href="javascript:history.back()" class="btn btn-primary">Back</a>
+<a href="{{ route('dashboard_report.index') }}" class="btn btn-primary">Back</a>
 <table>
     <thead>
         <tr>
