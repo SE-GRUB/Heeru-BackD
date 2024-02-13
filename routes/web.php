@@ -177,5 +177,7 @@ Route::post('/makereport', [ReportController::class, 'create_report'])->name('re
 // Auth::routes();
 Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+Route::post('reset_phone', [LoginController::class, 'reset_phone'])->name('reset.phone');
+Route::post('reset_email', [LoginController::class, 'reset_email'])->name('reset.email');
 Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');

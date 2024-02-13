@@ -100,9 +100,16 @@
 
         <div class="dash-content">
             <div class="overview">
-                <div class="title">
-                    <i class="uil uil-@yield('icon', 'Backend')"></i>
-                    <span class="text">@yield('title', 'Backend')</span>
+                <div class="row">
+                    <div class="title">
+                        <i class="uil uil-@yield('icon', 'Backend')"></i>
+                        <span class="text">@yield('title', 'Backend')</span>
+                    </div>
+                    <div class="button-container">
+                        <div class="button-container">
+                            @yield('button')
+                        </div>
+                    </div>
                 </div>
                 @yield('content')
             </div>

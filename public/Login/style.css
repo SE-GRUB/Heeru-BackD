@@ -329,6 +329,22 @@ form.sign-in-form {
   text-decoration: underline;
 }
 
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-success p {
+  margin: 0;
+}
+
+.alert-success a {
+  color: #155724;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .text-danger{
   color: red;
   text-align: left;
@@ -338,6 +354,18 @@ form.sign-in-form {
 .hide{
   display: none;
 }
+
+.reset {
+  display: inline-block;
+  margin-top: 45px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.reset:hover {
+  color: #0056b3;
+}
+
 
 @media (max-width: 870px) {
   .container {
@@ -494,6 +522,19 @@ form.sign-in-form {
   background-color: rgba(0,0,0,0.4);
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.modal-title {
+  text-align: center;
+  flex-grow: 1;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
@@ -502,6 +543,15 @@ form.sign-in-form {
   width: 80%;
   max-width: 600px;
   border-radius: 5px;
+}
+
+.note {
+  /* position: absolute; */
+  /* bottom: -20px; */
+  margin-top: 10px;
+  left: 0;
+  font-size: 14px;
+  color: #333;
 }
 
 .close {
@@ -526,8 +576,8 @@ form.sign-in-form {
 
 .tablinks {
   flex-grow: 1;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
+  background-color: #fefefe;
+  border: transparent;
   cursor: pointer;
   padding: 14px 16px;
   transition: background-color 0.3s;
@@ -538,5 +588,6 @@ form.sign-in-form {
 }
 
 .tablinks.active {
-  background-color: #fefefe;
+  background-color: #64A5F9;
+  color: white;
 }

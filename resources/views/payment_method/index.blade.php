@@ -3,6 +3,10 @@
 @section('title', 'Payment Methods')
 @section('icon', 'credit-card-search')
 
+@section('button')
+    <a href="{{ route('payment_method.create') }}" class="btn btn-primary">Add New Payment Method</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('payment_method.create') }}" class="btn btn-primary">Add New Payment Method</a>
 <table class="table">
     <thead>
         <tr>

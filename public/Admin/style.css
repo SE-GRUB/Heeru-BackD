@@ -41,21 +41,25 @@ nav{
     overflow-y: scroll;
 }
 nav::-webkit-scrollbar {
-    width: 12px;
-    background-color: var(--primary-color); 
+    /* width: 12px; */
+    /* background-color: var(--primary-color);  */
+    background-color: transparent;
 }
 
 nav::-webkit-scrollbar-track {
-    background: var(--toggle-color);
+    /* background: var(--toggle-color); */
+    background-color: transparent;
 }
 
 nav::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 10px;
+    /* background: var(--primary-color);
+    border-radius: 10px; */
+    background-color: transparent;
 }
 
 nav::-webkit-scrollbar-corner {
-    background: var(--toggle-color);
+    /* background: var(--toggle-color); */
+    background-color: transparent;
 }
 nav.close{
     width: 73px;
@@ -230,11 +234,23 @@ nav.close ~ .dashboard .top{
     display: flex;
     flex-direction: column;
 }
-.dash-content .title{
+
+.dash-content .row {
+    margin: 60px 0 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dash-content .row .title{
     display: flex;
     align-items: center;
     margin: 60px 0 30px 0;
 }
+.dash-content .row .button-container {
+    margin-left: auto; 
+}
+
 .dash-content .title i{
     position: relative;
     height: 35px;

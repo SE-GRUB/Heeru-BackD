@@ -3,8 +3,11 @@
 @section('title', 'Program')
 @section('icon', 'book')
 
-@section('content')
+@section('button')
+    <a href="{{ route('program.create') }}" class="btn btn-primary">Add New Program</a>
+@endsection
 
+@section('content')
 <div>
     @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
@@ -12,7 +15,7 @@
     </div>
     @endif
 </div>
-<a href="{{ route('program.create') }}" class="btn btn-primary">Add New Program</a>
+
 <table>
     <thead>
         <tr>

@@ -1,9 +1,13 @@
 @extends('backend.layout')
 
 @section('title', 'Consultation Result')
+@section('icon', 'clipboard-alt')
+
+@section('button')
+    <a href="{{ route('consultation_result.create', ['consultation' => $consultation]) }}" class="btn btn-primary">Add Result</a>
+@endsection
 
 @section('content')
-
 <div>
     @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
@@ -11,7 +15,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('consultation_result.create', ['consultation' => $consultation]) }}" class="btn btn-primary">Add Result</a>
 <h3>Post :</h3>
 <div>{{ $consultation->id }}</div>
 {{-- <h1>{{ $consultation->comment }}</h1> --}}

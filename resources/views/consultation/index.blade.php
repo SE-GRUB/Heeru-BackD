@@ -3,6 +3,10 @@
 @section('title', 'Consultation')
 @section('icon', 'heart')
 
+@section('button')
+    <a href="{{ route('consultation.create') }}" class="btn btn-primary">Add New Consultation</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('consultation.create') }}" class="btn btn-primary">Add New Consultation</a>
 <table>
     <thead>
         <tr>

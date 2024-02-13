@@ -17,6 +17,10 @@
                         <div class="alert alert-danger" role="alert">
                             {{ Session::get('error') }}
                         </div>
+                    @elseif (Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('success') }}
+                        </div>
                     @endif
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
@@ -33,7 +37,7 @@
                     </div>                    
                     <span id="errortext2" class="text-danger hide">text</span>
                     <input type="button" value="Login" class="btn solid" id="loginBtn">
-                    <a href="#" onclick="openResetPasswordModal()">Reset Password</a>
+                    <a href="#" class="reset" onclick="openResetPasswordModal()">Reset Password</a>
                 </form>
             </div>
         </div>
@@ -133,68 +137,26 @@
             });
         });
     </script>
-    <script>
-        function openTab(evt, tabName) {
-          var i, tabcontent, tablinks;
-          tabcontent = document.getElementsByClassName("tabcontent");
-          for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-          }
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
-          document.getElementById(tabName).style.display = "block";
-          evt.currentTarget.className += " active";
-        }
-      </script>
-      
-      <!-- JavaScript untuk membuka dan menutup modal serta menangani submit form -->
-      <script>
-        // Fungsi untuk membuka modal
-        function openResetPasswordModal() {
-          document.getElementById('resetPasswordModal').style.display = 'block';
-        }
-      
-        // Fungsi untuk menutup modal
-        function closeResetPasswordModal() {
-          document.getElementById('resetPasswordModal').style.display = 'none';
-        }
-      
-        // Fungsi untuk menangani submit form untuk nomor telepon
-        document.getElementById('phoneForm').addEventListener('submit', function(event) {
-          event.preventDefault(); // Mencegah submit form secara default
-      
-          // Lakukan validasi dan reset password untuk nomor telepon di sini
-      
-          // Tutup modal setelah submit berhasil
-          closeResetPasswordModal();
-        });
-      
-        // Fungsi untuk menangani submit form untuk email
-        document.getElementById('emailForm').addEventListener('submit', function(event) {
-          event.preventDefault(); // Mencegah submit form secara default
-      
-          // Lakukan validasi dan reset password untuk email di sini
-      
-          // Tutup modal setelah submit berhasil
-          closeResetPasswordModal();
-        });
-      </script>
-
-      <!-- Modal -->
+    <!-- Modal -->
 <div id="resetPasswordModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
+          <div class="modal-title">
+              <h2>Reset Password</h2>
+            </div>
         <span class="close" onclick="closeResetPasswordModal()">&times;</span>
-        <h2>Reset Password</h2>
       </div>
       <div class="tabs">
         <button class="tablinks active" onclick="openTab(event, 'phone')">Phone Number</button>
         <button class="tablinks" onclick="openTab(event, 'email')">Email</button>
       </div>
       <div id="phone" class="tabcontent">
-        <form id="phoneForm">
+        <form id="phoneForm" method="POST" action="{{ route('reset.phone') }}">
+            @csrf
+            <div class="note">
+                <span><b>Note: </b><br>Phone Number Inserted  Must Be Registered With Us.</span><br>
+                <em>Nomor telepon yang dimasukkan adalah nomor telepon yang telah didaftarkan.</em></span>
+            </div>
             <div class="input-field">
                 <i class="fas fa-user"></i>
                 <input type="number" name="phone_nip" id="phone_nip" placeholder="NIP" autocomplete="off" autofocus>
@@ -202,7 +164,7 @@
             <span id="errortext3" class="text-danger hide">text</span>
             <div class="input-field">
                 <i class="fas fa-phone-alt"></i>
-                <input type="text" name="phone" id="phone" placeholder="Phone Number" autocomplete="off" autofocus>
+                <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number" autocomplete="off" autofocus>
             </div>
             <span id="errortext4" class="text-danger hide">text</span>
             <div class="input-field">
@@ -217,7 +179,12 @@
         </form>
       </div>
       <div id="email" class="tabcontent" style="display: none;">
-        <form id="emailForm">
+        <form id="emailForm" action="{{ route('reset.email') }}" method="POST">
+            @csrf
+            <div class="note">
+                <span><b>Note: </b><br>Email Inserted  Must Be Registered With Us.</span><br>
+                <em>Email yang dimasukkan adalah email yang telah didaftarkan.</em></span>
+            </div>
             <div class="input-field">
                 <i class="fas fa-user"></i>
                 <input type="number" name="email_nip" id="email_nip" placeholder="NIP" autocomplete="off" autofocus>
@@ -225,7 +192,7 @@
             <span id="errortext6" class="text-danger hide">text</span>
             <div class="input-field">
                 <i class="fas fa-envelope"></i>
-                <input type="text" name="email" id="email" placeholder="Email" autocomplete="off" autofocus>
+                <input type="text" name="email_reset" id="email_reset" placeholder="Email" autocomplete="off" autofocus>
             </div>
             <span id="errortext7" class="text-danger hide">text</span>
             <div class="input-field">
@@ -241,5 +208,167 @@
       </div>
     </div>
   </div>
+    <script>
+        function openTab(evt, tabName) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(tabName).style.display = "block";
+          evt.currentTarget.className += " active";
+        }
+      </script>
+      <script>
+        function openResetPasswordModal() {
+          document.getElementById('resetPasswordModal').style.display = 'block';
+        }
+        function closeResetPasswordModal() {
+          document.getElementById('resetPasswordModal').style.display = 'none';
+        }
+
+        function validatePhoneNumber(phoneNumber) {
+            var regex = /^(\+62|62|0)(\d{8,15})$/;
+            return regex.test(phoneNumber);
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+      
+        // Fungsi untuk menangani submit form untuk nomor telepon
+        document.getElementById('phoneForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var nip = document.getElementById("phone_nip");
+            var no_telp = document.getElementById("phone_number");
+            var new_password = document.getElementById("new_password");
+
+            var errortext3 = document.getElementById("errortext3");
+            var errortext4 = document.getElementById("errortext4");
+            var errortext5 = document.getElementById("errortext5");
+
+            if(nip.value.trim() === ""){
+                errortext3.innerHTML = "NIP cannot be empty";
+                errortext3.classList.remove("hide");
+            } else {
+                errortext3.classList.add("hide");
+            }
+
+            if(no_telp.value.trim() === ""){
+                errortext4.innerHTML = "Phone number cannot be empty";
+                errortext4.classList.remove("hide");
+            } else {
+                errortext4.classList.add("hide");
+                if (validatePhoneNumber(no_telp.value)) {
+                    if (no_telp.value.startsWith('+62')) {
+                        no_telp.value = '0' + no_telp.value.substring(3);
+                    }
+                    errortext4.classList.add("hide");
+                } else {
+                    errortext4.innerHTML  = "Phone number is not valid";
+                    errortext4.classList.remove("hide");
+                }
+            }
+
+            if(new_password.value.trim() === ""){
+                errortext5.innerHTML = "Password cannot be empty";
+                errortext5.classList.remove("hide");
+            } else {
+                errortext5.classList.add("hide");
+                if(!/[A-Z]/.test(new_password.value)){
+                    errortext5.innerText = "Your password must contain at least one uppercase letter";
+                    errortext5.classList.remove("hide");
+                } else {
+                    if (new_password.value.length < 8 ) {
+                        errortext5.innerHTML = "Password must be at least 8 characters long";
+                        errortext5.classList.remove("hide");
+                    } else {
+                        if(!/[a-z]/.test(new_password.value)){
+                            errortext5.innerText = "Your password must contain at least one lowercase letter";
+                            errortext5.classList.remove("hide");
+                        } else {
+                            if(!/\d/.test(new_password.value)){
+                                errortext5.innerText = "Your password must contain at least one number.";
+                                errortext5.classList.remove("hide");
+                            } else {
+                                errortext5.classList.add('hide');
+                                document.getElementById('phoneForm').submit();
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        });
+      
+        // Fungsi untuk menangani submit form untuk email
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var email_nip = document.getElementById("email_nip");
+            var email = document.getElementById("email_reset");
+            var new_password_email = document.getElementById("new_password_email");
+
+            var errortext6 = document.getElementById("errortext6");
+            var errortext7 = document.getElementById("errortext7");
+            var errortext8 = document.getElementById("errortext8");
+
+            if(email_nip.value.trim() === ""){
+                errortext6.innerHTML = "NIP cannot be empty";
+                errortext6.classList.remove("hide");
+            } else {
+                errortext6.classList.add("hide");
+            }
+
+            if(email.value.trim() === ""){
+                errortext7.innerHTML = "Email cannot be empty";
+                errortext7.classList.remove("hide");
+            } else {
+                errortext7.classList.add("hide");
+                if (validateEmail(email.value)) {
+                    errortext7.classList.add("hide");
+                } else {
+                    errortext7.innerHTML  = "Email is not valid";
+                    errortext7.classList.remove("hide");
+                }
+            }
+
+            if(new_password_email.value.trim() === ""){
+                errortext8.innerHTML = "Password cannot be empty";
+                errortext8.classList.remove("hide");
+            } else {
+                errortext8.classList.add("hide");
+                if(!/[A-Z]/.test(new_password_email.value)){
+                    errortext8.innerText = "Your password must contain at least one uppercase letter";
+                    errortext8.classList.remove("hide");
+                } else {
+                    if (new_password_email.value.length < 8 ) {
+                        errortext8.innerHTML = "Password must be at least 8 characters long";
+                        errortext8.classList.remove("hide");
+                    } else {
+                        if(!/[a-z]/.test(new_password_email.value)){
+                            errortext8.innerText = "Your password must contain at least one lowercase letter";
+                            errortext8.classList.remove("hide");
+                        } else {
+                            if(!/\d/.test(new_password_email.value)){
+                                errortext8.innerText = "Your password must contain at least one number.";
+                                errortext8.classList.remove("hide");
+                            } else {
+                                errortext8.classList.add('hide');
+                                document.getElementById('emailForm').submit();
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        });
+      </script>
 </body>
 </html>

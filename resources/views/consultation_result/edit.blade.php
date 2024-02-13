@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Edit Result')
+@section('icon', 'clipboard-alt')
 
 @section('content')
     <div class="container mt-5">

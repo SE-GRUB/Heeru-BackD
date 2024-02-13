@@ -1,6 +1,7 @@
 @extends('backend.layout')
 
 @section('title', 'Add Result')
+@section('icon', 'clipboard-alt')
 
 @section('content')
     <div class="container mt-5">
@@ -15,7 +16,7 @@
         @endif
         <form action="{{ route('consultation_result.store', ['consultation' => $consultation]) }}" method="post" enctype="multipart/form-data">
             <!-- CSRF Token for Laravel -->
-            @csrfa
+            @csrf
             @method("post")
             <input type="hidden" name="counselor_id" value="{{ $consultation->counselor_id }}">
             <input type="hidden" name="student_id" value="{{ $consultation->student_id }}">

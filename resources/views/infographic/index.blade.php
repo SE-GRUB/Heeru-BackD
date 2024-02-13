@@ -3,6 +3,10 @@
 @section('title', 'Infographic')
 @section('icon', 'image-v')
 
+@section('button')
+    <a href="{{ route('infographic.create') }}" class="btn btn-primary">Add New Infographic</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('infographic.create') }}" class="btn btn-primary">Add New Infographic</a>
 <table>
     <thead>
         <tr>

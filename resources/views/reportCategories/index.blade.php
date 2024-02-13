@@ -3,6 +3,10 @@
 @section('title', 'Report Categories')
 @section('icon', 'folder')
 
+@section('button')
+    <a href="{{ route('report_category.create') }}" class="btn btn-primary">Add New Report Category</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('report_category.create') }}" class="btn btn-primary">Add New Report Category</a>
 <table>
     <thead>
         <tr>

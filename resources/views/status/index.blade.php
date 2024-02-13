@@ -3,6 +3,11 @@
 @section('title', 'Report Status')
 @section('icon', 'share')
 
+@section('button')
+    {{-- Statusnya jangan dicreate  --}}
+    <a href="{{ route('status.create') }}" class="btn btn-primary">Add Status</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,8 +17,6 @@
     </div>
     @endif
 </div>
-{{-- Statusnya jangan dicreate  --}}
-<a href="{{ route('status.create') }}" class="btn btn-primary">Add Status</a>
 <table>
     <thead>
         <tr>

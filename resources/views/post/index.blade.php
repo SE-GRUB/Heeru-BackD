@@ -3,6 +3,10 @@
 @section('title', 'Posts')
 @section('icon', 'postcard')
 
+@section('button')
+    <a href="{{ route('post.create') }}" class="btn btn-primary">Add New Post</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('post.create') }}" class="btn btn-primary">Add New Post</a>
 <table>
     <thead>
         <tr>

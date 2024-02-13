@@ -3,6 +3,10 @@
 @section('title', 'User')
 @section('icon', 'user')
 
+@section('button')
+    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New User</a>
+@endsection
+
 @section('content')
 
 <div>
@@ -12,7 +16,6 @@
     </div>
     @endif
 </div>
-<a href="{{ route('user.create') }}" class="btn btn-primary">Add New User</a>
 <table>
     <thead>
         <tr>
