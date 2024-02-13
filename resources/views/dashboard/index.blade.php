@@ -4,6 +4,39 @@
 @section('icon', 'tachometer-fast')
 
 @section('content')
+<style>
+    .nav.nav-tabs {
+        margin-bottom: 20px;
+    }
+
+    .nav.nav-tabs .badge {
+        margin-left: 5px;
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+
+    .card-columns {
+        column-count: 1;
+    }
+
+    .card-columns .card {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    @media (min-width: 768) {
+        .card-columns {
+            column-count: 2;
+        }
+
+        .card-columns .card {
+            width: auto;
+        }
+    }
+</style>
 
 <div>
     @if(session()->has('success'))

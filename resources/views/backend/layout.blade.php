@@ -40,25 +40,10 @@
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="{{ route('dashboard_report.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
-                </a></li>
-                <li><a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
-                    <i class="uil uil-user"></i>
-                    <span class="link-name">User</span>
-                </a></li>
-                <li><a href="{{ route('program.index') }}" class="{{ request()->routeIs('program.index') ? 'active' : '' }}">
-                    <i class="uil uil-book"></i>
-                    <span class="link-name">Program</span>
-                </a></li>
+                @if (Auth::user()->role ===  "admin")
                 <li><a href="{{ route('report.index') }}" class="{{ request()->routeIs('report.index') ? 'active' : '' }}">
                     <i class="uil uil-file-graph"></i>
                     <span class="link-name">Report</span>
-                </a></li>
-                <li><a href="{{ route('report_category.index') }}" class="{{ request()->routeIs('report_category.index') ? 'active' : '' }}">
-                    <i class="uil uil-folder"></i>
-                    <span class="link-name">Report Category</span>
                 </a></li>
                 <li><a href="{{ route('post.index') }}" class="{{ request()->routeIs('post.index') ? 'active' : '' }}">
                     <i class="uil uil-postcard"></i>
@@ -84,6 +69,24 @@
                     <i class="uil uil-share"></i>
                     <span class="link-name">Status</span>
                 </a></li>
+                @else
+                <li><a href="{{ route('dashboard_report.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dashboard</span>
+                </a></li>
+                <li><a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
+                    <i class="uil uil-user"></i>
+                    <span class="link-name">User</span>
+                </a></li>
+                <li><a href="{{ route('program.index') }}" class="{{ request()->routeIs('program.index') ? 'active' : '' }}">
+                    <i class="uil uil-book"></i>
+                    <span class="link-name">Program</span>
+                </a></li>
+                <li><a href="{{ route('report_category.index') }}" class="{{ request()->routeIs('report_category.index') ? 'active' : '' }}">
+                    <i class="uil uil-folder"></i>
+                    <span class="link-name">Report Category</span>
+                </a></li>
+                @endif
             </ul>            
             
             <ul class="logout-mode">

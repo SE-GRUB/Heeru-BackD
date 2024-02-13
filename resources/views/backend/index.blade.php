@@ -5,6 +5,6 @@
 
 @section('content')
     <!-- Add your index page content here -->
-    <p>Welcome to the dashboard!</p>
+    <h4>Welcome to Heeru, <b>{{Auth::user()->name}}</b>!<br>You're logged in as <b>{{Auth::user()->role}}</b>.</h4>
     <!-- Add more content as needed -->
 @endsection
