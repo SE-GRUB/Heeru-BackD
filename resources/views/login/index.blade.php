@@ -13,6 +13,7 @@
             <div class="signin-signup">
                 <form action="{{ route('actionlogin') }}" method="POST" id="formLogin" class="sign-in-form">
                     @csrf
+                    @method('post')
                     @if(Session::has('error'))
                         <div class="alert alert-danger" role="alert">
                             {{ Session::get('error') }}
@@ -36,7 +37,7 @@
                         </button>                            
                     </div>                    
                     <span id="errortext2" class="text-danger hide">text</span>
-                    <input type="button" value="Login" class="btn solid" id="loginBtn">
+                    <input type="submit" value="Login" class="btn solid" id="loginBtn">
                     <a href="#" class="reset" onclick="openResetPasswordModal()">Reset Password</a>
                 </form>
             </div>
@@ -65,7 +66,9 @@
         var errortext1=document.getElementById("errortext1");
         var errortext2=document.getElementById("errortext2");
 
-        login_btn.addEventListener("click", () => {
+        document.getElementById("formLogin").addEventListener('submit', function(event) {
+            event.preventDefault();
+            // container.classList.add("fullscreen-mode");
             if(nip.value.trim() === ""){
                 errortext1.innerHTML="Please input your NIP";
                 errortext1.classList.remove("hide");
@@ -153,6 +156,7 @@
       <div id="phone" class="tabcontent">
         <form id="phoneForm" method="POST" action="{{ route('reset.phone') }}">
             @csrf
+            @method('post')
             <div class="note">
                 <span><b>Note: </b><br>Phone Number Inserted  Must Be Registered With Us.</span><br>
                 <em>Nomor telepon yang dimasukkan adalah nomor telepon yang telah didaftarkan.</em></span>
@@ -181,6 +185,7 @@
       <div id="email" class="tabcontent" style="display: none;">
         <form id="emailForm" action="{{ route('reset.email') }}" method="POST">
             @csrf
+            @method('post')
             <div class="note">
                 <span><b>Note: </b><br>Email Inserted  Must Be Registered With Us.</span><br>
                 <em>Email yang dimasukkan adalah email yang telah didaftarkan.</em></span>

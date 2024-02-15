@@ -8,6 +8,9 @@
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('Admin/style.css') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <?php
+        $useDatatables = true;
+    ?>
     @if(isset($useDatatables) && $useDatatables)
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     @endif
