@@ -160,7 +160,7 @@
                 $('#studentFields').hide();
                 $('#picFields').hide();
                 $('#counselorFields').show();
-                $('#photoFields').hide();
+                $('#photoFields').show();
             }
             $('#role').change(function(){
                 if($(this).val() === 'student'){
@@ -182,7 +182,7 @@
                     $('#studentFields').hide();
                     $('#picFields').hide();
                     $('#counselorFields').show();
-                    $('#photoFields').hide();
+                    $('#photoFields').show();
                 }
             });
             document.getElementById('profile_pic').addEventListener('change', function (event) {

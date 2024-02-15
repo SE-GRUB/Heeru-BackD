@@ -104,7 +104,6 @@ class UserController extends Controller
                 'email' => 'required',
                 'nip' => 'required|numeric',
                 'password' => 'required',
-                'profile_pic' => 'required',
             ]);
             $data['password'] = Hash::make($data['password']);
 
@@ -115,7 +114,7 @@ class UserController extends Controller
                 'role' => 'required',
                 'no_telp' => 'required|unique:users,no_telp',
                 'email' => 'required',
-                'fare' => 'required|numeric'
+                'fare' => 'required|numeric',
             ]);
             $data['nip'] = generateNIP();
             $data['rating'] = 0;
@@ -123,7 +122,7 @@ class UserController extends Controller
 
         $newUser = User::create($data);
 
-        if ($request['role'] == 'pic' || $request['role'] == 'admin') {
+        if ($request['role'] == 'pic' || $request['role'] == 'admin' || $request['role'] == 'counselor') {
             $data = $request->validate([
                 'profile_pic' => 'required',
             ]);
@@ -165,6 +164,17 @@ class UserController extends Controller
                 $user['fare'] = null;
                 $user['rating'] = null;
             }
+            $data['password'] = Hash::make($request->input('password'));
+        } elseif ($request['role'] == 'counselor') {
+            if ($user['role'] != $request['role']) {
+                $user['program_id'] = null;
+                $user['nip'] = null;
+            }
+            $data['fare'] = $request->input('fare');
+            $data['rating'] = 0;
+        }
+
+        if ($request['role'] == 'counselor' || $request['role'] == 'admin' || $request['role'] == 'pic'){
             if($request->hasfile('profile_pic')){
                 $profilePicFolderPath = public_path('photo_profile/' .  $user['id']);
                 if (File::exists($profilePicFolderPath)) {
@@ -175,14 +185,6 @@ class UserController extends Controller
                 $paths = $this->uploadedFile0($files, $path);
                 $data['profile_pic'] = $paths;
             }
-            $data['password'] = Hash::make($request->input('password'));
-        } elseif ($request['role'] == 'counselor') {
-            if ($user['role'] != $request['role']) {
-                $user['program_id'] = null;
-                $user['nip'] = null;
-            }
-            $data['fare'] = $request->input('fare');
-            $data['rating'] = 0;
         }
         // dd($data);
         $user->update($data);
