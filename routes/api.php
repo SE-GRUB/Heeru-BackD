@@ -26,3 +26,5 @@ Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('pr
 Route::get('/checkPass', [UserController::class,'checkPass'])->name('pass.check');
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
+Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
+

@@ -268,4 +268,33 @@ class UserController extends Controller
     // public function drivepoin(Request $request){
     //     return view('users.show', ['user' => $user]);
     // }
+
+    public function showCounselor()
+{
+    $counselors = User::where('role', 'counselor')->get();
+
+    if ($counselors->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'There are no counselors registered',
+        ]);
+    }
+
+    $dataCounselors = [];
+
+    foreach ($counselors as $counselor) {
+        $dataCounselors[] = [
+            'user_id' => $counselor->id,
+            'name' => $counselor->name,
+            'rating' => $counselor->rating,
+            'profile_pic' => json_decode($counselor->profile_pic),
+        ];
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Fetched all counselors',
+        'users' => $dataCounselors,
+    ]);
+}
 }
