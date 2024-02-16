@@ -268,6 +268,27 @@ class UserController extends Controller
         return redirect(route('profile'))->with('success', 'Password changed successfully.');
     }
 
+    public function changePhone(Request $request){
+        $request->validate([
+            'new_phone' => 'required',
+        ]);
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->no_telp = $request->new_phone;
+        $user->save();
+        return redirect(route('profile'))->with('success', 'Phone number updated successfully.');
+    }
+
+    public function changeEmail(Request $request)
+    {
+        $request->validate([
+            'new_email' => 'required',
+        ]);
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->email = $request->new_email;
+        $user->save();
+        return redirect(route('profile'))->with('success', 'Email updated successfully.');
+    }
+
     public function checkPass(Request $request){
         try {
             $data = $request->validate([
@@ -330,7 +351,7 @@ class UserController extends Controller
     }
 
     public function getProfile(){
-        $user = Auth::user();
+        $user = User::where('id', Auth::user()->id)->first();
         $userArray = [
             'user_id' => $user->id,
             'name' => $user->name,

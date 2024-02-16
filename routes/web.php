@@ -168,6 +168,8 @@ Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard'
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 // User Profile 
-Route::get('/profile', [UserController::class, 'getProfile'])->name('profile');
-Route::put('/updatePP', [UserController::class, 'updatePP'])->name('update.pp');
-Route::put('/changePass', [UserController::class, 'changePass'])->name('change.password');
+Route::get('/profile', [UserController::class, 'getProfile'])->name('profile')->middleware('auth');
+Route::put('/updatePP', [UserController::class, 'updatePP'])->name('update.pp')->middleware('auth');
+Route::put('/changePass', [UserController::class, 'changePass'])->name('change.password')->middleware('auth');
+Route::put('/changePhone', [UserController::class, 'changePhone'])->name('change.phone')->middleware('auth');
+Route::put('/changeEmail', [UserController::class, 'changeEmail'])->name('change.email')->middleware('auth');

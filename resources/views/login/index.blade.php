@@ -246,7 +246,6 @@
             return emailRegex.test(email);
         }
       
-        // Fungsi untuk menangani submit form untuk nomor telepon
         document.getElementById('phoneForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var nip = document.getElementById("phone_nip");
@@ -312,7 +311,6 @@
             return false;
         });
       
-        // Fungsi untuk menangani submit form untuk email
         document.getElementById('emailForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var email_nip = document.getElementById("email_nip");
