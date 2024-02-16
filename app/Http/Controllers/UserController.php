@@ -35,6 +35,7 @@ class UserController extends Controller
                     'no_telp' => $user->no_telp,
                     'email' => $user->email,
                     'password' => $user->password ? '*******' : '',
+                    'profile_pic' => json_decode($user->profile_pic)[0],
                 ];
                 return response()->json([
                     'success' => true,
