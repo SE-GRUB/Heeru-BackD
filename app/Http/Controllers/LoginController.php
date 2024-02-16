@@ -36,7 +36,7 @@ class LoginController extends Controller
                 return redirect("/")->with('error','NIP or Password Incorrect!');
             }
         }else{
-            return redirect("/")->with('error','Student cannot  access this page!');
+            return redirect("/")->with('error','This page  is only for admin and PIC!');
         }
     }
 

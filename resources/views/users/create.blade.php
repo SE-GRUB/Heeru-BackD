@@ -9,6 +9,13 @@
         justify-content: center;
         text-align: center;
     }
+
+    .photoprofile{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    
     .lingkarannya{
         background-color: #D6D6D6;
         width: 100px;
@@ -19,11 +26,6 @@
         justify-content: center;
     }
 
-    .photoprofile{
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
 
     #labelForFileInput{
         width: 100%;

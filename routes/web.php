@@ -43,15 +43,12 @@ Route::get('/dashboard_report/view/{program_id}/{report_category}', [DashboardCo
 Route::get('/dashboard_report/detail/{report}', [DashboardController::class, 'detail'])->name('dashboard_report.detail');
 
 //user route
-
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
-
-
 
 // Progam route
 Route::get('/program', [ProgramController::class, 'index'])->name('program.index');
@@ -159,25 +156,18 @@ Route::get('/status/{status}/edit', [StatusController::class, 'edit'])->name('st
 Route::put('/status/{status}/update', [StatusController::class, 'update'])->name('status.update');
 Route::delete('/status/{status}/destroy', [StatusController::class, 'destroy'])->name('status.destroy');
 
-// Update photo profile
-Route::get('/updateProfile', [UserController::class, 'drivepoin'])->name('drivepoin');
-
-Route::get('/laporanBukti', function (Request $request) {
-    return view('evidence.evidence', ['data' => $request]);
-});
-
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    Lfm::routes();
-});
-
-
 // Make Report API
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
 
-// Auth::routes();
+// Login Logout Reset Pass
 Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
 Route::post('reset_phone', [LoginController::class, 'reset_phone'])->name('reset.phone');
 Route::post('reset_email', [LoginController::class, 'reset_email'])->name('reset.email');
 Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+
+// User Profile 
+Route::get('/profile', [UserController::class, 'getProfile'])->name('profile');
+Route::put('/updatePP', [UserController::class, 'updatePP'])->name('update.pp');
+Route::put('/changePass', [UserController::class, 'changePass'])->name('change.password');

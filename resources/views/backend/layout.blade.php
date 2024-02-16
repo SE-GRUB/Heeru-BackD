@@ -17,77 +17,92 @@
 </head>
 <body>
     <nav class="close">
-        <div class="logo-name">
-            <div class="logo-image">
-                @if(Auth::check())
-                @php
-                    $profilePic = Auth::user()->profile_pic ? json_decode(Auth::user()->profile_pic)[0] : null;
-                @endphp
-                
-                <img src="{{ $profilePic ? asset($profilePic) : asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">            
-                @else
-                    <img src="{{ asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">
-                @endif
+        <a href="{{ route('profile', ['user' => Auth::user()]) }}"  class="hidden-link">
+            <div class="logo-name">
+                <div class="logo-image">
+                    @if(Auth::check())
+                    @php
+                        $profilePic = Auth::user()->profile_pic ? json_decode(Auth::user()->profile_pic)[0] : null;
+                    @endphp
+                    
+                    <img id="profile_image" src="{{ $profilePic ? asset($profilePic) : asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">            
+                    @else
+                        <img id="profile_image" src="{{ asset('Admin/images/profile.jpg') }}" alt="Gambar Profil Pengguna">
+                    @endif
+                </div>
+    
+                <div class="user-info">
+                    @if (Auth::check())
+                        @php
+                            $userName = Auth::user()->name;
+                            $userNameParts = explode(' ', $userName);
+                            $shortenedName = $userNameParts[0];
+                            if (count($userNameParts) > 1) {
+                                $shortenedName .= ' ' . $userNameParts[1];
+                                for ($i = 2; $i < count($userNameParts); $i++) {
+                                    $shortenedName .= ' ' . substr($userNameParts[$i], 0, 1) . '.';
+                                }
+                            }
+                        @endphp
+                        <span class="logo_name">{{ $shortenedName }}</span>
+                        <span class="role">{{ Auth::user()->role }}</span>
+                    @else
+                        <span class="logo_name">USERNAME</span>
+                        <span class="role">ROLE</span>
+                    @endif
+                </div>
             </div>
-
-            <div class="user-info">
-                @if (Auth::check())
-                    <span class="logo_name">{{ Auth::user()->name }}</span>
-                    <span class="role">{{ Auth::user()->role }}</span>
-                @else
-                    <span class="logo_name">USERNAME</span>
-                    <span class="role">ROLE</span>
-                @endif
-            </div>
-        </div>
+        </a>
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="{{ route('dashboard_report.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
-                </a></li>
-                <li><a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
-                    <i class="uil uil-user"></i>
-                    <span class="link-name">User</span>
-                </a></li>
-                <li><a href="{{ route('program.index') }}" class="{{ request()->routeIs('program.index') ? 'active' : '' }}">
-                    <i class="uil uil-book"></i>
-                    <span class="link-name">Program</span>
-                </a></li>
-                <li><a href="{{ route('report_category.index') }}" class="{{ request()->routeIs('report_category.index') ? 'active' : '' }}">
-                    <i class="uil uil-folder"></i>
-                    <span class="link-name">Report Category</span>
-                </a></li>
-                @if (Auth::user()->role ===  "admin")
-                <li><a href="{{ route('report.index') }}" class="{{ request()->routeIs('report.index') ? 'active' : '' }}">
-                    <i class="uil uil-file-graph"></i>
-                    <span class="link-name">Report</span>
-                </a></li>
-                <li><a href="{{ route('post.index') }}" class="{{ request()->routeIs('post.index') ? 'active' : '' }}">
-                    <i class="uil uil-postcard"></i>
-                    <span class="link-name">Post</span>
-                </a></li>
-                <li><a href="{{ route('infographic.index') }}" class="{{ request()->routeIs('infographic.index') ? 'active' : '' }}">
-                    <i class="uil uil-image-v"></i>
-                    <span class="link-name">Infographic</span>
-                </a></li>
-                <li><a href="{{ route('consultation.index') }}" class="{{ request()->routeIs('consultation.index') ? 'active' : '' }}">
-                    <i class="uil uil-heart"></i>
-                    <span class="link-name">Consultation</span>
-                </a></li>
-                <li><a href="{{ route('payment_method.index') }}" class="{{ request()->routeIs('payment_method.index') ? 'active' : '' }}">
-                    <i class="uil uil-credit-card-search"></i>
-                    <span class="link-name">Payment Method</span>
-                </a></li>
-                <li><a href="{{ route('payment.index') }}" class="{{ request()->routeIs('payment.index') ? 'active' : '' }}">
-                    <i class="uil uil-bill"></i>
-                    <span class="link-name">Payment</span>
-                </a></li>
-                <li><a href="{{ route('status.index') }}" class="{{ request()->routeIs('status.index') ? 'active' : '' }}">
-                    <i class="uil uil-share"></i>
-                    <span class="link-name">Status</span>
-                </a></li>
+                @if (Auth::check())
+                    <li><a href="{{ route('dashboard_report.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dashboard</span>
+                    </a></li>
+                    <li><a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">User</span>
+                    </a></li>
+                    <li><a href="{{ route('program.index') }}" class="{{ request()->routeIs('program.index') ? 'active' : '' }}">
+                        <i class="uil uil-book"></i>
+                        <span class="link-name">Program</span>
+                    </a></li>
+                    <li><a href="{{ route('report_category.index') }}" class="{{ request()->routeIs('report_category.index') ? 'active' : '' }}">
+                        <i class="uil uil-folder"></i>
+                        <span class="link-name">Report Category</span>
+                    </a></li>
+                    @if (Auth::user()->role ===  "admin")
+                    <li><a href="{{ route('report.index') }}" class="{{ request()->routeIs('report.index') ? 'active' : '' }}">
+                        <i class="uil uil-file-graph"></i>
+                        <span class="link-name">Report</span>
+                    </a></li>
+                    <li><a href="{{ route('post.index') }}" class="{{ request()->routeIs('post.index') ? 'active' : '' }}">
+                        <i class="uil uil-postcard"></i>
+                        <span class="link-name">Post</span>
+                    </a></li>
+                    <li><a href="{{ route('infographic.index') }}" class="{{ request()->routeIs('infographic.index') ? 'active' : '' }}">
+                        <i class="uil uil-image-v"></i>
+                        <span class="link-name">Infographic</span>
+                    </a></li>
+                    <li><a href="{{ route('consultation.index') }}" class="{{ request()->routeIs('consultation.index') ? 'active' : '' }}">
+                        <i class="uil uil-heart"></i>
+                        <span class="link-name">Consultation</span>
+                    </a></li>
+                    <li><a href="{{ route('payment_method.index') }}" class="{{ request()->routeIs('payment_method.index') ? 'active' : '' }}">
+                        <i class="uil uil-credit-card-search"></i>
+                        <span class="link-name">Payment Method</span>
+                    </a></li>
+                    <li><a href="{{ route('payment.index') }}" class="{{ request()->routeIs('payment.index') ? 'active' : '' }}">
+                        <i class="uil uil-bill"></i>
+                        <span class="link-name">Payment</span>
+                    </a></li>
+                    <li><a href="{{ route('status.index') }}" class="{{ request()->routeIs('status.index') ? 'active' : '' }}">
+                        <i class="uil uil-share"></i>
+                        <span class="link-name">Status</span>
+                    </a></li>
+                    @endif
                 @endif
             </ul>            
             
@@ -140,6 +155,7 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     @endif
     <script src="{{ asset('Admin/script.js') }}"></script>
+    @stack('scripts')
     <script>
         $(document).ready(function(){
             if($('#role').val() === 'student'){
@@ -184,7 +200,7 @@
                     $('#counselorFields').show();
                     $('#photoFields').show();
                 }
-            });
+            }); 
             document.getElementById('profile_pic').addEventListener('change', function (event) {
                 const fileInput = event.target;
                 document.getElementById("pensil").style.display = "none";

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
@@ -234,6 +235,39 @@ class UserController extends Controller
         }
     }
 
+    public function updatePP(Request $request){
+        $data = $request->validate([
+            'profile_pic' => 'required',
+        ]);
+
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $profilePicFolderPath = public_path('photo_profile/' .  $user['id']);
+        if (File::exists($profilePicFolderPath)) {
+            File::deleteDirectory($profilePicFolderPath);
+        }
+
+        $files = $request->file('profile_pic');
+        $path = 'photo_profile/' . $user->id;
+        $paths = $this->uploadedFile0($files, $path);
+
+        $data['profile_pic']= $paths;
+        $user->update($data);
+        return redirect(route('profile'))->with('success', 'Profile Image Updated Successfully');
+    }
+
+    public function changePass(Request $request){
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required',
+        ]);
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return redirect(route('profile'))->with('success', 'Password changed successfully.');
+    }
+
     public function checkPass(Request $request){
         try {
             $data = $request->validate([
@@ -267,36 +301,44 @@ class UserController extends Controller
         return redirect(route('user.index'))->with('success', 'User Deleted Successfully');
     }
 
-    // public function drivepoin(Request $request){
-    //     return view('users.show', ['user' => $user]);
-    // }
+    public function showCounselor(){
+        $counselors = User::where('role', 'counselor')->get();
 
-    public function showCounselor()
-{
-    $counselors = User::where('role', 'counselor')->get();
+        if ($counselors->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'There are no counselors registered',
+            ]);
+        }
 
-    if ($counselors->isEmpty()) {
+        $dataCounselors = [];
+
+        foreach ($counselors as $counselor) {
+            $dataCounselors[] = [
+                'user_id' => $counselor->id,
+                'name' => $counselor->name,
+                'rating' => $counselor->rating,
+                'profile_pic' => json_decode($counselor->profile_pic),
+            ];
+        }
+
         return response()->json([
-            'success' => false,
-            'message' => 'There are no counselors registered',
+            'success' => true,
+            'message' => 'Fetched all counselors',
+            'users' => $dataCounselors,
         ]);
     }
 
-    $dataCounselors = [];
-
-    foreach ($counselors as $counselor) {
-        $dataCounselors[] = [
-            'user_id' => $counselor->id,
-            'name' => $counselor->name,
-            'rating' => $counselor->rating,
-            'profile_pic' => json_decode($counselor->profile_pic),
+    public function getProfile(){
+        $user = Auth::user();
+        $userArray = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'role' => $user-> role,
+            'no_telp' => $user->no_telp,
+            'email' => $user->email,
+            'profile_pic' => json_decode($user->profile_pic)[0],
         ];
+        return view('profile.index', ['user' => $userArray]);
     }
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Fetched all counselors',
-        'users' => $dataCounselors,
-    ]);
-}
 }
