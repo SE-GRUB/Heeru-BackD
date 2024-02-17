@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ asset('asset/favicon.ico') }}">
     <title>@yield('title', 'Backend')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('Admin/style.css') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <?php
-        $useDatatables = true;
-    ?>
-    @if(isset($useDatatables) && $useDatatables)
+    
+    <?php $useDatatables = isset($__env->getSections()['useDatatables']) ? (bool) $__env->getSections()['useDatatables'] : true; ?>
+
+    @if($useDatatables)
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     @endif
+
+
 </head>
 <body>
     <nav class="close">
-        <a href="{{ route('profile', ['user' => Auth::user()]) }}"  class="hidden-link">
+        <a href="{{ route('profile') }}"  class="hidden-link">
             <div class="logo-name">
                 <div class="logo-image">
                     @if(Auth::check())
@@ -117,7 +119,11 @@
 
     <section class="dashboard">
         <div class="top">
-            <img src="{{ asset('Admin/images/logo.png') }}" alt="HEERU">
+            <div class="left-top"></div>
+            <div class="logoo">
+                <img src="{{ asset('Admin/images/logo.png') }}" alt="HEERU">
+            </div>
+            <div class="date-time" id="date-time"></div>
         </div>
 
         <div class="dash-content">
@@ -151,70 +157,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @if(isset($useDatatables) && $useDatatables)
+    @if($useDatatables)
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     @endif
     <script src="{{ asset('Admin/script.js') }}"></script>
     @stack('scripts')
-    <script>
-        $(document).ready(function(){
-            if($('#role').val() === 'student'){
-                $('#studentFields').show();
-                $('#picFields').show();
-                $('#counselorFields').hide();
-                $('#adminFields').hide();
-                $('#photoFields').hide();
-
-            } else if (($('#role').val() === 'pic' ) || ($('#role').val() === 'admin')) {
-                $('#picFields').show();
-                $('#adminFields').show();
-                $('#photoFields').show();
-                $('#studentFields').hide();
-                $('#counselorFields').hide();
-            } else {
-                $('#adminFields').hide();
-                $('#studentFields').hide();
-                $('#picFields').hide();
-                $('#counselorFields').show();
-                $('#photoFields').show();
-            }
-            $('#role').change(function(){
-                if($(this).val() === 'student'){
-                    $('#studentFields').show();
-                    $('#picFields').show();
-                    $('#counselorFields').hide();
-                    $('#adminFields').hide();
-                    $('#photoFields').hide();
-
-                } else if ($(this).val() === 'pic' || $('#role').val() === 'admin') {
-                    $('#picFields').show();
-                    $('#adminFields').show();
-                    $('#photoFields').show();
-                    $('#studentFields').hide();
-                    $('#counselorFields').hide();
-
-                } else {
-                    $('#adminFields').hide();
-                    $('#studentFields').hide();
-                    $('#picFields').hide();
-                    $('#counselorFields').show();
-                    $('#photoFields').show();
-                }
-            }); 
-            document.getElementById('profile_pic').addEventListener('change', function (event) {
-                const fileInput = event.target;
-                document.getElementById("pensil").style.display = "none";
-                if (fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        document.getElementById("profileImage").src = e.target.result;
-                        document.getElementById("profileImage").style.display = "block";
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            });
-        });
-    </script>
 </body>
 </html>

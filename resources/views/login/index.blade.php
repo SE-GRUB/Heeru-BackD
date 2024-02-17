@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('Login/style.css') }}">
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('asset/favicon.ico') }}">
 </head>
 <body>
     <div class="container">

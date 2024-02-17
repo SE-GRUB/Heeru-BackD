@@ -1,3 +1,26 @@
+function formatDateTime() {
+    const now = new Date();
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const dayOfWeek = days[now.getDay()];
+    const dayOfMonth = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+
+    hours = ('0' + hours).slice(-2);
+    minutes = ('0' + minutes).slice(-2);
+    seconds = ('0' + seconds).slice(-2);
+
+    const formattedDateTime = `${dayOfWeek},<br>${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+
+    document.getElementById('date-time').innerHTML = formattedDateTime;
+}
+formatDateTime();
+setInterval(formatDateTime, 1000);
+
 $(document).ready(function () {
     $('table').DataTable();
 });

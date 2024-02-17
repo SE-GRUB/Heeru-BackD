@@ -146,4 +146,66 @@
             <button type="submit" class="btn btn-primary">Add User</button>
         </form>
     </div>
+    @push('scripts')
+    <script>
+        $(document).ready(function(){
+            if($('#role').val() === 'student'){
+                $('#studentFields').show();
+                $('#picFields').show();
+                $('#counselorFields').hide();
+                $('#adminFields').hide();
+                $('#photoFields').hide();
+
+            } else if (($('#role').val() === 'pic' ) || ($('#role').val() === 'admin')) {
+                $('#picFields').show();
+                $('#adminFields').show();
+                $('#photoFields').show();
+                $('#studentFields').hide();
+                $('#counselorFields').hide();
+            } else {
+                $('#adminFields').hide();
+                $('#studentFields').hide();
+                $('#picFields').hide();
+                $('#counselorFields').show();
+                $('#photoFields').show();
+            }
+            $('#role').change(function(){
+                if($(this).val() === 'student'){
+                    $('#studentFields').show();
+                    $('#picFields').show();
+                    $('#counselorFields').hide();
+                    $('#adminFields').hide();
+                    $('#photoFields').hide();
+
+                } else if ($(this).val() === 'pic' || $('#role').val() === 'admin') {
+                    $('#picFields').show();
+                    $('#adminFields').show();
+                    $('#photoFields').show();
+                    $('#studentFields').hide();
+                    $('#counselorFields').hide();
+
+                } else {
+                    $('#adminFields').hide();
+                    $('#studentFields').hide();
+                    $('#picFields').hide();
+                    $('#counselorFields').show();
+                    $('#photoFields').show();
+                }
+            }); 
+            document.getElementById('profile_pic').addEventListener('change', function (event) {
+                const fileInput = event.target;
+                document.getElementById("pensil").style.display = "none";
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById("profileImage").src = e.target.result;
+                        document.getElementById("profileImage").style.display = "block";
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            });
+        });
+    </script>        
+    @endpush
 @endsection

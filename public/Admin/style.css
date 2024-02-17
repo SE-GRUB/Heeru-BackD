@@ -234,9 +234,9 @@ nav.close ~ .dashboard{
     left: 250px;
     display: flex;
     width: calc(100% - 250px);
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 14px;
+    padding: 10px 20px;
     background-color: var(--panel-color);
     transition: var(--tran-05);
     z-index: 10;
@@ -245,8 +245,38 @@ nav.close ~ .dashboard .top{
     left: 73px;
     width: calc(100% - 73px);
 }
-.top img{
+
+.top .left-top{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.top .logoo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top .logoo img{
     width: 100px;
+    max-height: 50px;
+}
+
+.date-time {
+    width: 100%;
+    right: 0;
+    display: flex;
+    justify-content: end;
+    font-size: 16px;
+}
+
+.logo-name {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center; 
 }
 .dashboard .dash-content{
     padding-top: 50px;
@@ -404,4 +434,9 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+.btn {
+    margin-bottom: 5px;
+    margin-right: 5px;
 }

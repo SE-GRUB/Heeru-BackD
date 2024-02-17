@@ -3,6 +3,8 @@
 @section('title', 'Report Details')
 @section('icon', 'tachometer-fast')
 
+@section('useDatatables', false)
+
 @section('content')
 
 <div>
