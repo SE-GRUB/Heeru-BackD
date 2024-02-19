@@ -341,7 +341,6 @@ class UserController extends Controller
                 'name' => $counselor->name,
                 'fare' => $counselor->fare,
                 'rating' => $counselor->rating,
-                'fare' => $counselor->fare,
                 'profile_pic' => json_decode($counselor->profile_pic),
             ];
         }
