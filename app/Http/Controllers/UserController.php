@@ -339,6 +339,7 @@ class UserController extends Controller
             $dataCounselors[] = [
                 'user_id' => $counselor->id,
                 'name' => $counselor->name,
+                'fare' => $counselor->fare,
                 'rating' => $counselor->rating,
                 'profile_pic' => json_decode($counselor->profile_pic),
             ];
