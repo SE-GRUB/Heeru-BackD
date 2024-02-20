@@ -69,6 +69,7 @@ nav.close{
 }
 nav .logo-name{
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -77,6 +78,7 @@ nav .logo-image {
     justify-content: center;
     align-items: center;
     min-width: 45px;
+    max-width: 80px;
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
