@@ -14,7 +14,7 @@ function formatDateTime() {
     minutes = ('0' + minutes).slice(-2);
     seconds = ('0' + seconds).slice(-2);
 
-    const formattedDateTime = `${dayOfWeek},<br>${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+    const formattedDateTime = `${dayOfWeek},${dayOfMonth} ${month} ${year}<br>${hours}:${minutes}:${seconds}`;
 
     document.getElementById('date-time').innerHTML = formattedDateTime;
 }
