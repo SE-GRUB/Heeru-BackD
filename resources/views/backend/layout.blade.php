@@ -92,6 +92,10 @@
                         <i class="uil uil-heart"></i>
                         <span class="link-name">Consultation</span>
                     </a></li>
+                    {{-- <li><a href="{{ route('rating.index') }}" class="{{ request()->routeIs('rating.index') ? 'active' : '' }}">
+                        <i class="uil uil-heart"></i>
+                        <span class="link-name">Rating</span>
+                    </a></li> --}}
                     <li><a href="{{ route('payment_method.index') }}" class="{{ request()->routeIs('payment_method.index') ? 'active' : '' }}">
                         <i class="uil uil-credit-card-search"></i>
                         <span class="link-name">Payment Method</span>

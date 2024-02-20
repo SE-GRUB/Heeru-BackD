@@ -25,6 +25,8 @@
             <th>Consultation Date</th>
             <th>Duration</th>
             <th>Action</th>
+            <th>Rating</th>
+
         </tr>
     </thead>
     <tbody>
@@ -48,6 +50,10 @@
                     @if(!$consultation->isPaid)
                         <a href="{{ route('payment.create',  ['consultation' => $consultation])}}" class="btn btn-primary">Pay</a>
                     @endif
+                </td>
+
+                <td>
+                    <a href="{{ route('rating.index', ['consultation' => $consultation]) }}" class="btn btn-primary">View Rating</a>
                 </td>
             </tr>
         @endforeach

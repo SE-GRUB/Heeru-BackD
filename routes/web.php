@@ -18,6 +18,7 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StatusController;
 use Illuminate\Http\Request;
 use UniSharp\LaravelFilemanager\Lfm;
@@ -131,6 +132,12 @@ Route::post('/consultation_result/{consultation}/', [ConsultationResultControlle
 Route::get('/consultation_result/{consultation_result}/{consultation}/edit', [ConsultationResultController::class, 'edit'])->name('consultation_result.edit');
 Route::put('/consultation_result/{consultation_result}/{consultation}/update', [ConsultationResultController::class, 'update'])->name('consultation_result.update');
 Route::delete('/consultation_result/{consultation_result}/{consultation}/destroy', [ConsultationResultController::class, 'destroy'])->name('consultation_result.destroy');
+
+// Rating route
+Route::get('/{consultation}/rating', [RatingController::class, 'index'])->name('rating.index');
+Route::get('/{consultation}/rating/create', [RatingController::class, 'create'])->name('rating.create');
+Route::post('/{consultation}/rating', [RatingController::class, 'store'])->name('rating.store');
+Route::delete('/rating/{consultation}/{rating}/destroy', [RatingController::class, 'destroy'])->name('rating.destroy');
 
 // Payment method route
 Route::get('/payment_method', [PaymentMethodController::class, 'index'])->name('payment_method.index');
