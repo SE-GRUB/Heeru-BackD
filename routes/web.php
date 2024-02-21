@@ -20,6 +20,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\SMSGUN;
 use Illuminate\Http\Request;
 use UniSharp\LaravelFilemanager\Lfm;
 
@@ -104,8 +105,6 @@ Route::delete('/infographic_image/{infographic_image}/destroy', [InfographicImag
 Route::get('/chat/up', [ChatController::class, 'patup'])->name('chat.save');
 Route::get('/chat/get', [ChatController::class, 'patdown'])->name('chat.get');
 
-// custem Agus
-Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
 
 // Comment route
 Route::get('/comment/{post}/', [CommentController::class, 'index'])->name('comment.index');
@@ -174,9 +173,16 @@ Route::post('reset_email', [LoginController::class, 'reset_email'])->name('reset
 Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
-// User Profile 
+// User Profile
 Route::get('/profile', [UserController::class, 'getProfile'])->name('profile')->middleware('auth');
 Route::put('/updatePP', [UserController::class, 'updatePP'])->name('update.pp')->middleware('auth');
 Route::put('/changePass', [UserController::class, 'changePass'])->name('change.password')->middleware('auth');
 Route::put('/changePhone', [UserController::class, 'changePhone'])->name('change.phone')->middleware('auth');
 Route::put('/changeEmail', [UserController::class, 'changeEmail'])->name('change.email')->middleware('auth');
+
+
+// custem Agus
+Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
+// otp hendelpoin
+Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
+Route::get('/sotp', [SMSGUN::class, 'sendSMS'])->name('sotp');
