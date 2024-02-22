@@ -61,4 +61,62 @@ class PostController extends Controller
         $post->delete();
         return redirect(route('post.index'))->with('success', 'Post Deleted Successfully');
     }
+
+    public function showPost(){
+        $posts = post::all();
+        if ($posts->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'There are no counselors registered',
+            ]);
+        }
+
+        foreach ($posts as $post) {
+            $user = User::where('id', $post->user_id)->first(); // Retrieve the user
+            $comments = comment::where('post_id', $post->id)->get();
+
+            // dd($comments);
+            if ($user) {
+                $dataPosts[] = [
+                    'user_id' => $post->user_id,
+                    'post_id' => $post->id,
+                    'post_body' => $post->post_body,
+                    'poster' =>json_decode($post->poster),
+                    'like' => $post->like,
+                    'created_at' => $post->created_at,
+                ];
+
+                $datacomments = [];
+
+                if($comments){
+                    foreach ($comments as $comment){
+                        $user2 = User::where('id', $comment->user_id)->first(); // Retrieve the user
+                        $datacomments[] = [
+                            'user' => $user2->name,
+                            'user_id' => $comment->user_id,
+                            'post_id'=> $comment->post_id,
+                            'comment' => $comment->comment,
+                            'profilkomen' => json_decode($user2->profile_pic)[0], 
+
+                    
+                        ];
+                    }
+                }    
+            
+
+                $dataUser[]=[
+                    'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
+                    'profile_pic' => json_decode($user->profile_pic)[0], 
+                ];
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Fetched all counselors',
+            'posts' => $dataPosts,
+            'users' => $dataUser,
+            'comments' => $datacomments
+        ]);
+    }
 }

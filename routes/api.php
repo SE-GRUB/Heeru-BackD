@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
@@ -27,4 +28,6 @@ Route::get('/checkPass', [UserController::class,'checkPass'])->name('pass.check'
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
 Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
+Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
+
 
