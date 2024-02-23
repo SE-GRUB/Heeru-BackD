@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\program;
+use App\Models\rating;
 use Carbon\Carbon;
 
 function generateNIP() {
@@ -336,11 +337,27 @@ class UserController extends Controller
         $dataCounselors = [];
 
         foreach ($counselors as $counselor) {
+            $ratings = rating::where('counselor_id', $counselor->id)->get();
+
+            $totalRating = 0;
+            $numberOfRatings = $ratings->count();
+
+            foreach ($ratings as $rating) {
+                $totalRating += $rating->value; // Anda perlu menyesuaikan ini dengan nama kolom di tabel rating yang berisi nilai rating
+            }
+
+            if ($numberOfRatings > 0) {
+                $averageRating = $totalRating / $numberOfRatings;
+            } else {
+                $averageRating = 5;
+            }
+
+
             $dataCounselors[] = [
                 'user_id' => $counselor->id,
                 'name' => $counselor->name,
                 'fare' => $counselor->fare,
-                'rating' => $counselor->rating,
+                'rating' => $averageRating,
                 'profile_pic' => json_decode($counselor->profile_pic),
             ];
         }
