@@ -184,7 +184,7 @@ Route::put('/changeEmail', [UserController::class, 'changeEmail'])->name('change
 // custem Agus
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
-Route::get('/avp', [InfographicController::class, 'getpriv']);
+Route::get('/avp', [ConsultationController::class, 'getpriv']);
 
 // otp hendelpoin
 Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
