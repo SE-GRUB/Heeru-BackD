@@ -69,10 +69,21 @@ class ConsultationController extends Controller
     }
 
     public function getSche(Request $request) {
-        $time = DB::table('consultations')
+        try {
+            $time = DB::table('consultations')
             ->where('consultation_date', $request->input('time'))
             ->select('duration')
             ->get();
-        return response()->json($time, 200);
+    
+            return response()->json([
+                'success' => true,
+                'time' => $time,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }

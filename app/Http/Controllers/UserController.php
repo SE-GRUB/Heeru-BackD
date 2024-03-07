@@ -11,8 +11,6 @@ use App\Models\User;
 use App\Models\program;
 use App\Models\rating;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Message;
-use PhpParser\Node\Stmt\TryCatch;
 
 function generateNIP() {
     $nip = 'C-';
@@ -414,28 +412,16 @@ class UserController extends Controller
         }
     }
 
-    public function getProfile() {
-        try {
-            $user = User::findOrFail(Auth::user()->id);
-    
-            $userArray = [
-                'user_id' => $user->id,
-                'name' => $user->name,
-                'role' => $user->role,
-                'no_telp' => $user->no_telp,
-                'email' => $user->email,
-                'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : null,
-            ];
-    
-            return response()->json([
-                'success' => true,
-                'user' => $userArray,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }    
+    public function getProfile(){
+        $user = User::where('id', Auth::user()->id)->first();
+        $userArray = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'role' => $user-> role,
+            'no_telp' => $user->no_telp,
+            'email' => $user->email,
+            'profile_pic' => json_decode($user->profile_pic)[0],
+        ];
+        return view('profile.index', ['user' => $userArray]);
+    }
 }
