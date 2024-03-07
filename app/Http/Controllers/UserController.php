@@ -343,7 +343,7 @@ class UserController extends Controller
             $numberOfRatings = $ratings->count();
 
             foreach ($ratings as $rating) {
-                $totalRating += $rating->value; // Anda perlu menyesuaikan ini dengan nama kolom di tabel rating yang berisi nilai rating
+                $totalRating += $rating->value;
             }
 
             if ($numberOfRatings > 0) {
@@ -367,6 +367,53 @@ class UserController extends Controller
             'message' => 'Fetched all counselors',
             'users' => $dataCounselors,
         ]);
+    }
+
+    public function showCons(Request $request){
+        try {
+            // dd($request['user_id']);
+            $data = $request->validate([
+                'user_id' => 'required',
+            ]);
+
+            // dd($data);
+
+            $user = User::where( 'id', $data['user_id'])->first();
+
+            $ratings = rating::where('counselor_id', $data['user_id'])->get();
+            $totalRating = 0;
+            $numberOfRatings = $ratings->count();
+
+            foreach ($ratings as $rating) {
+                $totalRating += $rating->value;
+            }
+            if ($numberOfRatings > 0) {
+                $averageRating = $totalRating / $numberOfRatings;
+            } else {
+                $averageRating = 5;
+            }
+            $showCounselorData = [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'rating' => $averageRating,
+                'fare' => $user->fare,
+                'description' => $user->description,
+                'profile_pic' => json_decode($user->profile_pic)[0],
+            ];
+
+            // dd($showCounselorData);
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched counselor data',
+                'users' => $showCounselorData,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+            ]);
+        }
     }
 
     public function getProfile(){

@@ -29,5 +29,4 @@ Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('ca
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
 Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
 Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
-
-
+Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.show');
