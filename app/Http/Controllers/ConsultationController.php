@@ -66,4 +66,13 @@ class ConsultationController extends Controller
         $consultation->delete();
         return redirect(route('consultation.index'))->with('success', 'Consultation Deleted Successfully');
     }
+
+
+    public function getpriv(Request $request) {
+        $time = DB::table('consultations')
+            ->where('consultation_date', $request->input('time'))
+            ->select('duration')
+            ->get(); // Menggunakan get() untuk mendapatkan semua hasil yang cocok
+        return response()->json($time, 200);
+    }
 }
