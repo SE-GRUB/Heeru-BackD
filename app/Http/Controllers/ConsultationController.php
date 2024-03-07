@@ -8,6 +8,7 @@ use App\Models\consultation_result;
 use App\Models\User;
 use App\Models\video_call;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
