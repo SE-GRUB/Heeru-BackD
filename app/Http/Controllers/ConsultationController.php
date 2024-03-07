@@ -8,6 +8,7 @@ use App\Models\consultation_result;
 use App\Models\User;
 use App\Models\video_call;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
@@ -65,5 +66,13 @@ class ConsultationController extends Controller
         }
         $consultation->delete();
         return redirect(route('consultation.index'))->with('success', 'Consultation Deleted Successfully');
+    }
+
+    public function getSche(Request $request) {
+        $time = DB::table('consultations')
+            ->where('consultation_date', $request->input('time'))
+            ->select('duration')
+            ->get();
+        return response()->json($time, 200);
     }
 }

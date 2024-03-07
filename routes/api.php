@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
@@ -30,3 +31,4 @@ Route::post('/makereport', [ReportController::class, 'create_report'])->name('re
 Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
 Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
 Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.show');
+Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns.sche');

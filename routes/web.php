@@ -183,6 +183,7 @@ Route::put('/changeEmail', [UserController::class, 'changeEmail'])->name('change
 
 // custem Agus
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
+
 // otp hendelpoin
 Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
 Route::get('/sotp', [SMSGUN::class, 'sendSMS'])->name('sotp');
