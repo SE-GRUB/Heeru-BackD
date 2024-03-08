@@ -32,3 +32,4 @@ Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('co
 Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
 Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.show');
 Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns.sche');
+Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');

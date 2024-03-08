@@ -20,6 +20,41 @@ class PostController extends Controller
         return view('post.create', ['users' => $users]);
     }
 
+    public function createPost(Request $request){
+        $data = $request->validate([
+            'user_id' => 'required',
+            'post_body'=> 'required',  
+        ]);
+
+        try {
+            $newPost = post::create([
+                'user_id' => $data['user_id'],
+                'post_body' => $data['post_body'],
+            ]);
+
+            $files = $request->file('poster');
+            $path = 'post_poster/' . $newPost->id;
+            $paths = $this->uploadedFiles($files, $path);
+
+            $postPath = json_encode($paths);
+
+            $newPost->update(['post' => $postPath]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Post created successfully',
+                'data' => [
+                    'post' => $newPost,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create post. Please try again later.',
+            ]);
+        }
+    }
+
     public function store(Request $request){
         // dd($request);
         $data = $request->validate([

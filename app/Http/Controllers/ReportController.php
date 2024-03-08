@@ -106,7 +106,7 @@ class ReportController extends Controller
 
 
     public function create_report(Request $request){
-        // dd($request->file('evidence'));
+        // dd($request->file('post'));
         $data = $request->validate([
             'title' => 'required',
             'details' => 'required',
@@ -114,17 +114,6 @@ class ReportController extends Controller
             'user_id' => 'required',
             'evidence.*' => 'required',
         ]);
-
-        // if ($request->hasFile('evidence')) {
-        //     $files = $request->file('evidence');
-        //     $path = 'report_evidences/' . $data['user_id'];
-        //     $paths = $this->uploadedFiles($files, $path);
-        //     $pathsString = implode(', ', $paths);
-        
-        //     return response()->json(['success' => true, 'message' => 'File berhasil diterima dan disimpan ke ' . $pathsString . '.']);
-        // } else {
-        //     return response()->json(['success' => false, 'message' => 'File tidak diterima.']);
-        // }
 
         try {
             $newReport = reports::create([
