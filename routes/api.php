@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Models\infographic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +35,4 @@ Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
 Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.show');
 Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns.sche');
 Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
+Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');

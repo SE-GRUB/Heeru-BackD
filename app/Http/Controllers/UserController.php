@@ -26,9 +26,9 @@ class UserController extends Controller
         try {
             $nip = $request->input('nip');
             $user = DB::table('users')
-                    ->where('users.nip', $nip)
-                    ->first();
-
+            ->where('users.nip', $nip)
+            ->first();
+            
             if ($user) {
                 $userArray = [
                     'user_id' => $user->id,
@@ -36,7 +36,7 @@ class UserController extends Controller
                     'no_telp' => $user->no_telp,
                     'email' => $user->email,
                     'password' => $user->password ? '*******' : '',
-                    'profile_pic' => json_decode($user->profile_pic)[0],
+                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                 ];
                 return response()->json([
                     'success' => true,
@@ -52,7 +52,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Internal server error',
+                'message' => 'Internal server error: ' . $th->getMessage(),
             ]);
         }
     }

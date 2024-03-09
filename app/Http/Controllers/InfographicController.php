@@ -88,4 +88,40 @@ class InfographicController extends Controller
         DB::table('infographic_images')->where('id', $request->id)->delete();
         return response()->json("beres", 200);
     }
+
+    public function showInfografis(){
+        $infographics = infographic::all();
+        if($infographics->isEmpty()){
+            return response()->json([
+                'success' => false,
+                'message' => 'There are no infographics registered',
+            ]);
+        }
+
+        foreach ($infographics as $infographic){
+            $images = infographic_image::where('info_id', $infographic->id)->get();
+
+            if($infographic){
+                
+                $dataImages = [];
+                if($images){
+                    foreach( $images as $image){
+                        $dataImages[]=[
+                            'image_path' => $image->image_path,
+                        ];
+                    }
+                }
+                $dataInfographics[]=[
+                    'title' => $infographic->title,
+                    'images' => $dataImages,
+                ];
+            };
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Fetched all counselors',
+            'infographics' => $dataInfographics,
+        ]);
+    }
 }
