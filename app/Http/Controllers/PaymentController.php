@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\consultation;
+use App\Mail\EmailPayment;
 use App\Models\payment;
 use App\Models\payment_method;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -50,4 +52,14 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect(route('payment.index'))->with('success', 'Payment Deleted Successfully');
     }
+
+    public function otp(Request $req)
+    {
+        $targer = $req->input('target');
+        $email = rand(100000, 999999);
+        $dw=Mail::to($targer)->send(new EmailPayment($email));
+        return response()->json([$dw,'email' => $email]);
+    }
+
+    
 }
