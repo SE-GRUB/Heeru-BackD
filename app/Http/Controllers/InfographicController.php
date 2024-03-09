@@ -120,7 +120,7 @@ class InfographicController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Fetched all counselors',
+            'message' => 'Fetched all infographics',
             'infographics' => $dataInfographics,
         ]);
     }
