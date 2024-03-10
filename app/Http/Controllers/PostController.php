@@ -99,59 +99,37 @@ class PostController extends Controller
 
     public function showPost(){
         $posts = post::all();
-        if ($posts->isEmpty()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'There are no counselors registered',
-            ]);
-        }
-
+        $dataPosts = [];
         foreach ($posts as $post) {
-            $user = User::where('id', $post->user_id)->first(); // Retrieve the user
-            $comments = comment::where('post_id', $post->id)->get();
-
-            // dd($comments);
+            $datacomments = [];
+            $user = User::where('id', $post->user_id)->first();
             if ($user) {
-                $dataPosts[] = [
-                    'user_id' => $post->user_id,
-                    'post_id' => $post->id,
-                    'post_body' => $post->post_body,
-                    'poster' =>json_decode($post->poster),
-                    'like' => $post->like,
-                    'created_at' => $post->created_at,
-                ];
-
-                $datacomments = [];
-
+                $comments = comment::where('post_id', $post->id)->get();
                 if($comments){
                     foreach ($comments as $comment){
-                        $user2 = User::where('id', $comment->user_id)->first(); // Retrieve the user
+                        $user2 = User::where('id', $comment->user_id)->first();
                         $datacomments[] = [
                             'user' => $user2->name,
-                            'user_id' => $comment->user_id,
-                            'post_id'=> $comment->post_id,
                             'comment' => $comment->comment,
-                            'profilkomen' => json_decode($user2->profile_pic)[0], 
-
-                    
+                            'profilkomen' => $user2->profile_pic ? json_decode($user2->profile_pic)[0] : '', 
                         ];
                     }
                 }    
-            
-
-                $dataUser[]=[
+                $dataPosts[] = [
                     'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
-                    'profile_pic' => json_decode($user->profile_pic)[0], 
+                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '', 
+                    'post_body' => $post->post_body,
+                    'poster' => $post->poster ? json_decode($post->poster)[0] : '',
+                    'like' => $post->like,
+                    'created_at' => $post->created_at,
+                    'comments' => $datacomments
                 ];
             }
         }
-
         return response()->json([
             'success' => true,
-            'message' => 'Fetched all counselors',
+            'message' => 'Fetched all post',
             'posts' => $dataPosts,
-            'users' => $dataUser,
-            'comments' => $datacomments
         ]);
-    }
+    }    
 }
