@@ -52,7 +52,42 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Internal server error: ' . $th->getMessage(),
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function getUserProfile(Request $request){
+        try {
+            $user = DB::table('users')
+            ->where('users.id', $request->input('user_id'))
+            ->first();
+
+            if($user){
+                $userArray = [
+                    'name' => $user->name,
+                    'no_telp' => $user->no_telp,
+                    'email' => $user->email,
+                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+                ];
+    
+                return response()->json([
+                    'success' => true,
+                    'message' => 'fetch user profile successfully',
+                    'user' => $userArray,
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not found!',
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
             ]);
         }
     }

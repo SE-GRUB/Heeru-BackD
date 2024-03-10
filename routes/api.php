@@ -36,3 +36,4 @@ Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.sh
 Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns.sche');
 Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
+Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
