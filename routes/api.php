@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Models\consultation_result;
 use App\Models\infographic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +39,4 @@ Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns
 Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
+Route::get('/getResult', [ConsultationResultController::class, 'getResult'])->name('consultation.result');
