@@ -4,7 +4,7 @@
 @section('icon', 'user')
 
 @section('button')
-    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New User</a>
+    <a href="{{ route('user.create', ['role' => $role]) }}" class="btn btn-primary">Add New User</a>
 @endsection
 
 @section('content')
@@ -15,6 +15,14 @@
         {{ session('success') }}
     </div>
     @endif
+</div>
+<div>
+    <!-- Button for Administrator -->
+    <a href="{{ route('user.index', ['role' => 'admin']) }}" class="btn btn-{{ $role == 'admin' ? 'success' : 'primary' }}">View Administrator's</a>
+    <!-- Button for PIC -->
+    <a href="{{ route('user.index', ['role' => 'pic']) }}" class="btn btn-{{ $role == 'pic' ? 'success' : 'primary' }}">View PIC's</a>
+    <!-- Button for Student -->
+    <a href="{{ route('user.index', ['role' => 'student']) }}" class="btn btn-{{ $role == 'student' ? 'success' : 'primary' }}">View Student's</a>
 </div>
 <table>
     <thead>

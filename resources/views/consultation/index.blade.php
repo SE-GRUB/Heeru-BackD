@@ -24,6 +24,7 @@
             <th>Counselor ID</th>
             <th>Consultation Date</th>
             <th>Duration</th>
+            <th>Note</th>
             <th>Action</th>
             <th>Rating</th>
 
@@ -37,7 +38,8 @@
                 <td>{{ $consultation->counselor_id }}</td>
                 <td>{{ $consultation->consultation_date }}</td>
                 <td>{{ $consultation->duration }}</td>
-                
+                <td>{{ $consultation->note }}</td>
+
 
                 <td>
                     {{-- <a href="{{ route('consultation.edit', ['consultations' => $consultations]) }}" class="btn btn-primary">Edit</a> --}}

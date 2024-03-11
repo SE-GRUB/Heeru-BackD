@@ -92,17 +92,23 @@ class UserController extends Controller
         }
     }
 
-    public function index(){
-        $users = User::all();
-        return view('users.index', ['users' => $users]);
+    public function index(Request $request){
+        $role = $request->input('role');
+        if (!$role) {
+            $users = User::all();
+        } else {
+            $users = User::where('role', $role)->get();
+        }
+        return view('users.index', ['users' => $users, 'role' => $role]);
         
     }
 
-    public function create(){
+    public function create(Request $request){
+        $role = $request->input('role');
+        $role = $role ? $role : 'student';
         $today = Carbon::now()->toDateString();
-
         $programs = Program::where('end_date', '>=', $today)->get();
-        return view('users.create', ['programs' => $programs]);
+        return view('users.create', ['programs' => $programs, 'role' => $role]);
     }   
 
     private function uploadedfile0($img, $path) {

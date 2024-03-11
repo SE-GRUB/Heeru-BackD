@@ -14,6 +14,7 @@ class consultation extends Model
         'counselor_id',
         'consultation_date',
         'duration',
+        'note',
         'isPaid'
     ];
 }

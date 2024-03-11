@@ -84,7 +84,7 @@ class CallbackStream implements StreamInterface, Stringable
      */
     public function eof(): bool
     {
-        return $this->callback === null;
+        return empty($this->callback);
     }
 
     /**
@@ -149,7 +149,7 @@ class CallbackStream implements StreamInterface, Stringable
     public function getContents(): string
     {
         $callback = $this->detach();
-        $contents = $callback !== null ? $callback() : '';
+        $contents = $callback ? $callback() : '';
         return (string) $contents;
     }
 

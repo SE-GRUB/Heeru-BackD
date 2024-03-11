@@ -29,6 +29,7 @@ class ConsultationController extends Controller
             'counselor_id' => 'required',
             'consultation_date' => 'required',
             'duration' => 'required',
+            'note' => 'required',
         ]);
         $data['isPaid']=false;
         $newConsultation = consultation::create($data);
