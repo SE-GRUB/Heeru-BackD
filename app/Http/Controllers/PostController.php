@@ -23,7 +23,7 @@ class PostController extends Controller
     public function createPost(Request $request){
         $data = $request->validate([
             'user_id' => 'required',
-            'post_body'=> 'required',  
+            'post_body'=> 'required',
         ]);
 
         try {
@@ -111,17 +111,19 @@ class PostController extends Controller
                         $datacomments[] = [
                             'user' => $user2->name,
                             'comment' => $comment->comment,
-                            'profilkomen' => $user2->profile_pic ? json_decode($user2->profile_pic)[0] : '', 
+                            'profilkomen' => $user2->profile_pic ? json_decode($user2->profile_pic)[0] : '',
                         ];
                     }
-                }    
+                }
                 $dataPosts[] = [
+                    'post_id'=>$post->id,
                     'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
-                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '', 
+                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                     'post_body' => $post->post_body,
                     'poster' => $post->poster ? json_decode($post->poster)[0] : '',
                     'like' => $post->like,
                     'created_at' => $post->created_at,
+                    'totalcomments'=>count($datacomments),
                     'comments' => $datacomments
                 ];
             }
@@ -131,5 +133,5 @@ class PostController extends Controller
             'message' => 'Fetched all post',
             'posts' => $dataPosts,
         ]);
-    }    
+    }
 }

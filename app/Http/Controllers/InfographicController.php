@@ -102,7 +102,7 @@ class InfographicController extends Controller
             $images = infographic_image::where('info_id', $infographic->id)->get();
 
             if($infographic){
-                
+
                 $dataImages = [];
                 if($images){
                     foreach( $images as $image){
@@ -112,6 +112,7 @@ class InfographicController extends Controller
                     }
                 }
                 $dataInfographics[]=[
+                    'id'=>$infographic->id,
                     'title' => $infographic->title,
                     'images' => $dataImages,
                 ];
