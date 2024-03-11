@@ -84,11 +84,10 @@
             <div class="form-group">
                 <label for="role">Role:</label>
                 <select class="form-control" id="role" name="role" required>
-                    <option value="student" selected>Student</option>
-                    <option value="pic">PIC</option>
-                    <option value="counselor">Counselor</option>
-                    <option value="admin">Admin</option>
-
+                    <option value="student" {{ $role == 'student' ? 'selected' : 'selected' }}>Student</option>
+                    <option value="pic" {{ $role == 'pic' ? 'selected' : '' }}>PIC</option>
+                    <option value="counselor" {{ $role == 'counselor' ? 'selected' : '' }}>Counselor</option>
+                    <option value="admin" {{ $role == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
             </div>
             

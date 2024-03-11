@@ -4680,7 +4680,7 @@ return array(
     'Ramsey\\Collection\\DoubleEndedQueueInterface' => $vendorDir . '/ramsey/collection/src/DoubleEndedQueueInterface.php',
     'Ramsey\\Collection\\Exception\\CollectionMismatchException' => $vendorDir . '/ramsey/collection/src/Exception/CollectionMismatchException.php',
     'Ramsey\\Collection\\Exception\\InvalidArgumentException' => $vendorDir . '/ramsey/collection/src/Exception/InvalidArgumentException.php',
-    'Ramsey\\Collection\\Exception\\InvalidPropertyOrMethod' => $vendorDir . '/ramsey/collection/src/Exception/InvalidPropertyOrMethod.php',
+    'Ramsey\\Collection\\Exception\\InvalidSortOrderException' => $vendorDir . '/ramsey/collection/src/Exception/InvalidSortOrderException.php',
     'Ramsey\\Collection\\Exception\\NoSuchElementException' => $vendorDir . '/ramsey/collection/src/Exception/NoSuchElementException.php',
     'Ramsey\\Collection\\Exception\\OutOfBoundsException' => $vendorDir . '/ramsey/collection/src/Exception/OutOfBoundsException.php',
     'Ramsey\\Collection\\Exception\\UnsupportedOperationException' => $vendorDir . '/ramsey/collection/src/Exception/UnsupportedOperationException.php',
