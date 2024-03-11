@@ -20,11 +20,9 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Time</th>
             <th>Name</th>
             <th>Title</th>
-            <th>Time</th>
-            <th>Evidence</th>
-            <th>Category</th>
             <th>Category name</th>
             <th>IsProcess</th>
             <th>IsDone</th>
@@ -36,16 +34,12 @@
         @foreach($reports as $report)
             <tr>
                 <td>{{ $report->id}}</td>
+                <td>{{ $report->created_at}}</td>
                 @php
                     $name = DB::table('users')->where('id', $report->user_id)->value('name')
                 @endphp
                 <td>{{ $name }}</td>
                 <td>{{ $report->title}}</td>
-                <td>{{ $report->created_at}}</td>
-                <td>{{ $report->evidence }}</td>
-                <td>{{ $report->category_id }}</td>
-                
-
                 @php
                     $category_name = DB::table('report_categories')->where('id', $report->category_id)->value('category_name')
                 @endphp

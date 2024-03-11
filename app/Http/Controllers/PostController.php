@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\comment;
 use App\Models\comment_reply;
 use App\Models\post;
@@ -11,8 +10,55 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index(){
-        $posts = post::all();
-        return view('post.index', ['posts' => $posts]);
+        $dataPosts = [];
+        $posts = Post::all();
+        foreach ($posts as $post) {
+            $dataComments = [];
+            $user = User::find($post->user_id);
+    
+            if ($user) {
+                $comments = Comment::where('post_id', $post->id)->get();
+    
+                foreach ($comments as $comment) {
+                    $dataReplies = [];
+                    $commentUser = User::find($comment->user_id);
+
+                    if ($commentUser) {
+                        $replies = comment_reply::where('comment_id', $comment->id)->get();
+                        foreach($replies as $reply){
+                            $replyUser = User::find($reply->user_id);
+                            if($replyUser){
+                                $dataReplies[] = [
+                                    'id' => $reply->id,
+                                    'profile_pic' => $replyUser->profile_pic ?  json_decode($replyUser->profile_pic)[0] : '',
+                                    'replier' => $replyUser->name,
+                                    'reply_body' => $reply->reply,
+                                ];
+                            }
+                        }
+                        $dataComments[] = [
+                            'id' => $comment->id,
+                            'user' => $commentUser->name,
+                            'comment' => $comment->comment,
+                            'replies' => $dataReplies,
+                            'profile_pic' => $commentUser->profile_pic ? json_decode($commentUser->profile_pic)[0] : '',
+                        ];
+                    }
+                }
+    
+                $dataPosts[] = [
+                    'id' => $post->id,
+                    'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
+                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+                    'post_body' => $post->post_body,
+                    'poster' => $post->poster ? json_decode($post->poster)[0] : '',
+                    'like' => $post->like,
+                    'created_at' => $post->created_at,
+                    'comments' => $dataComments,
+                ];
+            }
+        }
+        return view('post.index', ['posts' => $dataPosts]);
     }
 
     public function create(){

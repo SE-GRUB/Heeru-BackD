@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\comment;
+use App\Models\post;
 use App\Models\comment_reply;
 use Illuminate\Http\Request;
 
@@ -19,26 +20,22 @@ class CommentReplyController extends Controller
 
     }
 
-
-    public function store(Request $request, comment $comment){
-        // dd($request);
+    public function store(Request $request, post $post, comment $comment){
         $data = $request->validate([
-            'user_id' => 'required',
             'comment_id' => 'required',
             'post_id' => 'required',
             'reply' => 'required'
         ]);
-    
-        // $post = post::findOrFail($request->input('post_id'));
-    
-    
+
+        $data['user_id'] = Auth::user()->id;
         $newComment = comment_reply::create($data);
-    
-        return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Added Successfully!');
+        return redirect(route('post.index'));
+        // return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Added Successfully!');
     }
 
     public function destroy(comment_reply $comment_reply, comment $comment){
         $comment_reply->delete();
-        return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Deleted Successfully');
+        return redirect(route('post.index'));
+        // return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Deleted Successfully');
     }
 }
