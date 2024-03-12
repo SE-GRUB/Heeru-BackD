@@ -46,3 +46,4 @@ Route::get('/getResult', [ConsultationResultController::class, 'getResult'])->na
 
 
 Route::get('/myconsultation', [ConsultationController::class, 'myconsultation']);
+

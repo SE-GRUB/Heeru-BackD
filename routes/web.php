@@ -185,6 +185,9 @@ Route::put('/changeEmail', [UserController::class, 'changeEmail'])->name('change
 Route::get('/infographic/iddel', [InfographicController::class, 'delpo'])->name('infographic.delpo');
 Route::get('/pembayaran', [PaymentController::class, 'pembayaran']);
 
+Route::get('/poincreate', [PostController::class, 'poincreate']);
+Route::post('/uplodnewpost', [PostController::class, 'uplodnewpost']);
+
 // otp hendelpoin
 Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
 Route::get('/sotp', [SMSGUN::class, 'sendSMS'])->name('sotp');
