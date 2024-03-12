@@ -109,4 +109,46 @@ class ConsultationController extends Controller
             ]);
         }
     }
+    public function getResult(Request $request){
+        try{
+            $consultation_id = $request->input('consultation_id');
+
+            $result = consultation::find($consultation_id);
+            $student = User::where('id', $result->student_id);
+            $counselor = User::where('id', $result->counselor_id);
+
+
+            if($result){
+                $resultarray = [
+                    'note' =>$result->note,
+                    'consultation_date' => $result->consultation_date,
+                    'consultation_id' => $result->id,
+                    'student_profile' => $student->profile_pic,
+                    'studentName' => $student->name,
+                    'counselor_profile' => $counselor->profile_pic,
+                    'counselorName' => $counselor->name,
+                ];
+
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'fetch consultation result successfully',
+                    'result' => $resultarray,
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'result not found!',
+                ]);
+            }
+
+        }catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
+            ]);
+        }
+    
+    }
 }
