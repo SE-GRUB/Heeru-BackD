@@ -145,7 +145,7 @@ class PostController extends Controller
 
     public function showPost(Request $request){
         $page = $request->query('page', 1);
-        $posts = Post::paginate(10, ['*'], 'page', $page);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
         $dataPosts = [];
 
         foreach ($posts as $post) {
