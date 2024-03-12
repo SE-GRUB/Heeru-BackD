@@ -40,3 +40,6 @@ Route::get('/createPost', [PostController::class, 'createPost'])->name('post.cre
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
 Route::get('/getResult', [ConsultationResultController::class, 'getResult'])->name('consultation.result');
+
+
+Route::get('/myconsultation', [ConsultationController::class, 'myconsultation']);

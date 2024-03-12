@@ -75,10 +75,31 @@ class ConsultationController extends Controller
             ->where('consultation_date', $request->input('time'))
             ->select('duration')
             ->get();
-    
+
             return response()->json([
                 'success' => true,
                 'time' => $time,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    // get specific consultation
+    public function myconsultation(Request $request) {
+        try {
+           $consultation = DB::table('DataKonsultasi')
+           ->where('student_id', $request->input('id'))
+           ->orderBy('consultation_date', 'asc')
+           ->get();
+            
+
+            return response()->json([
+                'success' => true,
+                'consultation' => $consultation,
             ]);
         } catch (\Exception $e) {
             return response()->json([
