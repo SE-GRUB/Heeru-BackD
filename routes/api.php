@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/checkuser', [UserController::class, 'checkuser'])->name('user.checkuser');
 Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('profile.update');
 Route::get('/checkPass', [UserController::class,'checkPass'])->name('pass.check');
+Route::get('/changePass', [UserController::class,'changePasss'])->name('pass.change');
+Route::get('/changePassword', [UserController::class,'changePassword'])->name('password.change');
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
 Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
@@ -40,6 +42,7 @@ Route::get('/createPost', [PostController::class, 'createPost'])->name('post.cre
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
 Route::get('/getResult', [ConsultationResultController::class, 'getResult'])->name('consultation.result');
+
 
 
 Route::get('/myconsultation', [ConsultationController::class, 'myconsultation']);

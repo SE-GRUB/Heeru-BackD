@@ -465,4 +465,50 @@ class UserController extends Controller
         ];
         return view('profile.index', ['user' => $userArray]);
     }
+
+    public function changePasss(Request $request){
+        $data  = $request->validate([
+            'user_id' => 'required',
+            'email' => 'required',
+            'old_password' => 'required'
+        ]);
+        $user = User::where('id', $data['user_id'])->first();
+        if($user){
+            if($data['email'] == $user->email){
+                if(Hash::check($data['old_password'], $user->password)){
+                    return response()->json([
+                        'success' => true,
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Wrong Password!',
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'The email you entered is not registered!',
+                ]);
+            }
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found!',
+            ]);
+        }
+    }
+
+    public function changePassword(Request $request){
+        $data  = $request->validate([
+            'user_id' => 'required',
+            'new_password' => 'required'
+        ]);
+        $user = User::where('id', $data['user_id'])->first();
+        $user->password = Hash::make($data['new_password']);
+        $Update = $user->save();
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }

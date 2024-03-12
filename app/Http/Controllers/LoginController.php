@@ -33,7 +33,7 @@ class LoginController extends Controller
         // dd($role);
 
         if (in_array($role, ['admin', 'pic'])) {
-            // dd("TEST" . Auth::Attempt($data));
+            // dd("TEST : " . Auth::Attempt($data));
             if (Auth::Attempt($data)) {
                 return redirect('dashboard');
             }else{
