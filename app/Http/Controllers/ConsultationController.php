@@ -6,6 +6,7 @@ use App\Models\chat;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use App\Models\User;
+use App\Models\Rating;
 use App\Models\video_call;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 class ConsultationController extends Controller
 {
     public function index(){
-        $consultation = consultation::all();
-        return view('consultation.index', ['consultation' => $consultation]);
+        $consultations = consultation::all();
+        return view('consultation.index', ['consultations' => $consultations]);
     }
 
     public function create(){

@@ -24,21 +24,21 @@ class RatingController extends Controller
 
     public function store(Request $request, consultation $consultation){
         // dd($request);
+        $rating = $request->stars;
         $data = $request->validate([
             'consultation_id' => 'required',
             'student_id' => 'required',
             'counselor_id' => 'required',
-            'rating' => 'required',
             'review' => 'required'
         ]);
-    
+        $data['rating'] = $rating;
         $newRating= Rating::create($data);
-        return redirect(route('rating.index', ['consultation' => $consultation]))->with('success', 'Rating Added Successfully!');
+        return redirect(route('consultation.index'))->with('success', 'Rating Added Successfully!');
     }
 
     public function destroy(consultation $consultation, Rating $rating){
         // dd($consultation);
         $rating->delete();
-        return redirect(route('rating.index', ['consultation' => $consultation]))->with('success', 'Rating Deleted Successfully!');
+        return redirect(route('consultation.index'))->with('success', 'Rating Deleted Successfully!');
     }
 }
