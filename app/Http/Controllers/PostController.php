@@ -143,41 +143,62 @@ class PostController extends Controller
         return redirect(route('post.index'))->with('success', 'Post Deleted Successfully');
     }
 
-    public function showPost(){
-        $posts = post::all();
+    public function showPost(Request $request){
+        $page = $request->query('page', 1);
+        $posts = Post::paginate(10, ['*'], 'page', $page);
         $dataPosts = [];
+
         foreach ($posts as $post) {
-            $datacomments = [];
-            $user = User::where('id', $post->user_id)->first();
-            if ($user) {
-                $comments = comment::where('post_id', $post->id)->get();
-                if($comments){
-                    foreach ($comments as $comment){
-                        $user2 = User::where('id', $comment->user_id)->first();
-                        $datacomments[] = [
-                            'user' => $user2->name,
-                            'comment' => $comment->comment,
-                            'profilkomen' => $user2->profile_pic ? json_decode($user2->profile_pic)[0] : '',
-                        ];
-                    }
-                }
-                $dataPosts[] = [
-                    'post_id'=>$post->id,
-                    'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
-                    'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
-                    'post_body' => $post->post_body,
-                    'poster' => $post->poster ? json_decode($post->poster)[0] : '',
-                    'like' => $post->like,
-                    'created_at' => $post->created_at,
-                    'totalcomments'=>count($datacomments),
-                    'comments' => $datacomments
-                ];
-            }
+            $dataPosts[] = $this->formatPost($post);
         }
+
         return response()->json([
             'success' => true,
-            'message' => 'Fetched all post',
+            'message' => 'Fetched all posts',
             'posts' => $dataPosts,
         ]);
     }
+
+    protected function formatPost($post){
+        $dataComments = [];
+        $user = User::where('id', $post->user_id)->first();
+
+        if ($user) {
+            $comments = Comment::where('post_id', $post->id)->get();
+
+            if ($comments) {
+                foreach ($comments as $comment) {
+                    $dataComments[] = $this->formatComment($comment);
+                }
+            }
+
+            return [
+                'post_id' => $post->id,
+                'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
+                'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+                'post_body' => $post->post_body,
+                'poster' => $post->poster ? json_decode($post->poster)[0] : '',
+                'like' => $post->like,
+                'created_at' => $post->created_at,
+                'totalcomments' => count($dataComments),
+                'comments' => $dataComments,
+            ];
+        }
+
+        return null;
+    }
+
+    protected function formatComment($comment){
+        $user = User::where('id', $comment->user_id)->first();
+
+        if ($user) {
+            return [
+                'user' => $user->name,
+                'comment' => $comment->comment,
+                'profilkomen' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+            ];
+        }
+
+        return null;
+    }                                                                       
 }
