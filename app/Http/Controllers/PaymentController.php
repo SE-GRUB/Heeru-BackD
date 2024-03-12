@@ -73,7 +73,7 @@ class PaymentController extends Controller
             'product' => ['Melakukan Konsultasi Dengan ' . $datakonsul->dokter_name . ' Pada Tanggal ' . $datakonsul->consultation_date . '. support by Herru we Heer You'],
             'qty' => [1],
             'price' => [$datakonsul->dokter_fare],
-            'returnUrl' => url('/pembayaran/berhasil?id=' . $datakonsul->id),
+            'returnUrl' => $request->success,
             'cancelUrl' => url('/pembayaran/gagal?id=' . $datakonsul->id),
             'notifyUrl' => url('/pembayaran/notif?id=' . $datakonsul->id),
             'buyerName' => $datakonsul->student_name,
@@ -81,7 +81,7 @@ class PaymentController extends Controller
             'buyerPhone' => $datakonsul->student_no_telp,
             'expired' => 2,
         ];
-
+        // dd($body);
         $jsonBody = json_encode($body, JSON_UNESCAPED_SLASHES);
         $requestBody = strtolower(hash('sha256', $jsonBody));
         $stringToSign = strtoupper('POST') . ":$va:$requestBody:$secret";
