@@ -34,6 +34,8 @@ Route::get('/changePass', [UserController::class,'changePasss'])->name('pass.cha
 Route::get('/changePassword', [UserController::class,'changePassword'])->name('password.change');
 Route::get('/categoryName', [ReportCategoryController::class, 'show'])->name('categoryName.show');
 Route::post('/makereport', [ReportController::class, 'create_report'])->name('report.makereport');
+Route::get('/riwayatOngoing', [ReportController::class, 'riwayatOngoing'])->name('report.ongoing');
+Route::get('/riwayatDone', [ReportController::class, 'riwayatDone'])->name('report.done');
 Route::get('/counselorList', [UserController::class, 'showCounselor'])->name('counselor.show');
 Route::get('/postList', [PostController::class, 'showPost'])->name('post.show');
 Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.show');

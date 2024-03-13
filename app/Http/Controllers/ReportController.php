@@ -16,7 +16,6 @@ class ReportController extends Controller
             ->orderByDesc('report_categories.weight')
             ->get();
         return view('report.index', ['reports' => $reports, 'report_categories' => $report_categories]);
-
     }
 
     public function create(){
@@ -196,4 +195,46 @@ class ReportController extends Controller
         $report->delete();
         return redirect(route('report.index'))->with('success', 'Report Deleted Successfully');
     }
+
+    public function riwayatOngoing(){
+        try {
+            $reports = reports::select('reports.id', 'reports.title', 'reports.isProcess', 'reports.created_at')
+                ->orderByDesc('reports.created_at')
+                ->where('reports.isDone', '=', false)
+                ->get();
+                
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched ongoing reports!',
+                'reports' => $reports
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }
+    public function riwayatDone(){
+        try {
+            $reports = reports::select('reports.id', 'reports.title', 'reports.created_at')
+                ->orderByDesc('reports.created_at')
+                ->where('reports.isProcess', '=', true)
+                ->where('reports.isDone', '=', true)
+                ->get();
+                
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched done reports!',
+                'reports' => $reports
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }    
 }
