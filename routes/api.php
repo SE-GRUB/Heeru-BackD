@@ -51,5 +51,4 @@ Route::get('/createRating', [RatingController::class, 'createRating'])->name('ra
 
 
 
-Route::get('/myconsultation', [ConsultationController::class, 'myconsultation']);
 
