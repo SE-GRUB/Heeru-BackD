@@ -50,7 +50,8 @@ class UploadedFile implements UploadedFileInterface
 
     private bool $moved = false;
 
-    private ?StreamInterface $stream = null;
+    /** @var null|StreamInterface */
+    private $stream;
 
     /**
      * @param string|resource|StreamInterface $streamOrFile
@@ -71,7 +72,7 @@ class UploadedFile implements UploadedFileInterface
                 $this->stream = new Stream($streamOrFile);
             }
 
-            if ($this->file === null && $this->stream === null) {
+            if (! $this->file && ! $this->stream) {
                 if (! $streamOrFile instanceof StreamInterface) {
                     throw new Exception\InvalidArgumentException('Invalid stream or file provided for UploadedFile');
                 }
@@ -149,10 +150,7 @@ class UploadedFile implements UploadedFileInterface
 
         $sapi = PHP_SAPI;
         switch (true) {
-            case empty($sapi)
-                || str_starts_with($sapi, 'cli')
-                || str_starts_with($sapi, 'phpdbg')
-                || $this->file === null:
+            case empty($sapi) || str_starts_with($sapi, 'cli') || str_starts_with($sapi, 'phpdbg') || ! $this->file:
                 // Non-SAPI environment, or no filename present
                 $this->writeFile($targetPath);
 
