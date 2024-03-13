@@ -169,11 +169,10 @@ class ConsultationController extends Controller
             $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
                 ->join('users', 'consultations.counselor_id', '=', 'users.id')
                 ->where('consultations.student_id', $request->input('user_id'))
-                ->where('consultations.consultation_date', '>=', Carbon::now())
+                ->where('consultations.consultation_date', '>=', Carbon::now()->startOfDay())
                 ->whereNull('consultations.note')
-                ->orderByDesc('consultations.created_at')
+                ->orderBy('consultations.consultation_date')
                 ->get();
-            
                 $consultationData = [];
                 foreach ($consultations as $consultation) {
                     switch ($consultation->duration) {
@@ -207,26 +206,24 @@ class ConsultationController extends Controller
                         case '9':
                             $statusText = "17:00-18:00";
                             break;
+                        case '10':
+                            $statusText = "18:00-19:00";
+                            break;
                         default:
                             $statusText = "No value found";
                     }
                     $result = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
                     $minutesUntilConsultationStarts = $result['diff'];
                     $end = $result['end'];
-                    if ($minutesUntilConsultationStarts > 0) {
-                        $status = 'Pending';
-                    } elseif ($minutesUntilConsultationStarts === 0) {
-                        $status = 'Ongoing';
-                    } else {
-                        $status = 'Finished';
-                    }
-            
-                    if($status != 'Finished' AND Carbon::now() < $end){
+                    $currentTime = Carbon::now();
+                    if ($minutesUntilConsultationStarts >= 0 OR $currentTime < $end) {
+                        if($minutesUntilConsultationStarts < 0){
+                            $consultation['endIn'] = $end->diffInMinutes($currentTime);
+                        }
                         $consultation['time'] = $minutesUntilConsultationStarts;
                         $consultationData[] = $consultation;
-                    }
+                    } 
                 }
-            
             return response()->json([
                 'success' => true,
                 'message' => 'Fetched ongoing consultations!',
@@ -245,8 +242,8 @@ class ConsultationController extends Controller
             $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
                 ->join('users', 'consultations.counselor_id', '=', 'users.id')
                 ->where('consultations.student_id', $request->input('user_id'))
-                ->where('consultations.consultation_date', '<=', Carbon::now())
-                ->orderByDesc('consultations.created_at')
+                ->where('consultations.consultation_date', '<=', Carbon::now()->startOfDay())
+                ->orderBy('consultations.consultation_date')
                 ->get();
                 $consultationData = [];
                 foreach ($consultations as $consultation) {
@@ -280,6 +277,9 @@ class ConsultationController extends Controller
                             break;
                         case '9':
                             $statusText = "17:00-18:00";
+                            break;
+                        case '10':
+                            $statusText = "18:00-19:00";
                             break;
                         default:
                             $statusText = "No value found";
