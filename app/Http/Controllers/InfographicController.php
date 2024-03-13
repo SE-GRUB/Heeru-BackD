@@ -90,7 +90,7 @@ class InfographicController extends Controller
     }
 
     public function showInfografis(){
-        $infographics = infographic::orderBy('created_at', 'desc')->all();
+        $infographics = infographic::orderBy('created_at', 'desc')->get();
         if($infographics->isEmpty()){
             return response()->json([
                 'success' => false,
