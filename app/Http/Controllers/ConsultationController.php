@@ -189,7 +189,7 @@ class ConsultationController extends Controller
                             $statusText = "17:00-18:00";
                             break;
                         case '10':
-                            $statusText = "18:00-19:00";
+                            $statusText = "23:00-24:00";
                             break;
                         default:
                             $statusText = "No value found";
@@ -261,7 +261,7 @@ class ConsultationController extends Controller
                             $statusText = "17:00-18:00";
                             break;
                         case '10':
-                            $statusText = "18:00-19:00";
+                            $statusText = "23:00-24:00";
                             break;
                         default:
                             $statusText = "No value found";
