@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\chat;
 use App\Models\consultation;
 use App\Models\consultation_result;
-use App\Models\payment;
-use App\Models\payment_method;
+use App\Models\rating;
 use App\Models\User;
 use Carbon\Carbon;
-use App\Models\Rating;
 use App\Models\video_call;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -212,7 +210,9 @@ class ConsultationController extends Controller
                         default:
                             $statusText = "No value found";
                     }
-                    $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
+                    $result = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
+                    $minutesUntilConsultationStarts = $result['diff'];
+                    $end = $result['end'];
                     if ($minutesUntilConsultationStarts > 0) {
                         $status = 'Pending';
                     } elseif ($minutesUntilConsultationStarts === 0) {
@@ -221,7 +221,8 @@ class ConsultationController extends Controller
                         $status = 'Finished';
                     }
             
-                    if($status != 'Finished'){
+                    if($status != 'Finished' AND Carbon::now() < $end){
+                        $consultation['time'] = $minutesUntilConsultationStarts;
                         $consultationData[] = $consultation;
                     }
                 }
@@ -244,9 +245,9 @@ class ConsultationController extends Controller
             $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
                 ->join('users', 'consultations.counselor_id', '=', 'users.id')
                 ->where('consultations.student_id', $request->input('user_id'))
+                ->where('consultations.consultation_date', '<=', Carbon::now())
                 ->orderByDesc('consultations.created_at')
                 ->get();
-
                 $consultationData = [];
                 foreach ($consultations as $consultation) {
                     switch ($consultation->duration) {
@@ -283,16 +284,14 @@ class ConsultationController extends Controller
                         default:
                             $statusText = "No value found";
                     }
-                    $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
-                    if ($minutesUntilConsultationStarts > 0) {
-                        $status = 'Pending';
-                    } elseif ($minutesUntilConsultationStarts === 0) {
-                        $status = 'Ongoing';
-                    } else {
-                        $status = 'Finished';
-                    }
-            
-                    if($status == 'Finished'){
+                    $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date)['diff'];
+                    if ($minutesUntilConsultationStarts < 0) {
+                        $rating = rating::where('consultation_id', $consultation->id)->first();
+                        if ($rating) {
+                            $consultation['rating'] = $rating->rating;
+                        } else {
+                            $consultation['rating'] = '0';
+                        }
                         $consultationData[] = $consultation;
                     }
                 }
@@ -311,10 +310,19 @@ class ConsultationController extends Controller
         }
     }
 }
-
 function calculateTimeUntilConsultationStarts($statusText, $consultationDate){
     list($startTime, $endTime) = explode('-', $statusText);
     $consultationDateTime = Carbon::createFromFormat('Y-m-d H:i', $consultationDate . ' ' . $startTime);
-    $timeUntilConsultationStarts = $consultationDateTime->diffInMinutes(Carbon::now());
-    return $timeUntilConsultationStarts;
+    $consultationEndDateTime = Carbon::createFromFormat('Y-m-d H:i', $consultationDate . ' ' . $endTime);
+    $currentTime = Carbon::now();
+    if ($currentTime > $consultationDateTime) {
+        $diffInMinutes = -$consultationDateTime->diffInMinutes($currentTime);
+    }else{
+        $diffInMinutes = $consultationDateTime->diffInMinutes($currentTime);
+    }
+    return [
+        'start' => $consultationDateTime,
+        'end' => $consultationEndDateTime,
+        'diff' => $diffInMinutes
+    ];
 }
