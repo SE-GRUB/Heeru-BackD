@@ -6,6 +6,7 @@ use App\Models\chat;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Rating;
 use App\Models\video_call;
 use Illuminate\Http\Request;
@@ -151,4 +152,160 @@ class ConsultationController extends Controller
         }
     
     }
+
+    public  function updateConsultation(Request $request, $user_id){
+
+    }
+
+    public function konsulOngoing(Request $request){
+        try {
+            $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
+                ->join('users', 'consultations.counselor_id', '=', 'users.id')
+                ->where('consultations.student_id', $request->input('user_id'))
+                ->where('consultations.consultation_date', '>=', Carbon::now())
+                ->whereNull('consultations.note')
+                ->orderByDesc('consultations.created_at')
+                ->get();
+            
+                $consultationData = [];
+                foreach ($consultations as $consultation) {
+                    switch ($consultation->duration) {
+                        case '0':
+                            $statusText = "Off";
+                            break;
+                        case '1':
+                            $statusText = "08:00-09:00";
+                            break;
+                        case '2':
+                            $statusText = "09:00-10:00";
+                            break;
+                        case '3':
+                            $statusText = "10:00-11:00";
+                            break;
+                        case '4':
+                            $statusText = "11:00-12:00";
+                            break;
+                        case '5':
+                            $statusText = "13:00-14:00";
+                            break;
+                        case '6':
+                            $statusText = "14:00-15:00";
+                            break;
+                        case '7':
+                            $statusText = "15:00-16:00";
+                            break;
+                        case '8':
+                            $statusText = "16:00-17:00";
+                            break;
+                        case '9':
+                            $statusText = "17:00-18:00";
+                            break;
+                        default:
+                            $statusText = "No value found";
+                    }
+                    $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
+                    if ($minutesUntilConsultationStarts > 0) {
+                        $status = 'Pending';
+                    } elseif ($minutesUntilConsultationStarts === 0) {
+                        $status = 'Ongoing';
+                    } else {
+                        $status = 'Finished';
+                    }
+            
+                    if($status != 'Finished'){
+                        $consultationData[] = $consultation;
+                    }
+                }
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched ongoing consultations!',
+                'consultations' => $consultationData
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }
+    public function konsulDone(Request $request){
+        try {
+            $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
+                ->join('users', 'consultations.counselor_id', '=', 'users.id')
+                ->where('consultations.student_id', $request->input('user_id'))
+                ->orderByDesc('consultations.created_at')
+                ->get();
+
+                $consultationData = [];
+                foreach ($consultations as $consultation) {
+                    switch ($consultation->duration) {
+                        case '0':
+                            $statusText = "Off";
+                            break;
+                        case '1':
+                            $statusText = "08:00-09:00";
+                            break;
+                        case '2':
+                            $statusText = "09:00-10:00";
+                            break;
+                        case '3':
+                            $statusText = "10:00-11:00";
+                            break;
+                        case '4':
+                            $statusText = "11:00-12:00";
+                            break;
+                        case '5':
+                            $statusText = "13:00-14:00";
+                            break;
+                        case '6':
+                            $statusText = "14:00-15:00";
+                            break;
+                        case '7':
+                            $statusText = "15:00-16:00";
+                            break;
+                        case '8':
+                            $statusText = "16:00-17:00";
+                            break;
+                        case '9':
+                            $statusText = "17:00-18:00";
+                            break;
+                        default:
+                            $statusText = "No value found";
+                    }
+                    $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
+                    if ($minutesUntilConsultationStarts > 0) {
+                        $status = 'Pending';
+                    } elseif ($minutesUntilConsultationStarts === 0) {
+                        $status = 'Ongoing';
+                    } else {
+                        $status = 'Finished';
+                    }
+            
+                    if($status == 'Finished'){
+                        $consultationData[] = $consultation;
+                    }
+                }
+                
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched done consultations!',
+                'consultations' => $consultationData
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }
+}
+
+function calculateTimeUntilConsultationStarts($statusText, $consultationDate){
+    list($startTime, $endTime) = explode('-', $statusText);
+    $consultationDateTime = Carbon::createFromFormat('Y-m-d H:i', $consultationDate . ' ' . $startTime);
+    $timeUntilConsultationStarts = $consultationDateTime->diffInMinutes(Carbon::now());
+    return $timeUntilConsultationStarts;
 }

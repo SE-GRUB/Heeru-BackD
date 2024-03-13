@@ -196,11 +196,12 @@ class ReportController extends Controller
         return redirect(route('report.index'))->with('success', 'Report Deleted Successfully');
     }
 
-    public function riwayatOngoing(){
+    public function riwayatOngoing(Request $request){
         try {
             $reports = reports::select('reports.id', 'reports.title', 'reports.isProcess', 'reports.created_at')
                 ->orderByDesc('reports.created_at')
                 ->where('reports.isDone', '=', false)
+                ->where('reports.user_id', '=', $request->input('user_id'))
                 ->get();
                 
             return response()->json([
@@ -216,12 +217,13 @@ class ReportController extends Controller
             ]);
         }
     }
-    public function riwayatDone(){
+    public function riwayatDone(Request $request){
         try {
             $reports = reports::select('reports.id', 'reports.title', 'reports.created_at')
                 ->orderByDesc('reports.created_at')
                 ->where('reports.isProcess', '=', true)
                 ->where('reports.isDone', '=', true)
+                ->where('reports.user_id', '=', $request->input('user_id'))
                 ->get();
                 
             return response()->json([
