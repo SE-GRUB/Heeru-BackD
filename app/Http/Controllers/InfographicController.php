@@ -90,19 +90,19 @@ class InfographicController extends Controller
     }
 
     public function showInfografis(){
-        $infographics = infographic::all();
+        $infographics = infographic::orderBy('created_at', 'desc')->all();
         if($infographics->isEmpty()){
             return response()->json([
                 'success' => false,
                 'message' => 'There are no infographics registered',
             ]);
-        }
+        } 
 
         foreach ($infographics as $infographic){
             $images = infographic_image::where('info_id', $infographic->id)->get();
 
             if($infographic){
-                
+
                 $dataImages = [];
                 if($images){
                     foreach( $images as $image){
@@ -112,6 +112,7 @@ class InfographicController extends Controller
                     }
                 }
                 $dataInfographics[]=[
+                    'id'=>$infographic->id,
                     'title' => $infographic->title,
                     'images' => $dataImages,
                 ];

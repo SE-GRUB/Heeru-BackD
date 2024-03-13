@@ -92,17 +92,23 @@ class UserController extends Controller
         }
     }
 
-    public function index(){
-        $users = User::all();
-        return view('users.index', ['users' => $users]);
+    public function index(Request $request){
+        $role = $request->input('role');
+        if (!$role) {
+            $users = User::all();
+        } else {
+            $users = User::where('role', $role)->get();
+        }
+        return view('users.index', ['users' => $users, 'role' => $role]);
         
     }
 
-    public function create(){
+    public function create(Request $request){
+        $role = $request->input('role');
+        $role = $role ? $role : 'student';
         $today = Carbon::now()->toDateString();
-
         $programs = Program::where('end_date', '>=', $today)->get();
-        return view('users.create', ['programs' => $programs]);
+        return view('users.create', ['programs' => $programs, 'role' => $role]);
     }   
 
     private function uploadedfile0($img, $path) {
@@ -458,5 +464,51 @@ class UserController extends Controller
             'profile_pic' => json_decode($user->profile_pic)[0],
         ];
         return view('profile.index', ['user' => $userArray]);
+    }
+
+    public function changePasss(Request $request){
+        $data  = $request->validate([
+            'user_id' => 'required',
+            'email' => 'required',
+            'old_password' => 'required'
+        ]);
+        $user = User::where('id', $data['user_id'])->first();
+        if($user){
+            if($data['email'] == $user->email){
+                if(Hash::check($data['old_password'], $user->password)){
+                    return response()->json([
+                        'success' => true,
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Wrong Password!',
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'The email you entered is not registered!',
+                ]);
+            }
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found!',
+            ]);
+        }
+    }
+
+    public function changePassword(Request $request){
+        $data  = $request->validate([
+            'user_id' => 'required',
+            'new_password' => 'required'
+        ]);
+        $user = User::where('id', $data['user_id'])->first();
+        $user->password = Hash::make($data['new_password']);
+        $Update = $user->save();
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

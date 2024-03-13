@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\consultation;
 use App\Models\consultation_result;
 use Illuminate\Http\Request;
@@ -35,6 +35,40 @@ class ConsultationResultController extends Controller
         $newComment = consultation_result::create($data);
     
         return redirect(route('consultation_result.index', ['consultation' => $consultation]))->with('success', 'Result Added Successfully!');
+    }
+
+    public function getResult(Request $request){
+        try{
+            $result = DB::table('consultation')
+            ->where('consultation.id', $request->input('consultation_id'))
+            ->first();
+
+            if($result){
+                $resultarray = [
+                    'note' =>$result->note,
+                    'consultation_date' => $result->consultation_date,
+                    'consultation_id' => $result->id
+                ];
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'fetch consultation result successfully',
+                    'result' => $resultarray,
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'result not found!',
+                ]);
+            }
+
+        }catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
+            ]);
+        }
     }
 
     public function edit(consultation_result $consultation_result, consultation $consultation){

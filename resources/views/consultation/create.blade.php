@@ -52,7 +52,12 @@
                 <input type="number" class="form-control" id="duration" name="duration" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Add Post</button>
+            <div class="form-group">
+                <label for="note">Note:</label>
+                <input type="text" class="form-control" id="note" name="note" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Consultation</button>
         </form>
     </div>
 @endsection
