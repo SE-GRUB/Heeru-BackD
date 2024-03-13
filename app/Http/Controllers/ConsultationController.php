@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\chat;
 use App\Models\consultation;
 use App\Models\consultation_result;
+use App\Models\payment;
+use App\Models\payment_method;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Rating;
@@ -111,23 +113,30 @@ class ConsultationController extends Controller
         }
     }
     public function getResult(Request $request){
+        // dd($request);
+
         try{
-            $consultation_id = $request->input('consultation_id');
+            $consultation_id = $request->query('id');
 
-            $result = consultation::find($consultation_id);
-            $student = User::where('id', $result->student_id);
-            $counselor = User::where('id', $result->counselor_id);
+            // $result = consultation::find($consultation_id);
+            // $student = User::where('id', $result->student_id);
+            // $counselor = User::where('id', $result->counselor_id);
+            // $payment = payment::where('consultation_id', $consultation_id);
+            $data = DB::table("DataKonsultasi")->where('id', $consultation_id)->first();
+            // dd($data);
 
 
-            if($result){
+            if($data){
                 $resultarray = [
-                    'note' =>$result->note,
-                    'consultation_date' => $result->consultation_date,
-                    'consultation_id' => $result->id,
-                    'student_profile' => $student->profile_pic,
-                    'studentName' => $student->name,
-                    'counselor_profile' => $counselor->profile_pic,
-                    'counselorName' => $counselor->name,
+                    'note' =>$data->note?$data->note:'',
+                    'consultation_date' => $data->consultation_date,
+                    'consultation_id' => $data->id,
+                    'counselor_profile' => $data->dokter_profile_pic,
+                    'counselorName' => $data->dokter_name,
+                    // 'paymentMethod' => $data->payment_method_name,
+                    'paymentNominal' => $data->dokter_fare,
+                    'time' => $data->created_at
+
                 ];
 
 

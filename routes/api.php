@@ -4,6 +4,7 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\InfographicController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
@@ -45,7 +46,8 @@ Route::get('/konsulDone', [ConsultationController::class, 'konsulDone'])->name('
 Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
-Route::get('/getResult', [ConsultationResultController::class, 'getResult'])->name('consultation.result');
+Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('consultation.result');
+Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 
 
 

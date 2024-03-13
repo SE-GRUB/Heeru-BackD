@@ -21,6 +21,25 @@ class RatingController extends Controller
 
     }
 
+    public function createRating(Request $request){
+        $data = $request->validate([
+            'rating' => 'required',
+            'review' => 'required'
+        ]);
+
+        try{
+            $newRating = Rating::create([
+                'rating' => $data['review'],
+                'review' => $data['review']
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create rating. Please try again later.',
+            ]);
+        }
+    }
+
 
     public function store(Request $request, consultation $consultation){
         // dd($request);
