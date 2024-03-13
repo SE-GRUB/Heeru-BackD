@@ -90,26 +90,7 @@ class ConsultationController extends Controller
         }
     }
 
-    // get specific consultation
-    public function myconsultation(Request $request) {
-        try {
-           $consultation = DB::table('DataKonsultasi')
-           ->where('student_id', $request->input('id'))
-           ->orderBy('consultation_date', 'asc')
-           ->get();
-            
-
-            return response()->json([
-                'success' => true,
-                'consultation' => $consultation,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
+  
     public function getResult(Request $request){
         // dd($request);
 
@@ -129,8 +110,9 @@ class ConsultationController extends Controller
                     'note' =>$data->note?$data->note:'',
                     'consultation_date' => $data->consultation_date,
                     'consultation_id' => $data->id,
-                    'counselor_profile' => $data->dokter_profile_pic,
+                    'counselor_profile' => $data->dokter_profile_pic ? json_decode($data->dokter_profile_pic)[0] : '',
                     'counselorName' => $data->dokter_name,
+                    'counselorEmail' => $data->dokter_email,
                     // 'paymentMethod' => $data->payment_method_name,
                     'paymentNominal' => $data->dokter_fare,
                     'time' => $data->created_at
