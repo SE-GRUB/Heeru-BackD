@@ -22,19 +22,24 @@
         // Function to handle uploaded files and return their paths
         public function uploadedFiles($files, $path)
         {
+            $file=$files;
+            // dd(count($files), $path);
             $paths = [];
 
-            foreach ($files as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path($path), $fileName);
-                if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])) {
-                    // For image files
-                    $paths[] = '<img src="' . asset($path . '/' . $fileName) . '" alt="image" class="img-fluid">';
-                } else {
-                    // For other file types
-                    $paths[] = '<a href="' . asset($path . '/' . $fileName) . '" download>' . $file->getClientOriginalName() . '</a>';
-                }
+
+            // foreach ($files as $file) {
+            // dd($file,'aa');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            // dd($fileName, $file->getClientOriginal/Name());
+            $file->move(public_path($path), $fileName);
+            if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])) {
+                // For image files
+                $paths[] = '<img src="' . asset($path . '/' . $fileName) . '" alt="image" class="img-fluid">';
+            } else {
+                // For other file types
+                $paths[] = '<a href="' . asset($path . '/' . $fileName) . '" download>' . $file->getClientOriginalName() . '</a>';
             }
+            // }
             // dd($paths);
             return $paths;
         }
@@ -48,22 +53,16 @@
             $data['user_id'] = $request->input('user_id');
             $data['post_body'] = $request->input('isipost');
             $data['poster'] = null;
-            // Handle uploaded files
-
-            // dump(count($request->file()));
             foreach ($request->file() as $files) {
                 if ($files) {
-                    dump($files);
                     $path = 'post_poster/' . $data['user_id'];
                     $paths = $this->uploadedFiles($files, $path);
                     $data['poster'] = json_encode($paths);
                 }
 
             }
-
             $newPost = Post::create($data);
 
-            // tampilkan postSuccess
             return view('ManualVenlib.postSuccess', ['newPost' => $newPost]);
 
 

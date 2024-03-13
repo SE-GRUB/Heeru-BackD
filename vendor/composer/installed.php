@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '62e42114013ff4853dd6888ad442d221e235de4d',
+        'reference' => 'ec6a2326d38c6d892d4480c9b9e2d697ca728146',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -466,7 +466,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '62e42114013ff4853dd6888ad442d221e235de4d',
+            'reference' => 'ec6a2326d38c6d892d4480c9b9e2d697ca728146',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -482,9 +482,9 @@
             'dev_requirement' => true,
         ),
         'laravel/sail' => array(
-            'pretty_version' => 'v1.28.2',
-            'version' => '1.28.2.0',
-            'reference' => '057777403b8ab79222dcc04983beaab10b6de6a0',
+            'pretty_version' => 'v1.29.0',
+            'version' => '1.29.0.0',
+            'reference' => 'e40cc7ffb5186c45698dbd47e9477e0e429396d0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/sail',
             'aliases' => array(),
@@ -599,8 +599,8 @@
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
-            'pretty_version' => '1.6.7',
-            'version' => '1.6.7.0',
+            'pretty_version' => '1.6.9',
+            'version' => '1.6.9.0',
             'reference' => '0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06',
             'type' => 'library',
             'install_path' => __DIR__ . '/../mockery/mockery',
@@ -932,8 +932,8 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
-                1 => '^1.1 || ^2.0',
-                2 => '*',
+                1 => '*',
+                2 => '^1.1 || ^2.0',
             ),
         ),
         'psr/http-message' => array(
@@ -949,8 +949,8 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
-                1 => '^1.1 || ^2.0',
-                2 => '*',
+                1 => '*',
+                2 => '^1.1 || ^2.0',
             ),
         ),
         'psr/log' => array(
