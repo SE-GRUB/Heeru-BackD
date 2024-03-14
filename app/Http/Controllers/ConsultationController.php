@@ -96,13 +96,7 @@ class ConsultationController extends Controller
 
         try{
             $consultation_id = $request->query('id');
-
-            // $result = consultation::find($consultation_id);
-            // $student = User::where('id', $result->student_id);
-            // $counselor = User::where('id', $result->counselor_id);
-            // $payment = payment::where('consultation_id', $consultation_id);
             $data = DB::table("DataKonsultasi")->where('id', $consultation_id)->first();
-            // dd($data);
 
 
             if($data){
@@ -110,10 +104,10 @@ class ConsultationController extends Controller
                     'note' =>$data->note?$data->note:'',
                     'consultation_date' => $data->consultation_date,
                     'consultation_id' => $data->id,
+                    'counselor_id' => $data->counselor_id,
                     'counselor_profile' => $data->dokter_profile_pic ? json_decode($data->dokter_profile_pic)[0] : '',
                     'counselorName' => $data->dokter_name,
                     'counselorEmail' => $data->dokter_email,
-                    // 'paymentMethod' => $data->payment_method_name,
                     'paymentNominal' => $data->dokter_fare,
                     'time' => $data->created_at
 
@@ -189,7 +183,7 @@ class ConsultationController extends Controller
                             $statusText = "17:00-18:00";
                             break;
                         case '10':
-                            $statusText = "18:00-19:00";
+                            $statusText = "23:00-24:00";
                             break;
                         default:
                             $statusText = "No value found";
@@ -261,7 +255,7 @@ class ConsultationController extends Controller
                             $statusText = "17:00-18:00";
                             break;
                         case '10':
-                            $statusText = "18:00-19:00";
+                            $statusText = "23:00-24:00";
                             break;
                         default:
                             $statusText = "No value found";
