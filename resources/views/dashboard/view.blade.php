@@ -21,7 +21,6 @@
             <th>Report's Author</th>
             <th>Title</th>
             <th>Time</th>
-            <th>Evidence</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -35,7 +34,6 @@
                 <td>{{ $username }}</td>
                 <td>{{ $report->title }}</td>
                 <td>{{ $report->created_at }}</td>
-                <td>{{ $report->evidence }}</td>
                 <td>
                     <a href="{{ route('dashboard_report.detail', ['report' => $report->id]) }}" class="btn btn-primary">View Details</a>
                 </td>
