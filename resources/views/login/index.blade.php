@@ -69,7 +69,6 @@
 
         document.getElementById("formLogin").addEventListener('submit', function(event) {
             event.preventDefault();
-            // container.classList.add("fullscreen-mode");
             if(nip.value.trim() === ""){
                 errortext1.innerHTML="Please input your NIP";
                 errortext1.classList.remove("hide");

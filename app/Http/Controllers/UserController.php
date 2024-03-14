@@ -461,7 +461,7 @@ class UserController extends Controller
             'role' => $user-> role,
             'no_telp' => $user->no_telp,
             'email' => $user->email,
-            'profile_pic' => json_decode($user->profile_pic)[0],
+            'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
         ];
         return view('profile.index', ['user' => $userArray]);
     }

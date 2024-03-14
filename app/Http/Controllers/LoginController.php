@@ -25,10 +25,12 @@ class LoginController extends Controller
     }
 
     public function actionlogin(Request $request){
-        $data = [
-            'nip' => $request->input('nip'),
-            'password' => $request->input('password'),
-        ];
+        // dd("MASOKK");
+        $data = $request->validate([
+            'nip' => 'required',
+            'password'=> 'required',
+        ]);
+
         $role = User::where('nip', $data['nip'])->value('role');
         // dd($role);
 
@@ -102,8 +104,7 @@ class LoginController extends Controller
         return view('backend.index');
     }
 
-    public function actionlogout()
-    {
+    public function actionlogout(){
         Auth::logout();
         return redirect('/');
     }
