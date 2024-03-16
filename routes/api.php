@@ -46,6 +46,7 @@ Route::get('/konsulDone', [ConsultationController::class, 'konsulDone'])->name('
 Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
+Route::get('/pponly', [UserController::class, 'getPP'])->name('user.pp');
 Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('consultation.result');
 Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 

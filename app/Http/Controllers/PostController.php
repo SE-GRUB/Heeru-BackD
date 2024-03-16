@@ -44,8 +44,7 @@
             return $paths;
         }
 
-        public function uplodnewpost(Request $request)
-        {
+        public function uplodnewpost(Request $request){
             // dump($request);
             $data['like'] = 0;
             $data['isVerified'] = false;
@@ -64,8 +63,6 @@
             $newPost = Post::create($data);
 
             return view('ManualVenlib.postSuccess', ['newPost' => $newPost]);
-
-
         }
 
         //save data

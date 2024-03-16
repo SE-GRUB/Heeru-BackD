@@ -466,6 +466,26 @@ class UserController extends Controller
         return view('profile.index', ['user' => $userArray]);
     }
 
+    public function getPP(Request $request){
+        try {
+            $user = User::where('id', $request->input('user_id'))->first();
+            $userArray = [
+                'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+            ];
+            return response()->json([
+                'success' => true,
+                'message' => 'get user photo profile successfully',
+                'pp' => $userArray,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
+            ]);
+        }
+    }
+
     public function changePasss(Request $request){
         $data  = $request->validate([
             'user_id' => 'required',
