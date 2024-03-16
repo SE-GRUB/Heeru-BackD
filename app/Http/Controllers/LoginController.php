@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 use App\Mail\HeeruMail;
 
@@ -25,23 +26,32 @@ class LoginController extends Controller
     }
 
     public function actionlogin(Request $request){
-        // dd("MASOKK");
+        Log::info('Memulai fungsi actionlogin');
+    
+        // dd("MASUK");
         $data = $request->validate([
             'nip' => 'required',
             'password'=> 'required',
         ]);
-
+    
+        // Log data yang diterima
+        Log::debug('Data yang diterima: ' . json_encode($data));
+    
+        // Lakukan otentikasi pengguna
         $role = User::where('nip', $data['nip'])->value('role');
-        // dd($role);
-
+        Log::debug('Peran pengguna: ' . $role);
+    
+        // Log apakah otentikasi berhasil atau tidak
         if (in_array($role, ['admin', 'pic'])) {
-            // dd("TEST : " . Auth::Attempt($data));
-            if (Auth::Attempt($data)) {
+            if (Auth::attempt($data)) {
+                Log::info('Otentikasi berhasil');
                 return redirect('dashboard');
-            }else{
+            } else {
+                Log::warning('Otentikasi gagal: NIP atau password tidak sesuai');
                 return redirect("/")->with('error','NIP or Password Incorrect!');
             }
-        }else{
+        } else {
+            Log::warning('Otentikasi gagal: Pengguna tidak memiliki peran yang sesuai');
             return redirect("/")->with('error','This page is only for admin and PIC!');
         }
     }

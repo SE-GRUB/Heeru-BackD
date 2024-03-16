@@ -43,7 +43,9 @@
     </style>
 </head>
 
-<body> @php $data->profile_pic = json_decode($data->profile_pic)[0]; @endphp <form action="{{ url('/uplodnewpost') }}" method="post" enctype="multipart/form-data"> @csrf
+<body> @php $data->profile_pic = json_decode($data->profile_pic)[0]; @endphp 
+    <form action="{{ url('/uplodnewpost') }}" method="post" enctype="multipart/form-data"> 
+        @csrf
         <input type="hidden" name="user_id" value="{{ $data->id }}" />
         <div class="container-fluid" id="qui" style="width: 100vw; height: 100vh">
             <div class="row justify-content-end">
@@ -66,12 +68,10 @@
                     <div class="col-6">
                         <a href="#" id="linkfileview" class="hidden">#</a>
                     </div>
-
-
                 </div>
             </div>
-            <input type="file" name="filelist" class="form-control-file hidden" id="fileInput"
-                accept=".doc, .docx, .pdf" />
+            {{-- <input type="file" name="filelist" class="form-control-file hidden" id="fileInput"
+                accept=".doc, .docx, .pdf" /> --}}
             <input type="file" name="photo" class="form-control-file hidden" id="imageInput" accept="image/*" />
             <div class="col-12 row justify-content-end fixed-bottom p-0">
                 <a class="col-4 button button-primary button-circle btn btn-lg button-longshadow hipo hidden"
@@ -102,12 +102,12 @@
         });
 
         // this is for the file preview
-        document.getElementById('fileInput').addEventListener('change', function() {
-            var file = this.files[0];
-            document.getElementById('linkfileview').classList.remove('hidden');
-            document.getElementById('linkfileview').href = URL.createObjectURL(file);
-            document.getElementById('linkfileview').innerText = file.name;
-        });
+        //document.getElementById('fileInput').addEventListener('change', function() {
+        //    var file = this.files[0];
+        //    document.getElementById('linkfileview').classList.remove('hidden');
+        //    document.getElementById('linkfileview').href = URL.createObjectURL(file);
+        //    document.getElementById('linkfileview').innerText = file.name;
+        //});
     </script>
 
     <script>

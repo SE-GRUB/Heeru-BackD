@@ -24,6 +24,13 @@ class ConsultationController extends Controller
         return view('consultation.create', ['users' => $users]);
     }
 
+    private function generateConsultationId(){
+        $timestamp = microtime();
+        $randomPart = strtoupper(substr(hash('sha256', $timestamp), 0, 8));
+        return $randomPart;
+    }
+
+
     public function store(Request $request){
         // dd($request);
         $data = $request->validate([
@@ -33,26 +40,11 @@ class ConsultationController extends Controller
             'duration' => 'required',
             'note' => 'required',
         ]);
+        $data['consultation_id'] = $this->generateConsultationId();
         $data['isPaid']=false;
         $newConsultation = consultation::create($data);
         return redirect((route(('consultation.index'))))->with('success', 'Consultation Added Successfully !');;
     }
-
-
-    // public function edit(consultation $consultation){
-    //     $users = consultation::all();
-    //     return view('post.edit', ['post' => $post], ['users' => $users]);
-    // }
-
-    // public function update(post $post, Request $request){
-    //     $data = $request->validate([
-    //         'user_id' => 'required',
-    //         'post_body' => 'required',
-    //     ]);
-    //     $data['isAnonymous'] = $request->input('isAnonymous', false);
-    //     $post->update(($data));
-    //     return redirect(route('post.index'))->with('success', 'Post Updated Successfully');
-    // }
 
     public function destroy(consultation $consultation){
         $consultation_results=consultation_result::where('consultation_id', $consultation->id)->get();
@@ -96,24 +88,25 @@ class ConsultationController extends Controller
 
         try{
             $consultation_id = $request->query('id');
-            $data = DB::table("DataKonsultasi")->where('id', $consultation_id)->first();
+            $data = DB::table("consultations")
+            ->join("users","consultations.counselor_id","=","users.id")
+            ->where('consultations.id', $consultation_id)
+            ->first();
 
 
             if($data){
                 $resultarray = [
-                    'note' =>$data->note?$data->note:'',
+                    'note' =>$data->note ? $data->note : 'Consultation Note not available',
                     'consultation_date' => $data->consultation_date,
-                    'consultation_id' => $data->id,
+                    'consultation_id' => $data->consultation_id,
                     'counselor_id' => $data->counselor_id,
-                    'counselor_profile' => $data->dokter_profile_pic ? json_decode($data->dokter_profile_pic)[0] : '',
-                    'counselorName' => $data->dokter_name,
-                    'counselorEmail' => $data->dokter_email,
-                    'paymentNominal' => $data->dokter_fare,
+                    'counselor_profile' => $data->profile_pic ? json_decode($data->profile_pic)[0] : '',
+                    'counselorName' => $data->name,
+                    'counselorEmail' => $data->email,
+                    'paymentNominal' => $data->fare,
                     'time' => $data->created_at
 
                 ];
-
-
                 return response()->json([
                     'success' => true,
                     'message' => 'fetch consultation result successfully',
@@ -134,10 +127,6 @@ class ConsultationController extends Controller
             ]);
         }
     
-    }
-
-    public  function updateConsultation(Request $request, $user_id){
-
     }
 
     public function konsulOngoing(Request $request){

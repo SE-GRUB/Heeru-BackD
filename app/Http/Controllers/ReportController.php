@@ -24,6 +24,14 @@ class ReportController extends Controller
         return view('report.create', ['report_categories' => $report_categories, 'users'=>$users]);
     }
 
+    private function generateReportId(){
+        $timestamp = microtime();
+        $randomPart = strtoupper(substr(hash('sha256', $timestamp), 0, 8));
+        $reportId = 'RPT-' . $randomPart; 
+        return $reportId;
+    }
+    
+
     public function store(Request $request){
         $data = $request->validate([
             'title' => 'required',
@@ -49,6 +57,7 @@ class ReportController extends Controller
         ]);
 
         unset($data['w1'], $data['w2'], $data['w3'], $data['w4'], $data['w5'], $data['h1']);
+        $data['report_id'] = $this->generateReportId();
         $newReport = reports::create($data);
         $data2 = [
             'report_id' => $newReport->id,
@@ -58,7 +67,6 @@ class ReportController extends Controller
         ];
         // dd($data);
         $newstatus= status::create($data2);
-
         return redirect(route('report.index'))->with('success', 'Report Added Successfully');
     }
 
