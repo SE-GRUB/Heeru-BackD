@@ -79,7 +79,7 @@ Route::delete('/report_category/{report_category}/destroy', [ReportCategoryContr
 // Post route
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
-Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::post('/post', [PostController::class, 'createPost'])->name('post.store');
 Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
 Route::put('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');

@@ -9,6 +9,7 @@ class reports extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'report_id',
         'title',
         'user_id',
         'category_id',

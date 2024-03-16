@@ -23,7 +23,6 @@
         public function uploadedFiles($files, $path)
         {
             $file=$files;
-            // dd(count($files), $path);
             $paths = [];
 
 
@@ -44,6 +43,24 @@
             return $paths;
         }
 
+        private function uploadedfile0($img, $path) {
+            $time=time();
+            $newurl=[];
+            // dd($img);
+            $imag=$img;
+            if ($imag->isValid()) {
+                $imag->move($path, $time . '_' . $imag->getClientOriginalName());
+                $newurl[] = $path . '/' . $time . '_' . $imag->getClientOriginalName();
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to upload file',
+                    'error' => 'File upload failed',
+                ]);
+            }
+            return $newurl;
+        }
+
         public function uplodnewpost(Request $request){
             // dump($request);
             $data['like'] = 0;
@@ -55,7 +72,7 @@
             foreach ($request->file() as $files) {
                 if ($files) {
                     $path = 'post_poster/' . $data['user_id'];
-                    $paths = $this->uploadedFiles($files, $path);
+                    $paths = $this->uploadedfile0($files, $path);
                     $data['poster'] = json_encode($paths);
                 }
 
@@ -145,15 +162,18 @@
                 $newPost = post::create([
                     'user_id' => $data['user_id'],
                     'post_body' => $data['post_body'],
+                    'like' => 0,
+                    'isVerified' => false,
+                    'isAnonymous' => $request->input('isAnonymous', false),
                 ]);
 
-                $files = $request->file('poster');
-                $path = 'post_poster/' . $newPost->id;
-                $paths = $this->uploadedFiles($files, $path);
-
-                $postPath = json_encode($paths);
-
-                $newPost->update(['post' => $postPath]);
+                if($request['poster']){
+                    $files = $request->file('poster');
+                    $path = 'post_poster/' . $newPost->id;
+                    $paths = $this->uploadedfile0($files, $path);
+                    $postPath = json_encode($paths);
+                    $newPost->update(['poster' => $postPath]);
+                }
 
                 return response()->json([
                     'success' => true,

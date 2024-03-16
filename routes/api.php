@@ -43,7 +43,7 @@ Route::get('/counselorShow', [UserController::class, 'showCons'])->name('cons.sh
 Route::get('/counSlot', [ConsultationController::class, 'getSche'])->name('couns.sche');
 Route::get('/konsulOngoing', [ConsultationController::class, 'konsulOngoing'])->name('couns.ongoing');
 Route::get('/konsulDone', [ConsultationController::class, 'konsulDone'])->name('couns.done');
-Route::get('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
+Route::post('/createPost', [PostController::class, 'createPost'])->name('post.createPost');
 Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])->name('infografis.showInfografis');
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
 Route::get('/pponly', [UserController::class, 'getPP'])->name('user.pp');

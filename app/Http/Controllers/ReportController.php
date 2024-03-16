@@ -124,6 +124,7 @@ class ReportController extends Controller
 
         try {
             $newReport = reports::create([
+                'report_id' => $this->generateReportId(),
                 'title' => $data['title'],
                 'details' => $data['details'],
                 'category_id' => $data['category_id'],
