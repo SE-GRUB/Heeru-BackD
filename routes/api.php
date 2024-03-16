@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\InfographicController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReportCategoryController;
@@ -53,6 +54,7 @@ Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('co
 Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
 Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
+Route::get('/like', [LikeController::class, 'like'])->name('like.likes');
 
 
 
