@@ -54,7 +54,7 @@ Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('co
 Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
 Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
-
+Route::get('/like', [comment_reply::class, 'like'])->name('like.liking');
 
 
 
