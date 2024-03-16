@@ -3,7 +3,8 @@
     namespace App\Http\Controllers;
     use App\Models\comment;
     use App\Models\comment_reply;
-    use App\Models\post;
+use App\Models\like;
+use App\Models\post;
     use App\Models\User;
     use Illuminate\Http\Request;
 
@@ -234,11 +235,12 @@
 
         public function showPost(Request $request){
             $page = $request->query('page', 1);
+            $user_id = $request->input('user_id');
             $posts = Post::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
             $dataPosts = [];
 
             foreach ($posts as $post) {
-                $dataPosts[] = $this->formatPost($post);
+                $dataPosts[] = $this->formatPost($post, $user_id);
             }
 
             return response()->json([
@@ -248,9 +250,14 @@
             ]);
         }
 
-        protected function formatPost($post){
+        protected function formatPost($post, $user_id){
             $dataComments = [];
             $user = User::where('id', $post->user_id)->first();
+
+            $likeCount = like::where('post_id', $post->id)->count();
+            $liked = Like::where('user_id', $user_id)
+             ->where('post_id', $post->id)
+             ->exists();
 
             if ($user) {
                 $comments = Comment::where('post_id', $post->id)->get();
@@ -267,7 +274,8 @@
                     'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                     'post_body' => $post->post_body,
                     'poster' => $post->poster ? json_decode($post->poster)[0] : '',
-                    'like' => $post->like,
+                    'isLiked' => $liked,
+                    'like' => $likeCount,
                     'created_at' => $post->created_at,
                     'totalcomments' => count($dataComments),
                     'comments' => $dataComments,
