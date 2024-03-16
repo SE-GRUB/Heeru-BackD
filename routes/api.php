@@ -53,7 +53,8 @@ Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('co
 Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
 Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
-
+Route::get('/showComment', [CommentController::class, 'showComment'])->name('comment.showComment');
+Route::get('/showReply', [comment_reply::class, 'showReply'])->name('create_reply.showReply');
 
 
 

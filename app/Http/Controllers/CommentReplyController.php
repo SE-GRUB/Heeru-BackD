@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\comment;
 use App\Models\post;
 use App\Models\comment_reply;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentReplyController extends Controller
@@ -73,8 +74,10 @@ class CommentReplyController extends Controller
     }
 
     public function showReply(Request $request){
-        $replies =  comment_reply::orderBy('created_at', 'desc')->get();
-        if($replies->empty()){
+        $comment_id = $request->input('id');
+        $user = User::where('id', $comment_id)->first();
+        $replies =  comment_reply::where('comment_id', $comment_id)->orderBy('created_at', 'desc')->get();
+        if($replies->isEmpty()){
             return response()->json([
                 'success' => false,
                 'message' => 'There are no replies registered',
@@ -83,9 +86,12 @@ class CommentReplyController extends Controller
 
         foreach($replies as $reply){
             if($reply){
+                $userReply = User::where('id', $reply->user_id)->first();
                $datareply[] = [
                 'user_id' => $reply->id,
-                'comment_id' => $reply->comment_id,
+                'tag' => $user->username ? $user->username : $user->name,
+                'username' => $userReply->username ? $userReply->username : $userReply->name,
+                'profile_pic' => $userReply->profile_pic ? json_decode($userReply->profile_pic)[0] : '',
                 'reply' => $reply->reply,
                 'created_at' => $reply->created_at
                ]; 
