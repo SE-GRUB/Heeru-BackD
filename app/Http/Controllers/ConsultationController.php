@@ -104,6 +104,7 @@ class ConsultationController extends Controller
                     'counselorName' => $data->name,
                     'counselorEmail' => $data->email,
                     'paymentNominal' => $data->fare,
+                    'duration' => convertDuration($data->duration),
                     'time' => $data->created_at
 
                 ];
@@ -129,6 +130,7 @@ class ConsultationController extends Controller
     
     }
 
+
     public function konsulOngoing(Request $request){
         try {
             $consultations = consultation::select('consultations.id', 'users.name', 'consultations.isPaid', 'consultations.consultation_date', 'consultations.duration')
@@ -140,43 +142,7 @@ class ConsultationController extends Controller
                 ->get();
                 $consultationData = [];
                 foreach ($consultations as $consultation) {
-                    switch ($consultation->duration) {
-                        case '0':
-                            $statusText = "Off";
-                            break;
-                        case '1':
-                            $statusText = "08:00-09:00";
-                            break;
-                        case '2':
-                            $statusText = "09:00-10:00";
-                            break;
-                        case '3':
-                            $statusText = "10:00-11:00";
-                            break;
-                        case '4':
-                            $statusText = "11:00-12:00";
-                            break;
-                        case '5':
-                            $statusText = "13:00-14:00";
-                            break;
-                        case '6':
-                            $statusText = "14:00-15:00";
-                            break;
-                        case '7':
-                            $statusText = "15:00-16:00";
-                            break;
-                        case '8':
-                            $statusText = "16:00-17:00";
-                            break;
-                        case '9':
-                            $statusText = "17:00-18:00";
-                            break;
-                        case '10':
-                            $statusText = "23:00-24:00";
-                            break;
-                        default:
-                            $statusText = "No value found";
-                    }
+                    $statusText = convertDuration($consultation->duration);
                     $result = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date);
                     $minutesUntilConsultationStarts = $result['diff'];
                     $end = $result['end'];
@@ -212,43 +178,7 @@ class ConsultationController extends Controller
                 ->get();
                 $consultationData = [];
                 foreach ($consultations as $consultation) {
-                    switch ($consultation->duration) {
-                        case '0':
-                            $statusText = "Off";
-                            break;
-                        case '1':
-                            $statusText = "08:00-09:00";
-                            break;
-                        case '2':
-                            $statusText = "09:00-10:00";
-                            break;
-                        case '3':
-                            $statusText = "10:00-11:00";
-                            break;
-                        case '4':
-                            $statusText = "11:00-12:00";
-                            break;
-                        case '5':
-                            $statusText = "13:00-14:00";
-                            break;
-                        case '6':
-                            $statusText = "14:00-15:00";
-                            break;
-                        case '7':
-                            $statusText = "15:00-16:00";
-                            break;
-                        case '8':
-                            $statusText = "16:00-17:00";
-                            break;
-                        case '9':
-                            $statusText = "17:00-18:00";
-                            break;
-                        case '10':
-                            $statusText = "23:00-24:00";
-                            break;
-                        default:
-                            $statusText = "No value found";
-                    }
+                    $statusText = convertDuration($consultation->duration);
                     $minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts($statusText, $consultation->consultation_date)['diff'];
                     if ($minutesUntilConsultationStarts < 0) {
                         $rating = rating::where('consultation_id', $consultation->id)->first();
@@ -275,6 +205,49 @@ class ConsultationController extends Controller
         }
     }
 }
+
+function convertDuration($duration){
+    switch ($duration) {
+        case '0':
+            $statusText = "Off";
+            break;
+        case '1':
+            $statusText = "08:00-09:00";
+            break;
+        case '2':
+            $statusText = "09:00-10:00";
+            break;
+        case '3':
+            $statusText = "10:00-11:00";
+            break;
+        case '4':
+            $statusText = "11:00-12:00";
+            break;
+        case '5':
+            $statusText = "13:00-14:00";
+            break;
+        case '6':
+            $statusText = "14:00-15:00";
+            break;
+        case '7':
+            $statusText = "15:00-16:00";
+            break;
+        case '8':
+            $statusText = "16:00-17:00";
+            break;
+        case '9':
+            $statusText = "17:00-18:00";
+            break;
+        case '10':
+            $statusText = "23:00-24:00";
+            break;
+        default:
+            $statusText = "No value found";
+    }
+
+    return $statusText;
+}
+
 function calculateTimeUntilConsultationStarts($statusText, $consultationDate){
     list($startTime, $endTime) = explode('-', $statusText);
     $consultationDateTime = Carbon::createFromFormat('Y-m-d H:i', $consultationDate . ' ' . $startTime);

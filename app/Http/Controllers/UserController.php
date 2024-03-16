@@ -37,6 +37,7 @@ class UserController extends Controller
                     'email' => $user->email,
                     'password' => $user->password ? '*******' : '',
                     'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+                    'username' => $user->username
                 ];
                 return response()->json([
                     'success' => true,
@@ -70,6 +71,7 @@ class UserController extends Controller
                     'no_telp' => $user->no_telp,
                     'email' => $user->email,
                     'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
+                    'username' => $user->username
                 ];
     
                 return response()->json([
@@ -138,6 +140,7 @@ class UserController extends Controller
                 'email' => 'required',
                 'program_id' => 'required',
                 'nip' => 'required|numeric',
+                'username' => 'required'
             ]);
         } else if ($request['role'] == 'pic' || $request['role'] == 'admin') {
             // dd('User is PIC');

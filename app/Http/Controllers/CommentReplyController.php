@@ -38,4 +38,65 @@ class CommentReplyController extends Controller
         return redirect(route('post.index'));
         // return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Deleted Successfully');
     }
+
+    public function createComment(Request $request) {
+        $data = $request->validate([
+            'user_id' => 'required',
+            'comment_id' => 'required',
+            'reply' => 'required',
+            'created_at' => 'required'
+
+        ]);
+
+        try{
+            $newreply = comment::create([
+                'user_id' => 'required',
+                'comment_id' => 'required',
+                'reply' => 'required',
+                'created_at' => 'required'
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Reply created successfully',
+                'data' => [
+                    'comment' => $newreply,
+                ],
+            ]);
+
+        }catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create reply. Please try again later.',
+            ]);
+        }
+    }
+
+    public function showReply(Request $request){
+        $replies =  comment_reply::orderBy('created_at', 'desc')->get();
+        if($replies->empty()){
+            return response()->json([
+                'success' => false,
+                'message' => 'There are no replies registered',
+            ]);
+        }
+
+        foreach($replies as $reply){
+            if($reply){
+               $datareply[] = [
+                'user_id' => $reply->id,
+                'comment_id' => $reply->comment_id,
+                'reply' => $reply->reply,
+                'created_at' => $reply->created_at
+               ]; 
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Fetched all replies',
+            'reply' => $datareply,
+        ]);
+
+    }
 }

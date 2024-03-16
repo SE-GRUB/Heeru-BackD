@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\InfographicController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Models\comment_reply;
 use App\Models\consultation_result;
 use App\Models\infographic;
 use Illuminate\Http\Request;
@@ -49,6 +51,8 @@ Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('use
 Route::get('/pponly', [UserController::class, 'getPP'])->name('user.pp');
 Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('consultation.result');
 Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
+Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
+Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
 
 
 

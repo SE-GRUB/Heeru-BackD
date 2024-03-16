@@ -37,4 +37,37 @@ class CommentController extends Controller
         return redirect(route('post.index'));
         // return redirect(route('comment.index', ['post' => $post]))->with('success', 'Comment Deleted Successfully');
     }
+
+    public function createComment(Request $request) {
+        $data = $request->validate([
+            'user_id' => 'required',
+            'post_id' => 'required',
+            'comment' => 'required',
+            'created_at' => 'required'
+        ]);
+
+        try{
+            $newcomment = comment::create([
+                'user_id' => 'required',
+                'post_id' => 'required',
+                'comment' => 'required',
+                'created_at' => 'required'
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment created successfully',
+                'data' => [
+                    'comment' => $newcomment,
+                ],
+            ]);
+
+        }catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create comment. Please try again later.',
+            ]);
+        }
+    }
+
 }
