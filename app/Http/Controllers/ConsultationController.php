@@ -84,39 +84,42 @@ class ConsultationController extends Controller
 
   
     public function getResult(Request $request){
-        // dd($request);
-
         try{
-            $consultation_id = $request->query('id');
+            $consultation_id = $request->input('id');
             $data = DB::table("consultations")
             ->join("users","consultations.counselor_id","=","users.id")
             ->where('consultations.id', $consultation_id)
             ->first();
 
-
             if($data){
-                $resultarray = [
-                    'note' =>$data->note ? $data->note : 'Consultation Note not available',
-                    'consultation_date' => $data->consultation_date,
-                    'consultation_id' => $data->consultation_id,
-                    'counselor_id' => $data->counselor_id,
-                    'counselor_profile' => $data->profile_pic ? json_decode($data->profile_pic)[0] : '',
-                    'counselorName' => $data->name,
-                    'counselorEmail' => $data->email,
-                    'paymentNominal' => $data->fare,
-                    'duration' => convertDuration($data->duration),
-                    'time' => $data->created_at
-
-                ];
+                $isRated = rating::where("ratings.consultation_id", "=", $consultation_id)->exists();
+                $ratingValue = null;
+                if ($isRated) {
+                    $ratingValue = Rating::where('ratings.consultation_id', $consultation_id)->value('rating');
+                }   
                 return response()->json([
                     'success' => true,
                     'message' => 'fetch consultation result successfully',
-                    'result' => $resultarray,
+                    'result' =>[
+                        'note' =>$data->note ? $data->note : 'Consultation Note not available',
+                        'consultation_date' => $data->consultation_date,
+                        'consultationId' => $consultation_id,
+                        'consultation_id' => $data->consultation_id,
+                        'counselor_id' => $data->counselor_id,
+                        'counselor_profile' => $data->profile_pic ? json_decode($data->profile_pic)[0] : '',
+                        'counselorName' => $data->name,
+                        'counselorEmail' => $data->email,
+                        'paymentNominal' => $data->fare,
+                        'isRated' => $isRated,
+                        'rating' => $ratingValue,
+                        'duration' => convertDuration($data->duration),
+                        'time' => $data->created_at
+                    ]
                 ]);
             }else{
                 return response()->json([
                     'success' => false,
-                    'message' => 'result not found!',
+                    'message' => 'Consultation not found!',
                 ]);
             }
 

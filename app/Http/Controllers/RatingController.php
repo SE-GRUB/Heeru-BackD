@@ -23,19 +23,27 @@ class RatingController extends Controller
 
     public function createRating(Request $request){
         try{
-            $rating = $request->stars;
             $data = $request->validate([
                 'consultation_id' => 'required',
                 'student_id' => 'required',
                 'counselor_id' => 'required',
-                'review' => 'required'
+                'review' => 'required',
+                'rating'=> 'required'
+
             ]);
-            $data['rating'] = $rating;
             $newRating= Rating::create($data);
-            return response()->json([
-                'success' => true,
-                'message' => 'Success add ratings',
-            ]);
+            if($newRating){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Success add ratings',
+                    'rating' => $data['rating']
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed add ratings',
+                ]);
+            }
         }catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -43,9 +51,6 @@ class RatingController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-
-        
-        return redirect(route('consultation.index'))->with('success', 'Rating Added Successfully!');
     }
 
 

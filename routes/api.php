@@ -52,7 +52,7 @@ Route::get('/showInfografis', [InfographicController::class, 'showInfografis'])-
 Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('user.profile');
 Route::get('/pponly', [UserController::class, 'getPP'])->name('user.pp');
 Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('consultation.result');
-Route::get('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
+Route::post('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
 Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
 Route::get('/like', [LikeController::class, 'like'])->name('like.liking');
