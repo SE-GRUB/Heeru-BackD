@@ -6,6 +6,7 @@ use App\Models\report_category;
 use App\Models\reports;
 use App\Models\status;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -247,5 +248,38 @@ class ReportController extends Controller
                 'error' => $th->getMessage()
             ]);
         }
-    }    
+    }
+
+    public function riwayatDetail(Request $request){
+        try {
+            $report = reports::where('reports.id', '=', $request->input('report_id'))->first();
+            $report_category = report_category::where("report_categories.id", '=', $report->category_id)->first();
+            $status = status::where('status.report_id', '=', $report->id)->orderBy('created_at', 'desc')->first();
+            $user = User::where('users.id','=', $report->user_id)->first();
+
+            $created_at = $report->created_at;
+            $datetime = new DateTime($created_at);
+            $formatted_date = $datetime->format('j F Y');
+                
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched report details!',
+                'report' => [
+                    'report_id' => $report->report_id,
+                    'status' => $status->status,
+                    'name' => $user->name,
+                    'no_telp' => $user->no_telp,
+                    'email' => $user->email,
+                    'report_category' => $report_category->category_name,
+                    'report_date' => $formatted_date,
+                ]
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReportCategoryController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Models\comment_reply;
 use App\Models\consultation_result;
@@ -55,6 +56,8 @@ Route::get('/createRating', [RatingController::class, 'createRating'])->name('ra
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
 Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
 Route::get('/like', [LikeController::class, 'like'])->name('like.liking');
+Route::get('/riwayatDetail', [ReportController::class, 'riwayatDetail'])->name('report.detail');
+Route::get('/statusDetail', [StatusController::class, 'showStatus'])->name('status.detail');
 
 
 

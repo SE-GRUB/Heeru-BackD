@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\reports;
 use App\Models\status;
+use DateTime;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -68,6 +69,38 @@ class StatusController extends Controller
     public function destroy(status $status){
         $status->delete();
         return redirect(route('status.index'))->with('success', 'Status Deleted Successfully');
+    }
+
+    public function showStatus(Request $request){
+        try {
+            $statuses = status::where('status.report_id', '=', $request->input('report_id'))->get();
+            $dataStatuses = [];
+
+            foreach($statuses as $status){
+                $timestamp = $status->created_at;
+                $datetime = new DateTime($timestamp);
+                $date = $datetime->format('l, j F Y');
+                $time = $datetime->format('h:i A');
+                $dataStatuses[] = [
+                    'stat' => $status->status,
+                    'note' => $status->note,
+                    'date' => $date,
+                    'time' => $time,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetched report details!',
+                'statuses' => $dataStatuses
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => False,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage()
+            ]);
+        }
     }
 }
 
