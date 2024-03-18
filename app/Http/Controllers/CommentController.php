@@ -41,9 +41,7 @@ class CommentController extends Controller
 
     public function showComment(Request $request){
         $post_id = $request->input('id');
-        dd($post_id);
         $comments =  comment::where('post_id', $post_id)->orderBy('created_at', 'desc')->get();
-        // dd($comments->isEmpty());
         if($comments->isEmpty()){
             return response()->json([
                 'success' => false,
