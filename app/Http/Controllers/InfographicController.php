@@ -89,8 +89,9 @@ class InfographicController extends Controller
         return response()->json("beres", 200);
     }
 
-    public function showInfografis(){
-        $infographics = infographic::orderBy('created_at', 'desc')->get();
+    public function showInfografis(Request $request){
+        $page = $request->input('page');
+        $infographics = infographic::orderBy('created_at', 'desc')->paginate(1, ['*'], 'page', $page);
         if($infographics->isEmpty()){
             return response()->json([
                 'success' => false,

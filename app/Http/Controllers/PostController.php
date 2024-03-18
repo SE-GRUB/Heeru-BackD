@@ -47,7 +47,6 @@ use App\Models\post;
         private function uploadedfile0($img, $path) {
             $time=time();
             $newurl=[];
-            // dd($img);
             $imag=$img;
             if ($imag->isValid()) {
                 $imag->move($path, $time . '_' . $imag->getClientOriginalName());
@@ -62,39 +61,7 @@ use App\Models\post;
             return $newurl;
         }
 
-        public function uplodnewpost(Request $request){
-            // dump($request);
-            $data['like'] = 0;
-            $data['isVerified'] = false;
-            $data['isAnonymous'] = $request->input('isAnonymous', false);
-            $data['user_id'] = $request->input('user_id');
-            $data['post_body'] = $request->input('isipost');
-            $data['poster'] = null;
-            foreach ($request->file() as $files) {
-                if ($files) {
-                    $path = 'post_poster/' . $data['user_id'];
-                    $paths = $this->uploadedfile0($files, $path);
-                    $data['poster'] = json_encode($paths);
-                }
-
-            }
-            $newPost = Post::create($data);
-
-            return view('ManualVenlib.postSuccess', ['newPost' => $newPost]);
-        }
-
-        //save data
-        public function poinstore(Request $request){
-            $data = $request->validate([
-                'user_id' => 'required',
-                'post_body' => 'required',
-            ]);
-            $data['like'] = 0;
-            $data['isVerified'] = false;
-            $data['isAnonymous'] = $request->input('isAnonymous', false);
-            $newPost = post::create($data);
-            return redirect((route(('post.index'))))->with('success', 'Post Added Successfully !');;
-        }
+    
 
         public function index(){
             $dataPosts = [];
@@ -236,7 +203,7 @@ use App\Models\post;
         public function showPost(Request $request){
             $page = $request->query('page', 1);
             $user_id = $request->input('user_id');
-            $posts = Post::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
+            $posts = Post::orderBy('created_at', 'desc')->paginate(5, ['*'], 'page', $page);
             $dataPosts = [];
 
             foreach ($posts as $post) {
