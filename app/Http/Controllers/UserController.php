@@ -242,6 +242,7 @@ class UserController extends Controller
         try {
             $data = $request->validate([
                 'user_id' => 'required',
+                'username' => 'required',
                 'email' => 'required',
                 'profile_pic' => 'required',
                 'password' => 'required',
@@ -256,12 +257,9 @@ class UserController extends Controller
             
             unset($data['user_id']);
             $data['profile_pic']= $paths;
-            // // dd($data);
             $data['password'] = Hash::make($data['password']);
             $user->update($data);
-            // dd($up);
                     
-            // dd($user, $data);
             if ($user) {
                 return response()->json([
                     'success' => true,
@@ -533,5 +531,16 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    public function checkUsername(Request $request){
+        $username = $request->input('username');
+
+        $isUsernameTaken = User::where('username', $username)->exists();
+        if ($isUsernameTaken) {
+            return response()->json(['success' => false, 'message' => 'Username is taken']);
+        } else {
+            return response()->json(['success' => true, 'message' => 'Username is available']);
+        }
     }
 }
