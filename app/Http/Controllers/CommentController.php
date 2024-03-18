@@ -41,7 +41,7 @@ class CommentController extends Controller
 
     public function showComment(Request $request){
         $post_id = $request->input('id');
-        // dd($post_id);
+        dd($post_id);
         $comments =  comment::where('post_id', $post_id)->orderBy('created_at', 'desc')->get();
         // dd($comments->isEmpty());
         if($comments->isEmpty()){
@@ -56,6 +56,7 @@ class CommentController extends Controller
                 $user = User::where('id', $comment->user_id)->first();
                 // dd($user);
                $datacomment[] = [
+                'comment_id' => $comment->id,
                 'username' => $user->username ? $user->username : $user->name,
                 'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                 'comment' => $comment->comment,

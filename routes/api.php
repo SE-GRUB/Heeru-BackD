@@ -58,6 +58,7 @@ Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_
 Route::get('/like', [LikeController::class, 'like'])->name('like.liking');
 Route::get('/riwayatDetail', [ReportController::class, 'riwayatDetail'])->name('report.detail');
 Route::get('/statusDetail', [StatusController::class, 'showStatus'])->name('status.detail');
-
+Route::get('/showComment', [CommentController::class, 'showComment'])->name('comment.showComment');
+Route::get('/showReply', [comment_reply::class, 'showReply'])->name('reply.showReply');
 
 

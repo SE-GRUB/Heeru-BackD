@@ -40,7 +40,7 @@ class CommentReplyController extends Controller
         // return redirect(route('comment_reply.index', ['comment' => $comment]))->with('success', 'Reply Deleted Successfully');
     }
 
-    public function createComment(Request $request) {
+    public function createReply(Request $request) {
         $data = $request->validate([
             'user_id' => 'required',
             'comment_id' => 'required',
@@ -101,7 +101,7 @@ class CommentReplyController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Fetched all replies',
-            'reply' => $datareply,
+            'replies' => $datareply,
         ]);
 
     }
