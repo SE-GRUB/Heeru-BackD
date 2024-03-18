@@ -32,6 +32,16 @@ class DashboardController extends Controller
     }    
 
     public function detail(reports $report){
-        return view('dashboard.detail', ['report' => $report]);
+        $user = DB::table('users')
+            ->where('users.id', $report->user_id)
+            ->select('users.nip','users.role', 'users.name', 'users.no_telp', 'users.email', 'users.program_id')
+            ->first();
+        $userData = $user;
+        $userData->program_name = NULL;
+        if($user->program_id){
+            $program = Program::where('programs.id', $user->program_id)->first();
+            $userData->program_name = $program->program_name;
+        }
+        return view('dashboard.detail', ['report' => $report, 'user' => $userData]);
     }
 }

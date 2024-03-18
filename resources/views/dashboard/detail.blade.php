@@ -41,13 +41,6 @@
     <button class="{{ $statusClass }}" disabled>{{ ucwords($status->status) }}</button>
     <h5><b>I. Whistleblower details</b></h5>
     <table class="table">
-    @php
-        $user = DB::table('users')
-            ->join('programs', 'users.program_id', '=', 'programs.id')
-            ->where('users.id', $report->user_id)
-            ->select('users.nip', 'users.name', 'programs.program_name', 'users.no_telp', 'users.email')
-            ->first();
-    @endphp
         <tbody>
             <tr>
                 <td>NIP</td>
@@ -57,10 +50,17 @@
                 <td>Nama</td>
                 <td>{{$user->name}}</td>
             </tr>
+            @if($user->program_name != NULL)
             <tr>
                 <td>Program</td>
                 <td>{{$user->program_name}}</td>
             </tr>
+            @else
+            <tr>
+                <td>Role</td>
+                <td>{{$user->role}}</td>
+            </tr>
+            @endif
             <tr>
                 <td>Email</td>
                 <td>{{$user->email}}</td>
@@ -69,7 +69,7 @@
                 <td>No. Telp</td>
                 <td>{{$user->no_telp}}</td>
             </tr>
-        </tbody>
+        </tbody>            
     </table>
 
     <h5><b>II. Report details</b></h5>
