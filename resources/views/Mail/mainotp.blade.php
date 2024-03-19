@@ -47,8 +47,7 @@
             <td style="text-align: right;">
               <span
                 style="font-size: 16px; line-height: 30px; color: #ffffff;"
-                id="date"</span
-              >
+                >Your Safety Zone</span>
             </td>
           </tr>
         </tbody>
@@ -164,12 +163,4 @@
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const currentDate = new Date();
-    const months = [
-      "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-    ];
-    const formattedDate = `${currentDate.getDate()} ${months[currentDate.getMonth()]}, ${currentDate.getFullYear()}`;
-    document.getElementById("date").innerText = formattedDate;
-  </script>
 </html>
