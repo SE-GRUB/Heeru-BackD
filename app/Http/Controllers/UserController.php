@@ -547,9 +547,21 @@ class UserController extends Controller
     }
 
     public function otp(Request $req){
-        $target = $req->input('email');
-        $otp = rand(100000, 999999);
-        $dw=Mail::to($target)->send(new HeeruMail($otp));
-        return response()->json([$dw,'otp' => $otp]);
+        try {
+            $target = $req->input('email');
+            $otp = rand(100000, 999999);
+            $dw=Mail::to($target)->send(new HeeruMail($otp));
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP Mail Send Successfully',
+                $dw,'otp' => $otp
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error',
+                'error' => $th->getMessage(),
+            ]);
+        }
     }
 }
