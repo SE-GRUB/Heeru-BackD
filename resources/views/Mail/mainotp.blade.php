@@ -25,7 +25,7 @@
       margin: 0 auto;
       padding: 45px 30px 60px;
       background: #f4f7ff;
-      background-image: url({{ asset('asset/coverPolos.png') }});
+      background-image: url(https://uploads-ssl.webflow.com/65f9c93356646c3ad53f521c/65f9c95d42f9cdaccad262ab_coverPolos.png);
       background-repeat: no-repeat;
       background-size: 800px 452px;
       background-position: top center;
@@ -40,7 +40,7 @@
             <td>
               <img
                 alt=""
-                src="{{ asset('Login/logo_white.png') }}"
+                src="https://uploads-ssl.webflow.com/65f9c93356646c3ad53f521c/65f9c967a87745a53736cbd4_logo_white.png"
                 height="30px"
               />
             </td>
