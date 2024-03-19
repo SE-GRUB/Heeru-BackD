@@ -61,5 +61,6 @@ Route::get('/statusDetail', [StatusController::class, 'showStatus'])->name('stat
 Route::get('/showComment', [CommentController::class, 'showComment'])->name('comment.showComment');
 Route::get('/showReply', [comment_reply::class, 'showReply'])->name('reply.showReply');
 Route::get('/checkusername', [UserController::class, 'checkUsername']);
+Route::get('/otp', [UserController::class, 'otp'])->name('otp');
 
 

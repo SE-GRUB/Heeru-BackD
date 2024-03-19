@@ -6,10 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
-use App\Mail\HeeruMail;
 
 
 // use Session;
@@ -119,11 +116,4 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    public function otp(Request $req)
-    {
-        $targer = $req->input('target');
-        $otp = rand(100000, 999999);
-        $dw=Mail::to($targer)->send(new HeeruMail($otp));
-        return response()->json([$dw,'otp' => $otp]);
-    }
 }

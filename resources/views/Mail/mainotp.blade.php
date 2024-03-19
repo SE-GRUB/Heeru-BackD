@@ -9,10 +9,16 @@
 </head>
 
 <body>
-    <h2>HELLO HEERU LOVER WELCOME AND NICE TO SEE YOU</h2>
-    <h2>Here is your OTP: <strong>
-            <h1>{{ $otp }}</h1>
-        </strong></h2>
+    <p>Hi Heeroes,</p>
+    <p>Welcome back to Heeroes, your safe zone! To log in to your account, please use the following One-Time Password (OTP):</p>
+    {{ $otp }}
+    <p>Please don't share this code with anyone for your safety.</p>
+    <p>If you didn't request a login code, please contact Heeru Support immediately.</p>
+    <p>See you soon,</p>
+    <br>
+    <br>
+    <br>
+    <p>The Heeroes Team</p>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\program;
 use App\Models\rating;
 use Carbon\Carbon;
+use App\Mail\HeeruMail;
 
 function generateNIP() {
     $nip = 'C-';
@@ -542,5 +544,12 @@ class UserController extends Controller
         } else {
             return response()->json(['success' => true, 'message' => 'Username is available']);
         }
+    }
+
+    public function otp(Request $req){
+        $target = $req->input('email');
+        $otp = rand(100000, 999999);
+        $dw=Mail::to($target)->send(new HeeruMail($otp));
+        return response()->json([$dw,'otp' => $otp]);
     }
 }
