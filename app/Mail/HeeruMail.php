@@ -33,7 +33,7 @@ class HeeruMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Heeru - We Heer U | One time password (OTP)',
+            subject: 'Your Heeru One-Time Password (OTP)',
         );
     }
 
