@@ -73,7 +73,7 @@ class UserController extends Controller
                     'no_telp' => $user->no_telp,
                     'email' => $user->email,
                     'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
-                    'username' => $user->username
+                    'username' => '@' . str_replace(' ', '', strtolower($user->username))
                 ];
     
                 return response()->json([

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommentReplyController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationResultController;
 use App\Http\Controllers\InfographicController;
@@ -59,7 +60,7 @@ Route::get('/like', [LikeController::class, 'like'])->name('like.liking');
 Route::get('/riwayatDetail', [ReportController::class, 'riwayatDetail'])->name('report.detail');
 Route::get('/statusDetail', [StatusController::class, 'showStatus'])->name('status.detail');
 Route::get('/showComment', [CommentController::class, 'showComment'])->name('comment.showComment');
-Route::get('/showReply', [comment_reply::class, 'showReply'])->name('reply.showReply');
+Route::get('/showReply', [CommentReplyController::class, 'showReply'])->name('reply.showReply');
 Route::get('/checkusername', [UserController::class, 'checkUsername']);
 Route::get('/otp', [UserController::class, 'otp'])->name('otp');
 

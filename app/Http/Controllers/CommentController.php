@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\comment;
+use App\Models\comment_reply;
 use App\Models\post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,12 +53,15 @@ class CommentController extends Controller
         foreach($comments as $comment){
             if($comment){
                 $user = User::where('id', $comment->user_id)->first();
+                $hasReplies = comment_reply::where('id', $comment->id)->exists();
                 // dd($user);
                $datacomment[] = [
                 'comment_id' => $comment->id,
-                'username' => $user->username ? $user->username : $user->name,
+                'username' => str_replace(' ', '', strtolower($user->username)),
                 'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                 'comment' => $comment->comment,
+                'time' => $comment->created_at,
+                'hasReplies' =>  $hasReplies,
                ]; 
             }
         }

@@ -75,22 +75,22 @@ class CommentReplyController extends Controller
 
     public function showReply(Request $request){
         $comment_id = $request->input('id');
-        $user = User::where('id', $comment_id)->first();
+        $user_id = comment::where('id','=',$comment_id)->value('user_id');
         $replies =  comment_reply::where('comment_id', $comment_id)->orderBy('created_at', 'desc')->get();
+        $user = User::where('id', $user_id)->first();
         if($replies->isEmpty()){
             return response()->json([
                 'success' => false,
-                'message' => 'There are no replies registered',
+                'message' => 'There are no replies',
             ]);
         }
 
         foreach($replies as $reply){
             if($reply){
-                $userReply = User::where('id', $reply->user_id)->first();
+                $userReply = User::where('users.id', $reply->user_id)->first();
                $datareply[] = [
-                'user_id' => $reply->id,
-                'tag' => $user->username ? $user->username : $user->name,
-                'username' => $userReply->username ? $userReply->username : $userReply->name,
+                'tag' => '@' . str_replace(' ', '', strtolower($user->username)),
+                'username' => str_replace(' ', '', strtolower($userReply->username)),
                 'profile_pic' => $userReply->profile_pic ? json_decode($userReply->profile_pic)[0] : '',
                 'reply' => $reply->reply,
                 'created_at' => $reply->created_at

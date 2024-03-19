@@ -3,8 +3,8 @@
     namespace App\Http\Controllers;
     use App\Models\comment;
     use App\Models\comment_reply;
-use App\Models\like;
-use App\Models\post;
+    use App\Models\like;
+    use App\Models\post;
     use App\Models\User;
     use Illuminate\Http\Request;
 
@@ -218,51 +218,27 @@ use App\Models\post;
         }
 
         protected function formatPost($post, $user_id){
-            $dataComments = [];
             $user = User::where('id', $post->user_id)->first();
-
+            $commentCount = comment::where('post_id', $post->id)->count();
             $likeCount = like::where('post_id', $post->id)->count();
             $liked = Like::where('user_id', $user_id)
              ->where('post_id', $post->id)
              ->exists();
 
             if ($user) {
-                $comments = Comment::where('post_id', $post->id)->get();
-
-                if ($comments) {
-                    foreach ($comments as $comment) {
-                        $dataComments[] = $this->formatComment($comment);
-                    }
-                }
-
                 return [
                     'post_id' => $post->id,
-                    'name' => $user->isAnonymous ? 'Anonymous' : $user->name,
+                    'name' => $user->username,
                     'profile_pic' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
                     'post_body' => $post->post_body,
                     'poster' => $post->poster ? json_decode($post->poster)[0] : '',
                     'isLiked' => $liked,
                     'like' => $likeCount,
                     'created_at' => $post->created_at,
-                    'totalcomments' => count($dataComments),
-                    'comments' => $dataComments,
+                    'totalcomments' => $commentCount,
                 ];
             }
-
             return null;
         }
 
-        protected function formatComment($comment){
-            $user = User::where('id', $comment->user_id)->first();
-
-            if ($user) {
-                return [
-                    'user' => $user->name,
-                    'comment' => $comment->comment,
-                    'profilkomen' => $user->profile_pic ? json_decode($user->profile_pic)[0] : '',
-                ];
-            }
-
-            return null;
-        }
     }
