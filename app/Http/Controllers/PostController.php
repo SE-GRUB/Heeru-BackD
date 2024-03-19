@@ -130,7 +130,6 @@ use App\Models\post;
                 $newPost = post::create([
                     'user_id' => $data['user_id'],
                     'post_body' => $data['post_body'],
-                    'like' => 0,
                     'isVerified' => false,
                     'isAnonymous' => $request->input('isAnonymous', false),
                 ]);
@@ -154,6 +153,7 @@ use App\Models\post;
                 return response()->json([
                     'success' => false,
                     'message' => 'Failed to create post. Please try again later.',
+                    'error' => $e->getMessage()
                 ]);
             }
         }
