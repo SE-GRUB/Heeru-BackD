@@ -547,7 +547,7 @@ class UserController extends Controller
     }
 
     public function otp(Request $req){
-        return view('Mail.mainotp', ['otp' => '123456']);
+        // return view('Mail.mainotp', ['otp' => '123456']);
         try {
             $target = $req->input('email');
             $otp = rand(100000, 999999);
