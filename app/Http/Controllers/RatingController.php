@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\consultation;
-use App\Models\Rating;
+use App\Models\rating;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
     public function index(consultation $consultation){
         // dd($consultation);
-        $ratings = Rating::where('consultation_id', $consultation->id)->get();
+        $ratings = rating::where('consultation_id', $consultation->id)->get();
         return view('rating.index', ['ratings' => $ratings], ['consultation' => $consultation]);
         
     }
@@ -31,12 +31,11 @@ class RatingController extends Controller
                 'rating'=> 'required'
 
             ]);
-            $newRating= Rating::create($data);
+            $newRating= rating::create($data);
             if($newRating){
                 return response()->json([
                     'success' => true,
                     'message' => 'Success add ratings',
-                    'rating' => $data['rating']
                 ]);
             }else{
                 return response()->json([
