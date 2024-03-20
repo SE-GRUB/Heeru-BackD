@@ -382,21 +382,19 @@ class UserController extends Controller
         $dataCounselors = [];
 
         foreach ($counselors as $counselor) {
-            $ratings = rating::where('counselor_id', $counselor->id)->get();
-
+            $ratings = rating::where('ratings.counselor_id', '=', $counselor->id)->get();
+            // dd($ratings);
             $totalRating = 0;
             $numberOfRatings = $ratings->count();
-
             foreach ($ratings as $rating) {
-                $totalRating += $rating->value;
+                $totalRating += $rating->rating;
             }
-
+            // dd($numberOfRatings);
             if ($numberOfRatings > 0) {
                 $averageRating = $totalRating / $numberOfRatings;
             } else {
                 $averageRating = 5;
             }
-
 
             $dataCounselors[] = [
                 'user_id' => $counselor->id,
@@ -425,9 +423,8 @@ class UserController extends Controller
             $ratings = rating::where('counselor_id', $data['user_id'])->get();
             $totalRating = 0;
             $numberOfRatings = $ratings->count();
-
             foreach ($ratings as $rating) {
-                $totalRating += $rating->value;
+                $totalRating += $rating->rating;
             }
             if ($numberOfRatings > 0) {
                 $averageRating = $totalRating / $numberOfRatings;
