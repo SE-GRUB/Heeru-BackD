@@ -50,6 +50,12 @@ class PaymentController extends Controller
         return response()->json([$dw, 'email' => $email]);
     }
 
+    private function generateConsultationId(){
+        $timestamp = microtime();
+        $randomPart = strtoupper(substr(hash('sha256', $timestamp), 0, 8));
+        return $randomPart;
+    }
+
     public function pembayaran(Request $request)
     {
         $booking = [
@@ -60,7 +66,7 @@ class PaymentController extends Controller
             'consultation_date' => $request->consultation_date,
             'duration' => $request->duration,
         ];
-
+        $booking['consultation_id'] = $this->generateConsultationId();
         $newdatakonsul = Consultation::create($booking);
         $datakonsul = DB::table('DataKonsultasi')->where('id', $newdatakonsul->id)->first();
         $referenceId = $datakonsul->id + $datakonsul->counselor_id + $datakonsul->student_id;
