@@ -222,7 +222,6 @@ class UserController extends Controller
                 $user['nip'] = null;
             }
             $data['fare'] = $request->input('fare');
-            $data['rating'] = 0;
         }
 
         if ($request['role'] == 'counselor' || $request['role'] == 'admin' || $request['role'] == 'pic'){
