@@ -61,7 +61,7 @@ class PaymentController extends Controller
         $booking = [
             'student_id' => $request->student_id,
             'counselor_id' => $request->counselor_id,
-            'note' => '',
+            'note' => null,
             'isPaid' => 0,
             'consultation_date' => $request->consultation_date,
             'duration' => $request->duration,
