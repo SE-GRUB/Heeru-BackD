@@ -245,9 +245,15 @@ function convertDuration($duration){
             $statusText = "19:00-20:00";
             break;
         case '11':
-            $statusText = "21:00-22:00";
+            $statusText = "20:00-21:00";
             break;
         case '12':
+            $statusText = "21:00-22:00";
+            break;
+        case '13':
+            $statusText = "22:00-23:00";
+            break;
+        case '14':
             $statusText = "23:00-24:00";
             break;
         default:
