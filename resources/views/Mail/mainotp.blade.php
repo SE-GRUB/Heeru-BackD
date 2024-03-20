@@ -104,7 +104,7 @@
               font-size: 40px;
               font-weight: 600;
               letter-spacing: 25px;
-              color: #ba3d4f;
+              color: #64A5F9;
             "
           >
             {{ $otp }}

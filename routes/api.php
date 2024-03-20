@@ -55,7 +55,7 @@ Route::get('/pponly', [UserController::class, 'getPP'])->name('user.pp');
 Route::get('/getResult', [ConsultationController::class, 'getResult'])->name('consultation.result');
 Route::post('/createRating', [RatingController::class, 'createRating'])->name('rating.createRating');
 Route::get('/createComment', [CommentController::class, 'createComment'])->name('comment.createComment');
-Route::get('/createReply', [comment_reply::class, 'createReply'])->name('create_reply.createReply');
+Route::get('/createReply', [CommentReplyController::class, 'createReply'])->name('create_reply.createReply');
 Route::get('/like', [LikeController::class, 'like'])->name('like.liking');
 Route::get('/riwayatDetail', [ReportController::class, 'riwayatDetail'])->name('report.detail');
 Route::get('/statusDetail', [StatusController::class, 'showStatus'])->name('status.detail');
@@ -63,5 +63,6 @@ Route::get('/showComment', [CommentController::class, 'showComment'])->name('com
 Route::get('/showReply', [CommentReplyController::class, 'showReply'])->name('reply.showReply');
 Route::get('/checkusername', [UserController::class, 'checkUsername']);
 Route::get('/otp', [UserController::class, 'otp'])->name('otp');
+Route::get('/tag', [UserController::class, 'tag'])->name('tag');
 
 

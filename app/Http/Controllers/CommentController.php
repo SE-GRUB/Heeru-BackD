@@ -53,7 +53,7 @@ class CommentController extends Controller
         foreach($comments as $comment){
             if($comment){
                 $user = User::where('id', $comment->user_id)->first();
-                $hasReplies = comment_reply::where('id', $comment->id)->exists();
+                $hasReplies = comment_reply::where('comment_id', $comment->id)->exists();
                 // dd($user);
                $datacomment[] = [
                 'comment_id' => $comment->id,
@@ -74,33 +74,32 @@ class CommentController extends Controller
 
     }
     public function createComment(Request $request) {
-        $data = $request->validate([
-            'user_id' => 'required',
-            'post_id' => 'required',
-            'comment' => 'required',
-            'created_at' => 'required'
-        ]);
 
         try{
             $newcomment = comment::create([
-                'user_id' => 'required',
-                'post_id' => 'required',
-                'comment' => 'required',
-                'created_at' => 'required'
+                'user_id' => $request->input('user_id'),
+                'post_id' => $request->input('post_id'),
+                'comment' => $request->input('comment'),
             ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Comment created successfully',
-                'data' => [
-                    'comment' => $newcomment,
-                ],
-            ]);
+            if($newcomment){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Comment created successfully',
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to create comment. Please try again later.',
+                ]);
+            }
 
         }catch (\Exception $e) {
+    
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create comment. Please try again later.',
+                'message' => 'Internal server error.',
+                'error' =>  $e->getMessage()
             ]);
         }
     }

@@ -13,6 +13,8 @@ use App\Models\program;
 use App\Models\rating;
 use Carbon\Carbon;
 use App\Mail\HeeruMail;
+use App\Models\comment;
+use App\Models\post;
 
 function generateNIP() {
     $nip = 'C-';
@@ -543,6 +545,18 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => 'Username is taken']);
         } else {
             return response()->json(['success' => true, 'message' => 'Username is available']);
+        }
+    }
+
+    public function tag(Request $request){
+        $comment_id = $request->input('comment_id');
+        $user_id = comment::where('comments.id', $comment_id)->value('user_id');
+        $username = User::where('users.id', $user_id)->value('username');
+        // dd($username);
+        if ($username) {
+            return response()->json(['success' => true, 'message' => 'Successfully Tagged', 'tag'=>'@' . str_replace(' ', '', strtolower($username))]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Tag Failed' ]);
         }
     }
 

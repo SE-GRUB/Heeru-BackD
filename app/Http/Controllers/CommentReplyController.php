@@ -41,34 +41,30 @@ class CommentReplyController extends Controller
     }
 
     public function createReply(Request $request) {
-        $data = $request->validate([
-            'user_id' => 'required',
-            'comment_id' => 'required',
-            'reply' => 'required',
-            'created_at' => 'required'
-
-        ]);
-
         try{
-            $newreply = comment::create([
-                'user_id' => 'required',
-                'comment_id' => 'required',
-                'reply' => 'required',
-                'created_at' => 'required'
+            $newreply = comment_reply::create([
+                'user_id' => $request->input('user_id'),
+                'comment_id' => $request->input('comment_id'),
+                'reply' => $request->input('reply'),
             ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Reply created successfully',
-                'data' => [
-                    'comment' => $newreply,
-                ],
-            ]);
+            if($newreply){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Reply created successfully',
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to create reply. Please try again later.',
+                ]);
+            }
 
         }catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create reply. Please try again later.',
+                'message' => 'Internal server error.',
+                'error' =>  $e->getMessage()
             ]);
         }
     }
